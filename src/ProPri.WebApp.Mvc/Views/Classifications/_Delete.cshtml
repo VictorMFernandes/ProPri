@@ -1,0 +1,26 @@
+﻿@{
+    ViewData["Title"] = "Deletar Palavra";
+}
+
+<div class="modal-header">
+    <h4 class="modal-title">@ViewData["Title"]</h4>
+    <button type="button" class="close" data-dismiss="modal">
+        <span aria-hidden="true">×</span><span class="sr-only">Fechar</span>
+    </button>
+</div>
+
+<form asp-action="Delete">
+    <div class="modal-body">
+
+        <input type="hidden" />
+        <input type="hidden" />
+
+        <p>Deseja mesmo deletar a palavra Gato?</p>
+    </div>
+
+    <div class="modal-footer">
+        <div>
+            <input class="btn btn-danger" type="submit" value="Deletar Palavra" />
+        </div>
+    </div>
+</form>
