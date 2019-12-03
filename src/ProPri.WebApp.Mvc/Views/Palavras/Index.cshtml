@@ -4,7 +4,7 @@
     ViewData["Title"] = "Palavras";
 }
 
-<h1>Index</h1>
+<h1>@ViewData["Title"]</h1>
 
 <p>
     <a asp-action="Create">Criar Nova</a>
@@ -23,16 +23,37 @@
         @*@foreach (var palavra in Model) {*@
         <tr>
             <td>
-                <a asp-action="Edit"><img src="https://www.petz.com.br/blog/wp-content/uploads/2019/06/tamanho-de-gato.jpg" alt="" style="width: 70px; height: 70px" /></a>
+                <a asp-action="Edit">
+                    <div class="div-img" style="background-image: url('https://www.petz.com.br/blog/wp-content/uploads/2019/06/tamanho-de-gato.jpg');
+                                      width: 70px; height: 70px;">
+                    </div>
+                </a>
             </td>
             <td>
                 @*@Html.DisplayFor(modelItem => palavra.TextoPortugues)*@
                 <a asp-action="Edit" style="line-height: 70px;">Gato</a>
             </td>
             <td class="text-right align-middle">
-                <a class="btn btn-danger" asp-action="Delete" asp-route-id="@*@palavra.Id*@"><spam class="fa fa-trash"></spam></a>
+                <a class="btn btn-danger" data-modal="" asp-action="Delete" asp-route-id="@*@palavra.Id*@"><spam class="fa fa-trash"></spam></a>
             </td>
         </tr>
         @*}*@
     </tbody>
+
+    <div id="myModal" class="modal fade in">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div id="myModalContent"></div>
+            </div>
+        </div>
+    </div>
+
 </table>
+
+@section Scripts {
+    <script>
+        $(document).ready(function () {
+            AjaxModal();
+        });
+    </script>
+}

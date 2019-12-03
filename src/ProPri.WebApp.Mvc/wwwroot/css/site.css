@@ -97,3 +97,9 @@ td a {
         color: #292b2c;
         text-decoration: none;
     }
+
+.div-img {
+    background-size:cover; 
+    background-position:center center; 
+    background-repeat:no-repeat;
+}

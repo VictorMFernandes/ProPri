@@ -1,8 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
+using ProPri.WebApp.Mvc.Views.Palavras.ViewModels;
+using System;
 
 namespace ProPri.WebApp.Mvc.Controllers
 {
@@ -23,9 +21,18 @@ namespace ProPri.WebApp.Mvc.Controllers
             return View();
         }
 
-        public IActionResult Delete()
+        public IActionResult Delete(Guid id)
         {
-            return View();
+            // Pegar palavra
+            // Checar se é null
+            return PartialView("_Delete", new PalavraIndexViewModel { Id = id });
+        }
+
+        [HttpPost]
+        public IActionResult Delete(PalavraIndexViewModel palavraIndexVm)
+        {
+            var url = Url.Action("Index", "Palavras");
+            return Json(new { success = true, url });
         }
     }
 }
