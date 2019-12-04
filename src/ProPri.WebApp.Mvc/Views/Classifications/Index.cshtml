@@ -1,57 +1,12 @@
-﻿@model IEnumerable<ProPri.WebApp.Mvc.Views.Palavras.ViewModels.PalavraIndexViewModel>
+﻿@model IEnumerable<ProPri.WebApp.Mvc.Views.Classifications.ViewModels.ClassificationIndexViewModel>
 
 @{
     ViewData["Title"] = "Classifications";
 }
 
-<h1>@ViewData["Title"]</h1>
+<h3>@ViewData["Title"]</h3>
 <a asp-action="Create">Create New</a>
-<div id="tree"></div>
 
-@section Scripts {
-    <script src="~/lib/bootstrap-treeview/bootstrap-treeview.min.js"></script>
-
-    <script>
-        function getTree() {
-            var tree = [
-                {
-                    text: "1. VOCAB",
-                    nodes: [
-                        {
-                            text: "1.1. NOUN"
-                        },
-                        {
-                            text: "1.2. ADVERBS"
-                        },
-                        {
-                            text: "1.3. VERBS"
-                        },
-                        {
-                            text: "1.4. PRONOUNS"
-                        }
-                    ]
-                },
-                {
-                    text: "2. STRUCTURE",
-                    nodes: [
-                        {
-                            text: "2.1. TO BE",
-                            nodes: [
-                                {
-                                    text: "2.1.1 I am"
-                                },
-                                {
-                                    text: "2.1.2 You are"
-                                }
-                            ]
-                        }
-                    ]
-                }
-            ];
-            return tree;
-        }
-
-        $('#tree').treeview({ data: getTree() });
-
-    </script>
-}
+<ejs-treeview id="hierarchical">
+    <e-treeview-fields child="ViewBag.child" dataSource="ViewBag.data" id="code" text="name" selected="selected" expanded="expanded"></e-treeview-fields>
+</ejs-treeview>

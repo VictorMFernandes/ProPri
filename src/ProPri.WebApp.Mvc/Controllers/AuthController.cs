@@ -1,9 +1,9 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using ProPri.WebApp.Mvc.Views.Autorizacao.ViewModels;
+using ProPri.WebApp.Mvc.Views.Auth.ViewModels;
 
 namespace ProPri.WebApp.Mvc.Controllers
 {
-    public class AutorizacaoController : Controller
+    public class AuthController : Controller
     {
         public IActionResult Login()
         {
@@ -21,13 +21,13 @@ namespace ProPri.WebApp.Mvc.Controllers
             return RedirectToAction("Login");
         }
 
-        public IActionResult RecuperarSenha(LoginViewModel loginVm)
+        public IActionResult RecoverPassword(LoginViewModel loginVm)
         {
             return View(loginVm);
         }
 
         [HttpPost]
-        public IActionResult RecuperarSenha(string email)
+        public IActionResult RecoverPassword(string email)
         {
             return View();
         }

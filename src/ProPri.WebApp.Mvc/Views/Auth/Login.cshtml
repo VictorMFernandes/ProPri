@@ -1,4 +1,4 @@
-﻿@model ProPri.WebApp.Mvc.Views.Autorizacao.ViewModels.LoginViewModel
+﻿@model ProPri.WebApp.Mvc.Views.Auth.ViewModels.LoginViewModel
 
 @{
     ViewData["Title"] = "Log in";
@@ -17,16 +17,16 @@
                     <span asp-validation-for="Email" class="text-danger"></span>
                 </div>
                 <div class="form-group">
-                    <label asp-for="Senha"></label>
-                    <input asp-for="Senha" class="form-control" />
-                    <span asp-validation-for="Senha" class="text-danger"></span>
+                    <label asp-for="Password"></label>
+                    <input asp-for="Password" class="form-control" />
+                    <span asp-validation-for="Password" class="text-danger"></span>
                 </div>
                 <div class="form-group">
                     <button type="submit" class="btn btn-primary">Log in</button>
                 </div>
                 <div class="form-group">
                     <p>
-                        <a id="esqueceu-senha" asp-action="RecuperarSenha">Esqueceu sua senha?</a>
+                        <a id="forgot-password" asp-action="RecoverPassword">Forgot Password?</a>
                     </p>
                 </div>
             </form>

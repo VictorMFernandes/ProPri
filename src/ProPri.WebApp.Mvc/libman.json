@@ -23,10 +23,6 @@
         "webfonts/fa-solid-900.woff",
         "webfonts/fa-solid-900.woff2"
       ]
-    },
-    {
-      "library": "bootstrap-treeview@1.2.0",
-      "destination": "wwwroot/lib/bootstrap-treeview/"
     }
   ]
 }

@@ -44,7 +44,7 @@ namespace ProPri.WebApp.Mvc
             {
                 endpoints.MapControllerRoute(
                     name: "default",
-                    pattern: "{controller=Autorizacao}/{action=Login}/{id?}");
+                    pattern: "{controller=Auth}/{action=Login}/{id?}");
             });
         }
     }

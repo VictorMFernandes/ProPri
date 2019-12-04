@@ -12,14 +12,11 @@
     </PackageReference>
     <PackageReference Include="Microsoft.Extensions.Logging.Debug" Version="3.0.0" />
     <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="3.0.0" />
+    <PackageReference Include="Syncfusion.EJ2.AspNet.Core" Version="17.3.0.31" />
   </ItemGroup>
 
   <ItemGroup>
     <ProjectReference Include="..\ProPri.Comum.WebApp\ProPri.Comum.WebApp.csproj" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <Folder Include="Views\Classifications\ViewModels\" />
   </ItemGroup>
 
 </Project>

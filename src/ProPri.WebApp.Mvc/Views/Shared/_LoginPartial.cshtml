@@ -2,7 +2,7 @@
     @if (false)
     {
         <li class="nav-item">
-            <a  class="nav-link text-dark" asp-page="/Account/Manage/Index" title="Manage">Olá @User.Identity.Name!</a>
+            <a  class="nav-link text-dark" asp-page="/Account/Manage/Index" title="Manage">Hello @User.Identity.Name!</a>
         </li>
         <li class="nav-item">
             <form  class="form-inline" asp-action="Logout" asp-route-returnUrl="@Url.Action("Login")">
@@ -13,7 +13,7 @@
     else
     {
         <li class="nav-item">
-            <a class="nav-link text-dark" asp-controller="Autorizacao" asp-action="Login">Login</a>
+            <a class="nav-link text-dark" asp-controller="Auth" asp-action="Login">Login</a>
         </li>
     }
 </ul>
