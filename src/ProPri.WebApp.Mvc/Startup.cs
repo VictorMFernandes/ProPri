@@ -4,6 +4,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using ProPri.Comum.WebApp.Extensoes;
+using Syncfusion.Licensing;
 
 namespace ProPri.WebApp.Mvc
 {
@@ -20,6 +21,7 @@ namespace ProPri.WebApp.Mvc
         {
             services.AddControllersWithViews();
             services.InjetarDependencias();
+            SyncfusionLicenseProvider.RegisterLicense("MTc4NjMyQDMxMzcyZTMzMmUzMElidVVLdGNQQjgxNi95UGNjQVl4MEtMNUFObVNBVzFyV3Z2OStLTHpMRUU9");
         }
 
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)

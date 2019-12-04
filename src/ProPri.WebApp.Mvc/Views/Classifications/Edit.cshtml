@@ -1,36 +1,22 @@
-﻿@model ProPri.WebApp.Mvc.Views.Entries.ViewModels.EntryFormViewModel
+﻿@model ProPri.WebApp.Mvc.Views.Classifications.ViewModels.ClassificationFormViewModel
 
 @{
-    ViewData["Title"] = "Edição";
+    ViewData["Title"] = Model.Name;
 }
 
-<h4>Editando</h4>
+<h4>@ViewData["Title"]</h4>
 <hr />
 <div class="row">
     <div class="col-md-4">
         <form asp-action="Edit">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
 
-            <div class="div-img" style="background-image: url('https://www.petz.com.br/blog/wp-content/uploads/2019/06/tamanho-de-gato.jpg');
-                                        width: 100px; height: 100px;">
-            </div>
-
-            <div class="form-group">
-                <label asp-for="Portuguese" class="control-label"></label>
-                <input asp-for="Portuguese" class="form-control" value="Gato" />
-                <span asp-validation-for="Portuguese" class="text-danger"></span>
-            </div>
-
-            <div class="form-group">
-                <label asp-for="English" class="control-label"></label>
-                <input asp-for="English" class="form-control" value="Cat" />
-                <span asp-validation-for="English" class="text-danger"></span>
-            </div>
+            <partial name="_FormFields"/>
 
             <input type="hidden" asp-for="Id" />
 
             <div class="form-group">
-                <input type="submit" value="Salvar" class="btn btn-primary" />
+                <input type="submit" value="Save" class="btn btn-primary" />
             </div>
 
         </form>
@@ -38,7 +24,7 @@
 </div>
 
 <div>
-    <a asp-action="Index">Voltar à lista</a>
+    <a asp-action="Index">Back to list</a>
 </div>
 
 @section Scripts {

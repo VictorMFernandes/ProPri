@@ -4,6 +4,16 @@
     ViewData["Title"] = "Entries";
 }
 
+<style>
+    .table-btn {
+        cursor: pointer;
+    }
+    .table-btn spam {
+        color: var(--light);
+    }
+</style>
+
+
 <h3>@ViewData["Title"]</h3>
 
 <div class="row">
@@ -42,7 +52,7 @@
             <td>
                 <a asp-action="Edit">
                     <div class="div-img" style="background-image: url('https://www.petz.com.br/blog/wp-content/uploads/2019/06/tamanho-de-gato.jpg');
-                                      width: 70px; height: 70px;">
+                                       width: 70px; height: 70px;">
                     </div>
                 </a>
             </td>
@@ -59,7 +69,7 @@
                 <a asp-action="Edit" style="line-height: 70px;">Noun</a>
             </td>
             <td class="text-right align-middle">
-                <a class="btn btn-danger" data-modal="" asp-action="Delete" asp-route-id="@*@palavra.Id*@"><spam class="fa fa-trash"></spam></a>
+                <a class="btn btn-danger table-btn" data-modal="/Entries/Delete"><spam class="fa fa-trash"></spam></a>
             </td>
         </tr>
         @*}*@

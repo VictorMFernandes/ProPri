@@ -1,12 +1,71 @@
-﻿@model IEnumerable<ProPri.WebApp.Mvc.Views.Classifications.ViewModels.ClassificationIndexViewModel>
+﻿@using ProPri.WebApp.Mvc.Views.Classifications.ViewModels
+
+@model IEnumerable<ClassificationIndexViewModel>
 
 @{
     ViewData["Title"] = "Classifications";
+
+    const string nodeTemplate = "<div class=\"row linha\">" +
+                                "   <div class=\"col-md-8 ename\">${Name}</div>" +
+                                "   <div class=\"col-md-4 text-right align-middle\">" +
+                                "       <a class=\"btn btn-warning ebtn\" href=\"/Classifications/Edit/${Id}\"><spam class=\"fa fa-pencil-alt\"></spam></a>" +
+                                "       <a class=\"btn btn-danger ebtn ml-2\" data-modal=\"/Classifications/Delete/${Id}\"><spam class=\"fa fa-trash\"></spam></a>" +
+                                "   </div>" +
+                                "</div>";
 }
+
+<style>
+
+    #treeparent {
+        width: 50em;
+        margin: auto;
+    }
+
+    .custom.e-treeview .e-fullrow {
+        height: 45px;
+    }
+
+    .ename {
+        font-size: 20px;
+        margin-top: 4px;
+    }
+
+    .ebtn {
+        margin-top: 2px;
+        pointer-events: auto;
+    }
+
+        .ebtn spam {
+            color: var(--light);
+        }
+
+    .linha {
+        width: 50em;
+    }
+</style>
 
 <h3>@ViewData["Title"]</h3>
 <a asp-action="Create">Create New</a>
 
-<ejs-treeview id="hierarchical">
-    <e-treeview-fields child="ViewBag.child" dataSource="ViewBag.data" id="code" text="name" selected="selected" expanded="expanded"></e-treeview-fields>
-</ejs-treeview>
+<div id="treeparent">
+    <ejs-treeview id="hierarchical" cssClass="custom" nodeTemplate="@Html.Raw(nodeTemplate)">
+        <e-treeview-fields dataSource="Model" child="nameof(ClassificationIndexViewModel.Children)" 
+                           hasChildren="HasChild" id="Id" text="Name" parentID="ParentId" expanded="Expanded"></e-treeview-fields>
+    </ejs-treeview>
+</div>
+
+<div id="myModal" class="modal fade in">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div id="myModalContent"></div>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    <script>
+        $(document).ready(function () {
+            AjaxModal();
+        });
+    </script>
+}

@@ -6,7 +6,7 @@
 
             $("a[data-modal]").on("click",
                 function (e) {
-                    $("#myModalContent").load(this.href,
+                    $("#myModalContent").load($(this).data("modal"),
                         function () {
                             $("#myModal").modal({
                                     keyboard: true
