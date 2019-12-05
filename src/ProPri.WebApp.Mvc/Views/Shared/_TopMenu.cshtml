@@ -1,15 +1,31 @@
 ﻿@{
-    var menu = new List<object>()
+    var menu = new List<object>();
+    if (false)
+    {
+        menu = new List<object>()
 {
-        new
-        {
-            text = "Hi admin@email.com",
-            items = new List<object>() {
-                new { text= "Profile", Action = "Index", Controller = "Classifications"},
-                new { text= "Log out", Action = "Logout", Controller = "Auth" }
+            new
+            {
+                text = "Hi admin@email.com!",
+                items = new List<object>() {
+                    new { text= "Profile", action = "Index", controller = "Classifications"},
+                    new { text= "Log out", action = "Logout", controller = "Auth" }
+                }
             }
-        }
-    };
+        };
+    }
+    else
+    {
+        menu = new List<object>()
+{
+            new
+            {
+                text = "Login",
+                action = "Login", 
+                controller = "Auth"
+            }
+        };
+    }
 }
 
 <div class="dock-menu" id="header">
@@ -17,7 +33,7 @@
         <li id="hamburger" class="icon-menu icon list"></li>
         <li class="right-header list">
             <div class="horizontal-menu">
-                <ejs-menu id="horizontal-menubar" items="@menu" orientation="Horizontal" cssClass="dock-menu"></ejs-menu>
+                <ejs-menu id="horizontal-menubar" items="@menu" orientation="Horizontal" cssClass="dock-menu" select="onMenuItemSelect"></ejs-menu>
             </div>
         </li>
     </ul>
@@ -149,13 +165,9 @@
     @@font-face {
         font-family: "FontAwesome";
         font-weight: normal;
-        font-style : normal;
-        src : url("https://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/fonts/fontawesome-webfont.eot?v=4.3.0");
-        src : url("https://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/fonts/fontawesome-webfont.eot?#iefix&v=4.3.0") format("embedded-opentype"),
-              url("https://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/fonts/fontawesome-webfont.woff2?v=4.3.0") format("woff2"),
-              url("https://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/fonts/fontawesome-webfont.woff?v=4.3.0") format("woff"),
-              url("https://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/fonts/fontawesome-webfont.ttf?v=4.3.0") format("truetype"),
-              url("https://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/fonts/fontawesome-webfont.svg?v=4.3.0#fontawesomeregular") format("svg");
+        font-style: normal;
+        src: url("https://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/fonts/fontawesome-webfont.eot?v=4.3.0");
+        src: url("https://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/fonts/fontawesome-webfont.eot?#iefix&v=4.3.0") format("embedded-opentype"), url("https://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/fonts/fontawesome-webfont.woff2?v=4.3.0") format("woff2"), url("https://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/fonts/fontawesome-webfont.woff?v=4.3.0") format("woff"), url("https://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/fonts/fontawesome-webfont.ttf?v=4.3.0") format("truetype"), url("https://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/fonts/fontawesome-webfont.svg?v=4.3.0#fontawesomeregular") format("svg");
     }
 
     #sidebar-menu .icon-staff:before {

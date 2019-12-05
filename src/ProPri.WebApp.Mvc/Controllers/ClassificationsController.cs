@@ -20,9 +20,33 @@ namespace ProPri.WebApp.Mvc.Controllers
                 },
                 new ClassificationIndexViewModel
                 {
-                    Id = 3,
+                    Id = 10,
+                    ParentId = 1,
+                    Name = "He is",
+                },
+                new ClassificationIndexViewModel
+                {
+                    Id = 11,
+                    ParentId = 1,
+                    Name = "She is",
+                },
+                new ClassificationIndexViewModel
+                {
+                    Id = 12,
+                    ParentId = 1,
+                    Name = "It is",
+                },
+                new ClassificationIndexViewModel
+                {
+                    Id = 13,
                     ParentId = 1,
                     Name = "You are",
+                },
+                new ClassificationIndexViewModel
+                {
+                    Id = 14,
+                    ParentId = 1,
+                    Name = "We are",
                 }
             };
 

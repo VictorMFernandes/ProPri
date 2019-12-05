@@ -1,9 +1,9 @@
 ﻿@if (false)
 {
-    <li class="right-header list logged">
+    <li class="right-header list">
         <a class="nav-link text-dark" asp-page="/Account/Manage/Index" title="Manage">Hello @User.Identity.Name!</a>
     </li>
-    <li class="right-header list logout">
+    <li class="right-header list">
         <form class="form-inline" asp-action="Logout" asp-route-returnUrl="@Url.Action("Login")">
             <button type="submit" class="nav-link btn btn-link text-dark">Logout</button>
         </form>
@@ -11,7 +11,7 @@
 }
 else
 {
-    <li class="right-header list login">
+    <li class="right-header list">
         <a class="nav-link text-dark" asp-controller="Auth" asp-action="Login">Login</a>
     </li>
 }
