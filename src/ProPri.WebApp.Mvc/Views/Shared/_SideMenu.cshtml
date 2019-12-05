@@ -1,0 +1,51 @@
+﻿@{
+    var menu = new List<object>()
+{
+        new
+        {
+            text = "Staff",
+            iconCss = "icon-staff icon",
+        },
+        new
+        {
+            text = "Students",
+            iconCss = "icon-students icon",
+        },
+        new
+        {
+            text = "Vocabulary",
+            iconCss = "icon-vocabulary icon",
+            items = new List<object>() {
+                new { text= "Classifications", iconCss = "icon-Classification icon", action = "Index", controller = "Classifications"},
+                new { text= "Entries", iconCss = "icon-team icon", action = "Index", controller = "Entries" },
+            }
+        },
+        new
+        {
+            text = "Challenges",
+            iconCss = "icon-puzzle icon",
+        }
+    };
+}
+
+<ejs-sidebar id="sidebar-menu" class="dock-menu" width="220px" dockSize="50px" target=".main-content" enableDock="true" type="Over">
+    <e-content-template>
+        <ejs-menu id="main-menubar" items="@menu" orientation="Vertical" cssClass="dock-menu" select="onMenuItemSelect"></ejs-menu>
+    </e-content-template>
+</ejs-sidebar>
+
+<script>
+    var sidebarInstance;
+
+    document.addEventListener('DOMContentLoaded', function () {
+        sidebarInstance = document.getElementById('sidebar-menu').ej2_instances[0];
+
+        document.getElementById('hamburger').onclick = function () {
+            sidebarInstance.toggle();
+        };
+    });
+
+    function onMenuItemSelect(args) {
+        window.location.href = `/${args.item.controller}/${args.item.action}`;
+    }
+</script>
