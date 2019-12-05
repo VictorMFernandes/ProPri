@@ -5,18 +5,18 @@
             $.ajaxSetup({ cache: false });
 
             $("a[data-modal]").on("click",
-                function (e) {
-                    $("#myModalContent").load($(this).data("modal"),
-                        function () {
-                            $("#myModal").modal({
+                    function (e) {
+                        $("#myModalContent").load($(this).data("modal"),
+                            function () {
+                                $("#myModal").modal({
                                     keyboard: true
                                 },
-                                "show");
-                            bindForm(this);
-                        });
-                    return false;
-                });
-        });
+                                    "show");
+                                bindForm(this);
+                            });
+                        return false;
+                    });
+            });
 
         function bindForm(dialog) {
             $("form", dialog).submit(function () {

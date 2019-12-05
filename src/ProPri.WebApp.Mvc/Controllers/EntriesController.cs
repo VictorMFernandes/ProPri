@@ -43,7 +43,7 @@ namespace ProPri.WebApp.Mvc.Controllers
 
             var entry = new EntryFormViewModel
             {
-                Image = "https://www.petz.com.br/blog/wp-content/uploads/2019/06/tamanho-de-gato.jpg",
+                Image = "https://cdn.cnn.com/cnnnext/dam/assets/191024091949-02-foster-cat-large-169.jpg",
                 English = "Cat",
                 Portuguese = "Gato",
                 Classifications = classifications

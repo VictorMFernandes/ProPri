@@ -17,11 +17,11 @@
 <h3>@ViewData["Title"]</h3>
 
 <div class="row">
-    <p class="col-md-9 align-middle">
+    <p class="col-9 align-middle">
         <a asp-action="Create">Create New</a>
     </p>
 
-    <select class="col-md-3 form-control">
+    <select class="col form-control">
         <option>All</option>
         <option selected="selected">Noun</option>
         <option>Adverb</option>
@@ -37,7 +37,7 @@
             <th>
                 @Html.DisplayNameFor(model => model.English)
             </th>
-            <th>
+            <th class="d-none d-sm-table-cell">
                 @Html.DisplayNameFor(model => model.Portuguese)
             </th>
             <th>
@@ -51,8 +51,7 @@
         <tr>
             <td>
                 <a asp-action="Edit">
-                    <div class="div-img" style="background-image: url('https://www.petz.com.br/blog/wp-content/uploads/2019/06/tamanho-de-gato.jpg');
-                                       width: 70px; height: 70px;">
+                    <div class="e-avatar e-avatar-xlarge" style="background-image: url('https://cdn.cnn.com/cnnnext/dam/assets/191024091949-02-foster-cat-large-169.jpg'); width: 70px; height: 70px">
                     </div>
                 </a>
             </td>
@@ -60,7 +59,7 @@
                 @*@Html.DisplayFor(modelItem => palavra.English)*@
                 <a asp-action="Edit" style="line-height: 70px;">Cat</a>
             </td>
-            <td>
+            <td class="d-none d-sm-table-cell">
                 @*@Html.DisplayFor(modelItem => palavra.Portuguese)*@
                 <a asp-action="Edit" style="line-height: 70px;">Gato</a>
             </td>

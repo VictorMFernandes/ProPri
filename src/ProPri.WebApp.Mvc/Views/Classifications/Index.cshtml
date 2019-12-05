@@ -6,8 +6,8 @@
     ViewData["Title"] = "Classifications";
 
     const string nodeTemplate = "<div class=\"row linha\">" +
-                                "   <div class=\"col-md-8 ename\">${Name}</div>" +
-                                "   <div class=\"col-md-4 text-right align-middle\">" +
+                                "   <div class=\"col-8 ename\">${Name}</div>" +
+                                "   <div class=\"col-4 text-right align-middle\">" +
                                 "       <a class=\"btn btn-warning ebtn\" href=\"/Classifications/Edit/${Id}\"><spam class=\"fa fa-pencil-alt\"></spam></a>" +
                                 "       <a class=\"btn btn-danger ebtn ml-2\" data-modal=\"/Classifications/Delete/${Id}\"><spam class=\"fa fa-trash\"></spam></a>" +
                                 "   </div>" +
@@ -17,22 +17,23 @@
 <style>
 
     #treeparent {
-        width: 50em;
         margin: auto;
+        width: 100%
     }
 
     .custom.e-treeview .e-fullrow {
-        height: 45px;
+        height: 5vh;
     }
 
     .ename {
         font-size: 20px;
-        margin-top: 4px;
+        margin-top: 0.8vh;
     }
 
     .ebtn {
-        margin-top: 2px;
+        margin-top: 0.3vh;
         pointer-events: auto;
+        z-index: -5;
     }
 
         .ebtn spam {
@@ -40,7 +41,7 @@
         }
 
     .linha {
-        width: 50em;
+        width: 50vw;
     }
 </style>
 
@@ -48,7 +49,7 @@
 <a asp-action="Create">Create New</a>
 
 <div id="treeparent">
-    <ejs-treeview id="hierarchical" cssClass="custom" nodeTemplate="@Html.Raw(nodeTemplate)">
+    <ejs-treeview id="hierarchical" loadOnDemand="false" cssClass="custom" nodeTemplate="@Html.Raw(nodeTemplate)">
         <e-treeview-fields dataSource="Model" child="nameof(ClassificationIndexViewModel.Children)" 
                            hasChildren="HasChild" id="Id" text="Name" parentID="ParentId" expanded="Expanded"></e-treeview-fields>
     </ejs-treeview>
