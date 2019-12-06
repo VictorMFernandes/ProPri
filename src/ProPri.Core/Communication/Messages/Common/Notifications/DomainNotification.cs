@@ -1,8 +1,10 @@
-﻿using System;
+﻿using MediatR;
+using ProPri.Core.Communication.Mensagens;
+using System;
 
 namespace ProPri.Core.Communication.Messages.Common.Notifications
 {
-    public class DomainNotification
+    public class DomainNotification : Message, INotification
     {
         public Guid Id { get; private set; }
         public DateTime Date { get; private set; }
