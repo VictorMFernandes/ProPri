@@ -39,27 +39,8 @@
     };
 }
 
-<ejs-sidebar id="sidebar-menu" class="dock-menu" width="220px" dockSize="50px" target=".main-content" enableDock="true" type="Over">
+<ejs-sidebar id="sidebar-menu" class="dock-menu" width="220px" dockSize="50px" target="#main-content-wrapper" enableDock="true" type="Over">
     <e-content-template>
         <ejs-menu id="main-menubar" items="@menu" orientation="Vertical" cssClass="dock-menu" select="onMenuItemSelect"></ejs-menu>
     </e-content-template>
 </ejs-sidebar>
-
-<script>
-    var sidebarInstance;
-
-    document.addEventListener('DOMContentLoaded', function () {
-        sidebarInstance = document.getElementById('sidebar-menu').ej2_instances[0];
-
-        document.getElementById('hamburger').onclick = function () {
-            sidebarInstance.toggle();
-        };
-    });
-
-    function onMenuItemSelect(args) {
-        if (typeof args.item.controller === "undefined") {
-            return;
-        }
-        window.location.href = `/${args.item.controller}/${args.item.action}`;
-    }
-</script>

@@ -5,49 +5,19 @@
 @{
     ViewData["Title"] = "Classifications";
 
-    const string nodeTemplate = "<div class=\"row linha\">" +
-                                "   <div class=\"col-8 ename\">${Name}</div>" +
+    const string nodeTemplate = "<div class=\"row treeview-row\">" +
+                                "   <div class=\"col-8 treeview-name\">${Name}</div>" +
                                 "   <div class=\"col-4 text-right align-middle\">" +
-                                "       <a class=\"btn btn-warning ebtn\" href=\"/Classifications/Edit/${Id}\"><spam class=\"fa fa-pencil-alt\"></spam></a>" +
-                                "       <a class=\"btn btn-danger ebtn ml-2\" data-modal=\"/Classifications/Delete/${Id}\"><spam class=\"fa fa-trash\"></spam></a>" +
+                                "       <a class=\"btn btn-warning treeview-btn\" href=\"/Classifications/Edit/${Id}\"><spam class=\"fa fa-pencil-alt\"></spam></a>" +
+                                "       <a class=\"btn btn-danger treeview-btn ml-2\" data-modal=\"/Classifications/Delete/${Id}\"><spam class=\"fa fa-trash\"></spam></a>" +
                                 "   </div>" +
                                 "</div>";
 }
 
-<style>
-
-    #treeparent {
-        margin: auto;
-        width: 80%;
-    }
-
-    .custom.e-treeview .e-fullrow {
-        height: 46px;
-    }
-
-    .ename {
-        font-size: 20px;
-        margin-top: 5px;
-    }
-
-    .ebtn {
-        margin-top: 3px;
-        pointer-events: auto;
-    }
-
-        .ebtn spam {
-            color: var(--light);
-        }
-
-    .linha {
-        width: 45vw;
-    }
-</style>
-
 <h3>@ViewData["Title"]</h3>
 <a asp-action="Create">Create New</a>
 
-<div id="treeparent">
+<div id="treeview-parent">
     <ejs-treeview id="hierarchical" loadOnDemand="false" cssClass="custom" nodeTemplate="@Html.Raw(nodeTemplate)">
         <e-treeview-fields dataSource="Model" child="nameof(ClassificationIndexViewModel.Children)" 
                            hasChildren="HasChild" id="Id" text="Name" parentID="ParentId" expanded="Expanded"></e-treeview-fields>

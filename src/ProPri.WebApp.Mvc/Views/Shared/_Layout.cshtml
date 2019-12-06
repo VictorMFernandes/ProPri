@@ -5,6 +5,9 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>@ViewData["Title"] - ProPri</title>
     <link rel="stylesheet" href="~/css/site.css" />
+    <link href="~/css/menu.css" rel="stylesheet" />
+    <link href="~/css/index.css" rel="stylesheet" />
+    <link href="~/css/form.css" rel="stylesheet" />
     <link href="~/lib/font-awesome/css/all.min.css" rel="stylesheet" />
     <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
     <link href="https://cdn.syncfusion.com/ej2/material.css" rel="stylesheet">
@@ -14,8 +17,8 @@
     <div>
         <partial name="_TopMenu" />
         <partial name="_SideMenu" />
-        <div class="main-content" id="maintext" style="background-color: #F9FAFB; padding: 20px 20px 60px 20px;">
-            <div class="content rounded" style="background-color: white; border: 1px solid #E9EAEB; display: inline-flex; flex-direction: column; min-width: 96%">
+        <div id="main-content-wrapper">
+            <div id="main-content" class="rounded box-shadow">
                 @RenderBody()
             </div>
         </div>
@@ -38,13 +41,9 @@
     <script src="~/lib/jquery/dist/jquery.min.js"></script>
     <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
     <script src="~/js/site.js" asp-append-version="true"></script>
+    <script src="~/js/menu.js"></script>
     @RenderSection("Scripts", required: false)
     <ejs-scripts></ejs-scripts>
 
-    <script>
-        function onMenuItemSelect(args) {
-            window.location.href = `/${args.item.controller}/${args.item.action}`;
-        }
-    </script>
 </body>
 </html>

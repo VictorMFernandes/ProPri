@@ -16,7 +16,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\ProPri.Comum.WebApp\ProPri.Comum.WebApp.csproj" />
+    <ProjectReference Include="..\ProPri.Core.WebApp\ProPri.Core.WebApp.csproj" />
   </ItemGroup>
 
 </Project>

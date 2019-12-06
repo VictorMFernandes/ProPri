@@ -1,0 +1,38 @@
+﻿/*table*/
+td a {
+    display: block;
+    color: #292b2c;
+}
+
+    td a:hover {
+        color: #292b2c;
+        text-decoration: none;
+    }
+
+/*treeview*/
+#treeview-parent {
+    margin: auto;
+    width: 80%;
+}
+
+.custom.e-treeview .e-fullrow {
+    height: 46px;
+}
+
+.treeview-name {
+    font-size: 20px;
+    margin-top: 5px;
+}
+
+.treeview-btn {
+    margin-top: 3px;
+    pointer-events: auto;
+}
+
+.treeview-btn spam {
+    color: var(--light);
+}
+
+.treeview-row {
+    width: 45vw;
+}

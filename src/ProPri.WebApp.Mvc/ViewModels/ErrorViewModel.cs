@@ -1,6 +1,4 @@
-using System;
-
-namespace ProPri.WebApp.Mvc.Models
+namespace ProPri.WebApp.Mvc.ViewModels
 {
     public class ErrorViewModel
     {

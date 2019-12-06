@@ -1,12 +1,12 @@
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using ProPri.Core.WebApp.Extensions;
-using Syncfusion.Licensing;
+using ProPri.WebApp.Api.Middleware;
 
-namespace ProPri.WebApp.Mvc
+namespace ProPri.WebApp.Api
 {
     public class Startup
     {
@@ -19,9 +19,16 @@ namespace ProPri.WebApp.Mvc
 
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddControllersWithViews();
-            services.InjectDependencies();
-            SyncfusionLicenseProvider.RegisterLicense("MTc4NjMyQDMxMzcyZTMzMmUzMElidVVLdGNQQjgxNi95UGNjQVl4MEtMNUFObVNBVzFyV3Z2OStLTHpMRUU9");
+            services.AddControllers();
+
+            services.AddAuthorization(options =>
+                {
+                    options.DefaultPolicy = new AuthorizationPolicyBuilder()
+                        .RequireAuthenticatedUser()
+                        .Build();
+                });
+
+            services.AddResponseCompression();
         }
 
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
@@ -30,13 +37,10 @@ namespace ProPri.WebApp.Mvc
             {
                 app.UseDeveloperExceptionPage();
             }
-            else
-            {
-                app.UseExceptionHandler("/Home/Error");
-                app.UseHsts();
-            }
+
+            app.UseMiddleware<ErrorMiddleware>();
+            app.UseResponseCompression();
             app.UseHttpsRedirection();
-            app.UseStaticFiles();
 
             app.UseRouting();
 
@@ -44,9 +48,7 @@ namespace ProPri.WebApp.Mvc
 
             app.UseEndpoints(endpoints =>
             {
-                endpoints.MapControllerRoute(
-                    name: "default",
-                    pattern: "{controller=Auth}/{action=Login}/{id?}");
+                endpoints.MapControllers();
             });
         }
     }
