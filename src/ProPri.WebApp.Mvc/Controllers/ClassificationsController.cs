@@ -15,37 +15,41 @@ namespace ProPri.WebApp.Mvc.Controllers
                 new ClassificationIndexViewModel
                 {
                     Id = 9,
-                    ParentId = 3,
                     Name = "I am"
                 },
                 new ClassificationIndexViewModel
                 {
                     Id = 10,
-                    ParentId = 1,
                     Name = "He is",
                 },
                 new ClassificationIndexViewModel
                 {
                     Id = 11,
-                    ParentId = 1,
                     Name = "She is",
                 },
                 new ClassificationIndexViewModel
                 {
                     Id = 12,
-                    ParentId = 1,
                     Name = "It is",
                 },
                 new ClassificationIndexViewModel
                 {
                     Id = 13,
-                    ParentId = 1,
                     Name = "You are",
                 },
                 new ClassificationIndexViewModel
                 {
                     Id = 14,
-                    ParentId = 1,
+                    Name = "We are",
+                },
+                new ClassificationIndexViewModel
+                {
+                    Id = 15,
+                    Name = "We are",
+                },
+                new ClassificationIndexViewModel
+                {
+                    Id = 16,
                     Name = "We are",
                 }
             };
@@ -55,25 +59,51 @@ namespace ProPri.WebApp.Mvc.Controllers
                 new ClassificationIndexViewModel
                 {
                     Id = 7,
-                    ParentId = 1,
                     Name = "Noun"
                 },
                 new ClassificationIndexViewModel
                 {
                     Id = 6,
-                    ParentId = 1,
                     Name = "Adverbs",
                 },
                 new ClassificationIndexViewModel
                 {
                     Id = 5,
-                    ParentId = 1,
                     Name = "Verbs",
                 },
                 new ClassificationIndexViewModel
                 {
                     Id = 4,
-                    ParentId = 1,
+                    Name = "Pronouns",
+                },
+                new ClassificationIndexViewModel
+                {
+                    Id = 17,
+                    Name = "Pronouns",
+                },
+                new ClassificationIndexViewModel
+                {
+                    Id = 18,
+                    Name = "Pronouns",
+                },
+                new ClassificationIndexViewModel
+                {
+                    Id = 19,
+                    Name = "Pronouns",
+                },
+                new ClassificationIndexViewModel
+                {
+                    Id = 20,
+                    Name = "Pronouns",
+                },
+                new ClassificationIndexViewModel
+                {
+                    Id = 21,
+                    Name = "Pronouns",
+                },
+                new ClassificationIndexViewModel
+                {
+                    Id = 22,
                     Name = "Pronouns",
                 }
             };
@@ -83,7 +113,6 @@ namespace ProPri.WebApp.Mvc.Controllers
                 new ClassificationIndexViewModel
                 {
                     Id = 3,
-                    ParentId = 2,
                     Name = "To Be",
                     Children = childrenToBe,
                     HasChild = true
@@ -95,7 +124,6 @@ namespace ProPri.WebApp.Mvc.Controllers
                 new ClassificationIndexViewModel
                 {
                     Id = 1,
-                    ParentId = null,
                     Name = "Vocab",
                     Children = childrenVocab,
                     HasChild = true
@@ -103,7 +131,6 @@ namespace ProPri.WebApp.Mvc.Controllers
                 new ClassificationIndexViewModel
                 {
                     Id = 2,
-                    ParentId = null,
                     Name = "Structure",
                     Children = childrenStructure,
                     HasChild = true

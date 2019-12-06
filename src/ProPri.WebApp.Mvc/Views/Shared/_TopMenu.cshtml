@@ -21,7 +21,7 @@
             new
             {
                 text = "Login",
-                action = "Login", 
+                action = "Login",
                 controller = "Auth"
             }
         };
@@ -40,10 +40,25 @@
 </div>
 
 <style>
+    html, body {
+        margin: 0;
+        height: 100%;
+        overflow: hidden
+    }
+
+    #sidebar-menu {
+        height: 100%;
+        position: fixed;
+        top: 50px;
+        left: 0;
+        overflow-x: hidden;
+        padding-top: 10px;
+    }
 
     /* content area styles */
     #header ul {
-        height: 8vh;
+        height: 50px;
+        z-index: 10;
     }
 
     #header #hamburger.icon-menu {
@@ -75,7 +90,7 @@
 
     /* content area styles */
     #maintext.main-content {
-        height: 92vh;
+        height: 100vh;
         z-index: 5;
     }
 
@@ -149,6 +164,11 @@
         padding: 0;
     }
 
+    #sidebar-menu.e-dock.e-open .e-menu-item .e-menu-icon {
+        font-size: 20px;
+        padding: 0;
+    }
+
     #sidebar-menu,
     #sidebar-menu ul,
     #header ul,
@@ -170,7 +190,7 @@
         src: url("https://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/fonts/fontawesome-webfont.eot?#iefix&v=4.3.0") format("embedded-opentype"), url("https://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/fonts/fontawesome-webfont.woff2?v=4.3.0") format("woff2"), url("https://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/fonts/fontawesome-webfont.woff?v=4.3.0") format("woff"), url("https://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/fonts/fontawesome-webfont.ttf?v=4.3.0") format("truetype"), url("https://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/fonts/fontawesome-webfont.svg?v=4.3.0#fontawesomeregular") format("svg");
     }
 
-    #sidebar-menu .icon-staff:before {
+    #sidebar-menu .icon-users:before {
         content: '\f0c0';
     }
 
@@ -186,6 +206,10 @@
         content: '\f11c';
     }
 
+    #sidebar-menu .icon-schedule:before {
+        content: '\f133';
+    }
+    
     #header .icon-menu:before {
         content: '\f0c9';
     }

@@ -1,15 +1,19 @@
 ﻿@{
-    var menu = new List<object>()
+    var menu = new List<object>
 {
         new
         {
-            text = "Staff",
-            iconCss = "icon-staff icon",
+            text = "Users",
+            iconCss = "icon-users icon",
+            action = "Index",
+            controller = "Users"
         },
         new
         {
             text = "Students",
             iconCss = "icon-students icon",
+            action = "Index",
+            controller = "Students"
         },
         new
         {
@@ -24,6 +28,13 @@
         {
             text = "Challenges",
             iconCss = "icon-puzzle icon",
+        },
+        new
+        {
+            text = "Schedule",
+            iconCss = "icon-schedule icon",
+            action = "Index",
+            controller = "Schedules"
         }
     };
 }
@@ -46,6 +57,9 @@
     });
 
     function onMenuItemSelect(args) {
+        if (typeof args.item.controller === "undefined") {
+            return;
+        }
         window.location.href = `/${args.item.controller}/${args.item.action}`;
     }
 </script>

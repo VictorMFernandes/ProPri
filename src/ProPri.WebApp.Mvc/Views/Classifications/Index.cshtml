@@ -18,20 +18,23 @@
 
     #treeparent {
         margin: auto;
-        width: 100%
+    }
+
+    #hierarchical {
+        width: 50vw;
     }
 
     .custom.e-treeview .e-fullrow {
-        height: 5vh;
+        height: 46px;
     }
 
     .ename {
         font-size: 20px;
-        margin-top: 0.8vh;
+        margin-top: 5px;
     }
 
     .ebtn {
-        margin-top: 0.3vh;
+        margin-top: 3px;
         pointer-events: auto;
         z-index: -5;
     }
@@ -41,7 +44,7 @@
         }
 
     .linha {
-        width: 50vw;
+        width: 45vw;
     }
 </style>
 
@@ -53,14 +56,6 @@
         <e-treeview-fields dataSource="Model" child="nameof(ClassificationIndexViewModel.Children)" 
                            hasChildren="HasChild" id="Id" text="Name" parentID="ParentId" expanded="Expanded"></e-treeview-fields>
     </ejs-treeview>
-</div>
-
-<div id="myModal" class="modal fade in">
-    <div class="modal-dialog">
-        <div class="modal-content">
-            <div id="myModalContent"></div>
-        </div>
-    </div>
 </div>
 
 @section Scripts {

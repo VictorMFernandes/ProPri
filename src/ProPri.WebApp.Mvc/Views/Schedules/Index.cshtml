@@ -1,0 +1,7 @@
+﻿@{
+    ViewData["Title"] = "Schedules";
+}
+
+<ejs-schedule id="schedule" height="550px" selectedDate="DateTime.Now">
+    <e-schedule-eventsettings dataSource="@ViewBag.appointments"></e-schedule-eventsettings>
+</ejs-schedule>
