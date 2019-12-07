@@ -11,6 +11,7 @@ namespace ProPri.Core.Domain
         {
             Id = Guid.NewGuid();
             RegistrationDate = DateTime.Now;
+            InitializeCollections();
         }
 
         public override bool Equals(object obj)
@@ -42,9 +43,10 @@ namespace ProPri.Core.Domain
             return (GetType().GetHashCode() * 907) + Id.GetHashCode();
         }
 
-        public override string ToString()
-        {
-            return $"{GetType().Name} [Id={Id}]";
-        }
+        protected abstract void InitializeCollections();
+        
+        protected abstract void Validate();
+        
+        public abstract override string ToString();
     }
 }

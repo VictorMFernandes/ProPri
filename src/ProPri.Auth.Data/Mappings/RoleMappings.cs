@@ -1,7 +1,7 @@
 ﻿using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
-using ProPri.Auth.Domain;
+using ProPri.Core.Constants;
 
 namespace ProPri.Auth.Data.Mappings
 {
@@ -23,8 +23,8 @@ namespace ProPri.Auth.Data.Mappings
             b.Property(r => r.ConcurrencyStamp).IsConcurrencyToken();
 
             // Limit the size of columns to use efficient database types
-            b.Property(u => u.Name).HasMaxLength(AuthConst.SizeProfileNameMax);
-            b.Property(u => u.NormalizedName).HasMaxLength(AuthConst.SizeProfileNameMax);
+            b.Property(u => u.Name).HasMaxLength(ConstSizes.ProfileNameMax);
+            b.Property(u => u.NormalizedName).HasMaxLength(ConstSizes.ProfileNameMax);
 
             // The relationships between Role and other entity types
             // Note that these relationships are configured with no navigation properties

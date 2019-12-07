@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using ProPri.Core.Domain.ValueObjects;
 using ProPri.WebApp.Mvc.Views.Auth.ViewModels;
 
 namespace ProPri.WebApp.Mvc.Controllers
@@ -7,6 +8,7 @@ namespace ProPri.WebApp.Mvc.Controllers
     {
         public IActionResult Login()
         {
+            var algo = new PersonName("First", "Second");
             return View();
         }
 

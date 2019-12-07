@@ -27,12 +27,12 @@ namespace ProPri.WebApp.Api.Controllers
             if (_notifications.NotificationExists())
                 return BadRequest(new ApiResponse(false, null, _notifications.GetNotifications().Select(n => n.Value).ToList()));
 
-            if (result is IComandoResultadoGenerico genericCommandResult)
-            {
-                return StatusCode(
-                    (int)genericCommandResult.CodigoHttp
-                    , new ApiResponse(genericCommandResult.Sucesso, genericCommandResult.Resultado, null));
-            }
+            //if (result is IComandoResultadoGenerico genericCommandResult)
+            //{
+            //    return StatusCode(
+            //        (int)genericCommandResult.CodigoHttp
+            //        , new ApiResponse(genericCommandResult.Sucesso, genericCommandResult.Resultado, null));
+            //}
 
             return Ok(new ApiResponse(true, result, null));
         }
