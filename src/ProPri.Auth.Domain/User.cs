@@ -1,8 +1,9 @@
-﻿using System;
-using Microsoft.AspNetCore.Identity;
+﻿using Microsoft.AspNetCore.Identity;
 using ProPri.Core.Domain;
 using ProPri.Core.Domain.ValueObjects;
 using ProPri.Core.Validation;
+using System;
+using System.Collections.Generic;
 
 namespace ProPri.Users.Domain
 {
@@ -12,7 +13,9 @@ namespace ProPri.Users.Domain
 
         public PersonName Name { get; private set; }
         public DateTime RegistrationDate { get; }
-        
+
+        public ICollection<IdentityUserRole<string>> UserRoles { get; set; }
+
         #endregion
 
         #region Constructors

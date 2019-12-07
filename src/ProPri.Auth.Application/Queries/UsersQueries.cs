@@ -1,24 +1,27 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Identity;
+using Microsoft.EntityFrameworkCore;
 using ProPri.Users.Application.Queries.Dtos;
+using ProPri.Users.Application.Queries.Filters;
 using ProPri.Users.Domain;
 
 namespace ProPri.Users.Application.Queries
 {
     public class UsersQueries : IUsersQueries
     {
-        private readonly UserManager<User> _userManager;
+        private readonly IUserRepository _userRepository;
 
-        public UsersQueries(UserManager<User> userManager)
+        public UsersQueries(IUserRepository userRepository)
         {
-            _userManager = userManager;
+            _userRepository = userRepository;
         }
 
-        public async Task<IEnumerable<UserIndexDto>> GetUsers()
+        public async Task<IEnumerable<UserIndexDto>> GetUsers(UserFilter filter)
         {
-            var users = _userManager.Users.Select(u =>
+            var users = _userRepository.GetAllUsers().Select(u =>
                 new UserIndexDto
                 {
                     Name = u.Name.ToString(),
@@ -26,6 +29,26 @@ namespace ProPri.Users.Application.Queries
                 });
 
             return users;
+        }
+
+        public async Task<UserIndexDto> GetUserById(Guid userId)
+        {
+            var users = context.Users
+                .Where(x => x.Roles.Select(y => y.Id).Contains(roleId))
+                .ToList();
+
+            var user = await _userManager.FindByIdAsync(userId.ToString());
+            var role = 
+            var userDto = new UserFormDto
+            {
+                Id = user.Id,
+                FirstName = user.Name.FirstName,
+                Surname = user.Name.Surname,
+                Email = user.Email,
+                RoleId = 
+            };
+
+            return null;
         }
     }
 }
