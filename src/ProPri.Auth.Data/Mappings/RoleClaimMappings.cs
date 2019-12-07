@@ -2,7 +2,7 @@
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
-namespace ProPri.Auth.Data.Mappings
+namespace ProPri.Users.Data.Mappings
 {
     public class RoleClaimMappings : IEntityTypeConfiguration<IdentityRoleClaim<string>>
     {

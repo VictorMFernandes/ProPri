@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 using ProPri.Core.Constants;
 
-namespace ProPri.Auth.Data.Mappings
+namespace ProPri.Users.Data.Mappings
 {
     internal class RoleMappings : IEntityTypeConfiguration<IdentityRole>
     {

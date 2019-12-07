@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace ProPri.Core.Communication.Mensagens
+namespace ProPri.Core.Communication.Messages
 {
     public abstract class Message
     {

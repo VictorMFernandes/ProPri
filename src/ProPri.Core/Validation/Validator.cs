@@ -40,6 +40,14 @@ namespace ProPri.Core.Validation
                 throw new ValidationException(ConstMessages.ErrorNotEqual(propertyNameA, propertyNameB));
         }
 
+        public static void IsNotNull(object property, string propertyName)
+        {
+            if (property == null)
+            {
+                throw new ValidationException(ConstMessages.ErrorNull(propertyName));
+            }
+        }
+
         public static void IsNotNullOrEmpty(string property, string propertyName)
         {
             if (string.IsNullOrEmpty(property))

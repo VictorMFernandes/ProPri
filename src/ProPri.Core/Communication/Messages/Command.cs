@@ -1,7 +1,6 @@
 ﻿using System;
 using FluentValidation.Results;
 using MediatR;
-using ProPri.Core.Communication.Mensagens;
 
 namespace ProPri.Core.Communication.Messages
 {

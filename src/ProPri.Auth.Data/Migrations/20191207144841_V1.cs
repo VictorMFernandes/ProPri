@@ -1,7 +1,7 @@
 ﻿using System;
 using Microsoft.EntityFrameworkCore.Migrations;
 
-namespace ProPri.Auth.Data.Migrations
+namespace ProPri.Users.Data.Migrations
 {
     public partial class V1 : Migration
     {

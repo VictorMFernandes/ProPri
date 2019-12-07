@@ -34,18 +34,16 @@
         </tr>
     </thead>
     <tbody>
-        @*@foreach (var palavra in Model) {*@
+        @foreach (var user in Model) {
         <tr>
             <td>
-                @*@Html.DisplayFor(modelItem => palavra.English)*@
-                <a asp-action="Edit" style="line-height: 70px;">John</a>
+                <a asp-action="Edit" style="line-height: 70px;">@user.Name</a>
             </td>
             <td class="d-none d-sm-table-cell">
-                @*@Html.DisplayFor(modelItem => palavra.Portuguese)*@
-                <a asp-action="Edit" style="line-height: 70px;">Admin</a>
+                <a asp-action="Edit" style="line-height: 70px;">@user.Role</a>
             </td>
         </tr>
-        @*}*@
+        }
     </tbody>
 
 </table>

@@ -1,10 +1,10 @@
 ﻿using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
-using ProPri.Auth.Domain;
 using ProPri.Core.Constants;
+using ProPri.Users.Domain;
 
-namespace ProPri.Auth.Data.Mappings
+namespace ProPri.Users.Data.Mappings
 {
     public class UserMappings : IEntityTypeConfiguration<User>
     {

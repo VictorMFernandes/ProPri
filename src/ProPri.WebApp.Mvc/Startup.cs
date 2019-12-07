@@ -1,3 +1,4 @@
+using AutoMapper;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Identity;
@@ -5,11 +6,12 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using ProPri.Auth.Data;
-using ProPri.Auth.Domain;
 using ProPri.Core.Constants;
+using ProPri.Core.WebApp.Data;
 using ProPri.Core.WebApp.Extensions;
 using ProPri.Students.Data;
+using ProPri.Users.Data;
+using ProPri.Users.Domain;
 using Syncfusion.Licensing;
 
 namespace ProPri.WebApp.Mvc
@@ -25,7 +27,7 @@ namespace ProPri.WebApp.Mvc
 
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddDbContext<AuthContext>(options =>
+            services.AddDbContext<UsersContext>(options =>
                 options.UseSqlite(Configuration.GetConnectionString("DefaultConnection")));
 
             services.AddDbContext<StudentsContext>(options =>
@@ -40,16 +42,18 @@ namespace ProPri.WebApp.Mvc
                     options.Password.RequireNonAlphanumeric = false;
                     options.Password.RequiredLength = ConstSizes.UserPasswordMin;
                 }).AddRoles<IdentityRole>()
-                .AddEntityFrameworkStores<AuthContext>();
+                .AddEntityFrameworkStores<UsersContext>();
 
             services.AddAuthorization();
 
             services.AddControllersWithViews();
+
+            services.AddAutoMapper(typeof(Startup));
             services.InjectDependencies();
             SyncfusionLicenseProvider.RegisterLicense("MTc4NjMyQDMxMzcyZTMzMmUzMElidVVLdGNQQjgxNi95UGNjQVl4MEtMNUFObVNBVzFyV3Z2OStLTHpMRUU9");
         }
 
-        public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
+        public void Configure(IApplicationBuilder app, IWebHostEnvironment env, Seeder seeder)
         {
             if (env.IsDevelopment())
             {
@@ -73,6 +77,8 @@ namespace ProPri.WebApp.Mvc
                     name: "default",
                     pattern: "{controller=Auth}/{action=Login}/{id?}");
             });
+
+            seeder.Seed();
         }
     }
 }

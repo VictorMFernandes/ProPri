@@ -9,7 +9,7 @@ using ProPri.Students.Data;
 namespace ProPri.Students.Data.Migrations
 {
     [DbContext(typeof(StudentsContext))]
-    [Migration("20191207113623_V1")]
+    [Migration("20191207144818_V1")]
     partial class V1
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -31,6 +31,54 @@ namespace ProPri.Students.Data.Migrations
 
             modelBuilder.Entity("ProPri.Students.Domain.Student", b =>
                 {
+                    b.OwnsOne("ProPri.Core.Domain.ValueObjects.Address", "Address", b1 =>
+                        {
+                            b1.Property<Guid>("StudentId")
+                                .HasColumnType("TEXT");
+
+                            b1.Property<string>("City")
+                                .HasColumnName("AddressCity")
+                                .HasColumnType("TEXT")
+                                .HasMaxLength(30);
+
+                            b1.Property<string>("Complement")
+                                .HasColumnName("AddressComplement")
+                                .HasColumnType("TEXT")
+                                .HasMaxLength(60);
+
+                            b1.Property<string>("District")
+                                .HasColumnName("AddressDistrict")
+                                .HasColumnType("TEXT")
+                                .HasMaxLength(30);
+
+                            b1.Property<string>("Number")
+                                .HasColumnName("AddressNumber")
+                                .HasColumnType("TEXT")
+                                .HasMaxLength(6);
+
+                            b1.Property<string>("State")
+                                .HasColumnName("AddressState")
+                                .HasColumnType("TEXT")
+                                .HasMaxLength(30);
+
+                            b1.Property<string>("Street")
+                                .HasColumnName("AddressStreet")
+                                .HasColumnType("TEXT")
+                                .HasMaxLength(30);
+
+                            b1.Property<string>("ZipCode")
+                                .HasColumnName("AddressZipCode")
+                                .HasColumnType("TEXT")
+                                .HasMaxLength(8);
+
+                            b1.HasKey("StudentId");
+
+                            b1.ToTable("tb_student");
+
+                            b1.WithOwner()
+                                .HasForeignKey("StudentId");
+                        });
+
                     b.OwnsOne("ProPri.Core.Domain.ValueObjects.Email", "Email", b1 =>
                         {
                             b1.Property<Guid>("StudentId")

@@ -11,7 +11,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "WebApps", "WebApps", "{8386
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ProPri.WebApp.Mvc", "src\ProPri.WebApp.Mvc\ProPri.WebApp.Mvc.csproj", "{D8423790-6775-4ED0-A2A7-3910E7AEE421}"
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Auth", "Auth", "{4865DBD0-80B9-49C2-9CA7-BA2209CA28A4}"
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Users", "Users", "{4865DBD0-80B9-49C2-9CA7-BA2209CA28A4}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Core", "Core", "{BBF2B8C1-FF40-4F6C-9E70-EF3344E228D7}"
 EndProject
@@ -19,11 +19,11 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ProPri.Core", "src\ProPri.C
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ProPri.Core.WebApp", "src\ProPri.Core.WebApp\ProPri.Core.WebApp.csproj", "{B7D22E0C-B50E-43FD-AC3C-CF160B733869}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ProPri.Auth.Domain", "src\ProPri.Auth.Domain\ProPri.Auth.Domain.csproj", "{5E376F50-C595-4319-9990-D1CB14B43C2B}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ProPri.Users.Domain", "src\ProPri.Auth.Domain\ProPri.Users.Domain.csproj", "{5E376F50-C595-4319-9990-D1CB14B43C2B}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ProPri.Auth.Data", "src\ProPri.Auth.Data\ProPri.Auth.Data.csproj", "{0A26BE32-28EA-4C04-8751-B57661B96FC9}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ProPri.Users.Data", "src\ProPri.Auth.Data\ProPri.Users.Data.csproj", "{0A26BE32-28EA-4C04-8751-B57661B96FC9}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ProPri.Auth.Application", "src\ProPri.Auth.Application\ProPri.Auth.Application.csproj", "{7C238F56-743B-42FE-8C62-4B3048D389AC}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ProPri.Users.Application", "src\ProPri.Auth.Application\ProPri.Users.Application.csproj", "{7C238F56-743B-42FE-8C62-4B3048D389AC}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ProPri.WebApp.Api", "src\ProPri.WebApp.Api\ProPri.WebApp.Api.csproj", "{CD2F4423-15F1-4AAC-B89D-55B935C15F66}"
 EndProject
@@ -37,11 +37,11 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ProPri.Students.Domain", "s
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Vocabulary", "Vocabulary", "{763BCF3F-CF4D-4702-9724-EBAD6707DD77}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ProPri.Vocabulary.Application", "src\ProPri.Vocabulary.Application\ProPri.Vocabulary.Application.csproj", "{7885B469-A241-4F3A-BEB8-1A0B6B652473}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ProPri.Vocabulary.Application", "src\ProPri.Vocabulary.Application\ProPri.Vocabulary.Application.csproj", "{7885B469-A241-4F3A-BEB8-1A0B6B652473}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ProPri.Vocabulary.Data", "src\ProPri.Vocabulary.Data\ProPri.Vocabulary.Data.csproj", "{947344AB-20D0-434C-A43E-0819EB2DBC78}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ProPri.Vocabulary.Data", "src\ProPri.Vocabulary.Data\ProPri.Vocabulary.Data.csproj", "{947344AB-20D0-434C-A43E-0819EB2DBC78}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ProPri.Vocabulary.Domain", "src\ProPri.Vocabulary.Domain\ProPri.Vocabulary.Domain.csproj", "{4D620B70-20C9-4F9B-86D4-F1CDEB74BFD6}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ProPri.Vocabulary.Domain", "src\ProPri.Vocabulary.Domain\ProPri.Vocabulary.Domain.csproj", "{4D620B70-20C9-4F9B-86D4-F1CDEB74BFD6}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

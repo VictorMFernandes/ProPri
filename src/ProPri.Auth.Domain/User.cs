@@ -1,9 +1,10 @@
-﻿using Microsoft.AspNetCore.Identity;
+﻿using System;
+using Microsoft.AspNetCore.Identity;
 using ProPri.Core.Domain;
 using ProPri.Core.Domain.ValueObjects;
-using System;
+using ProPri.Core.Validation;
 
-namespace ProPri.Auth.Domain
+namespace ProPri.Users.Domain
 {
     public sealed class User : IdentityUser, IAggregateRoot
     {
@@ -19,6 +20,16 @@ namespace ProPri.Auth.Domain
         private User()
         {
 
+        }
+
+        public User(PersonName name, string email)
+        {
+            Name = name;
+            Email = email;
+            UserName = email;
+            RegistrationDate = DateTime.Now;
+
+            Validate();
         }
 
         public User(PersonName name, string email, string phone)
@@ -47,6 +58,7 @@ namespace ProPri.Auth.Domain
 
         private void Validate()
         {
+            Validator.IsNotNull(RegistrationDate, nameof(RegistrationDate));
         }
 
         #endregion

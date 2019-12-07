@@ -3,12 +3,12 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
-using ProPri.Auth.Data;
+using ProPri.Users.Data;
 
-namespace ProPri.Auth.Data.Migrations
+namespace ProPri.Users.Data.Migrations
 {
-    [DbContext(typeof(AuthContext))]
-    partial class AuthContextModelSnapshot : ModelSnapshot
+    [DbContext(typeof(UsersContext))]
+    partial class UsersContextModelSnapshot : ModelSnapshot
     {
         protected override void BuildModel(ModelBuilder modelBuilder)
         {
@@ -148,7 +148,7 @@ namespace ProPri.Auth.Data.Migrations
                     b.ToTable("tb_user_token");
                 });
 
-            modelBuilder.Entity("ProPri.Auth.Domain.User", b =>
+            modelBuilder.Entity("ProPri.Users.Domain.User", b =>
                 {
                     b.Property<string>("Id")
                         .HasColumnType("TEXT");
@@ -223,7 +223,7 @@ namespace ProPri.Auth.Data.Migrations
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserClaim<string>", b =>
                 {
-                    b.HasOne("ProPri.Auth.Domain.User", null)
+                    b.HasOne("ProPri.Users.Domain.User", null)
                         .WithMany()
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -232,7 +232,7 @@ namespace ProPri.Auth.Data.Migrations
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserLogin<string>", b =>
                 {
-                    b.HasOne("ProPri.Auth.Domain.User", null)
+                    b.HasOne("ProPri.Users.Domain.User", null)
                         .WithMany()
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -247,7 +247,7 @@ namespace ProPri.Auth.Data.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("ProPri.Auth.Domain.User", null)
+                    b.HasOne("ProPri.Users.Domain.User", null)
                         .WithMany()
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -256,14 +256,14 @@ namespace ProPri.Auth.Data.Migrations
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserToken<string>", b =>
                 {
-                    b.HasOne("ProPri.Auth.Domain.User", null)
+                    b.HasOne("ProPri.Users.Domain.User", null)
                         .WithMany()
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
                 });
 
-            modelBuilder.Entity("ProPri.Auth.Domain.User", b =>
+            modelBuilder.Entity("ProPri.Users.Domain.User", b =>
                 {
                     b.OwnsOne("ProPri.Core.Domain.ValueObjects.PersonName", "Name", b1 =>
                         {

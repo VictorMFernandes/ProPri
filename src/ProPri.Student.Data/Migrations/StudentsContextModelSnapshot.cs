@@ -8,7 +8,7 @@ using ProPri.Students.Data;
 namespace ProPri.Students.Data.Migrations
 {
     [DbContext(typeof(StudentsContext))]
-    partial class StudentContextModelSnapshot : ModelSnapshot
+    partial class StudentsContextModelSnapshot : ModelSnapshot
     {
         protected override void BuildModel(ModelBuilder modelBuilder)
         {

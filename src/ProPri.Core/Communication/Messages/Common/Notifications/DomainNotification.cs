@@ -1,5 +1,4 @@
 ﻿using MediatR;
-using ProPri.Core.Communication.Mensagens;
 using System;
 
 namespace ProPri.Core.Communication.Messages.Common.Notifications

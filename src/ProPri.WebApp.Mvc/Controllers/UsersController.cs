@@ -1,16 +1,29 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using AutoMapper;
+using Microsoft.AspNetCore.Mvc;
+using ProPri.Users.Application.Queries;
 using ProPri.WebApp.Mvc.Views.Entries.ViewModels;
 using ProPri.WebApp.Mvc.Views.Users.ViewModels;
 using System;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 
 namespace ProPri.WebApp.Mvc.Controllers
 {
     public class UsersController : Controller
     {
-        public IActionResult Index()
+        private readonly IMapper _mapper;
+        private readonly IUsersQueries _authQueries;
+
+        public UsersController(IMapper mapper, IUsersQueries authQueries)
         {
-            return View();
+            _mapper = mapper;
+            _authQueries = authQueries;
+        }
+
+        public async Task<IActionResult> Index()
+        {
+            var users = await _authQueries.GetUsers();
+            return View(_mapper.Map<IEnumerable<UserIndexViewModel>>(users));
         }
 
         public IActionResult Create()

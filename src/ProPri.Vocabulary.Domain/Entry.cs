@@ -1,6 +1,7 @@
-﻿using System;
-using ProPri.Core.Domain;
+﻿using ProPri.Core.Domain;
 using ProPri.Core.Domain.ValueObjects;
+using ProPri.Core.Validation;
+using System;
 
 namespace ProPri.Vocabulary.Domain
 {
@@ -20,8 +21,13 @@ namespace ProPri.Vocabulary.Domain
 
         #region Constructors
 
-        public Entry()
+        public Entry(string english, string portuguese, Image image, Guid classificationId)
         {
+            English = english;
+            Portuguese = portuguese;
+            Image = image;
+            ClassificationId = classificationId;
+
             Validate();
         }
 
@@ -40,6 +46,7 @@ namespace ProPri.Vocabulary.Domain
 
         protected override void Validate()
         {
+            Validator.IsNotNullOrEmpty(English, nameof(English));
         }
 
         #endregion

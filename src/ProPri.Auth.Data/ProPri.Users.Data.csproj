@@ -5,17 +5,12 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Compile Remove="Migrations\20191207115812_V1.cs" />
-    <Compile Remove="Migrations\20191207115812_V1.Designer.cs" />
-  </ItemGroup>
-
-  <ItemGroup>
     <PackageReference Include="Microsoft.AspNetCore.Identity" Version="2.2.0" />
     <PackageReference Include="Microsoft.AspNetCore.Identity.EntityFrameworkCore" Version="3.0.0" />
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\ProPri.Auth.Domain\ProPri.Auth.Domain.csproj" />
+    <ProjectReference Include="..\ProPri.Auth.Domain\ProPri.Users.Domain.csproj" />
   </ItemGroup>
 
 </Project>

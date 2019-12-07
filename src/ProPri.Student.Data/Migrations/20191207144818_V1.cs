@@ -19,7 +19,14 @@ namespace ProPri.Students.Data.Migrations
                     Password = table.Column<string>(fixedLength: true, maxLength: 32, nullable: true),
                     Active = table.Column<bool>(nullable: true),
                     ImageUrl = table.Column<string>(maxLength: 160, nullable: true),
-                    ImagePublicId = table.Column<string>(maxLength: 25, nullable: true)
+                    ImagePublicId = table.Column<string>(maxLength: 25, nullable: true),
+                    AddressZipCode = table.Column<string>(maxLength: 8, nullable: true),
+                    AddressStreet = table.Column<string>(maxLength: 30, nullable: true),
+                    AddressNumber = table.Column<string>(maxLength: 6, nullable: true),
+                    AddressComplement = table.Column<string>(maxLength: 60, nullable: true),
+                    AddressDistrict = table.Column<string>(maxLength: 30, nullable: true),
+                    AddressCity = table.Column<string>(maxLength: 30, nullable: true),
+                    AddressState = table.Column<string>(maxLength: 30, nullable: true)
                 },
                 constraints: table =>
                 {
