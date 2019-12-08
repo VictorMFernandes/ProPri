@@ -10,6 +10,9 @@ namespace ProPri.WebApp.Mvc.Views.Users.ViewModels
         public string FirstName { get; set; }
         public string Surname { get; set; }
         public string Email { get; set; }
+        public DateTime LastActiveDate { get; set; }
+        public DateTime RegistrationDate { get; set; }
+        public bool Active { get; set; }
 
         [DisplayName("Role")]
         public Guid RoleId { get; set; }

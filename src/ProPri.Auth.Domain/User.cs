@@ -13,6 +13,7 @@ namespace ProPri.Users.Domain
 
         public PersonName Name { get; private set; }
         public DateTime RegistrationDate { get; }
+        public bool Active { get; set; }
 
         public ICollection<UserRole> UserRoles { get; set; }
 
@@ -31,6 +32,7 @@ namespace ProPri.Users.Domain
             Email = email;
             UserName = email;
             RegistrationDate = DateTime.Now;
+            Active = true;
 
             Validate();
         }

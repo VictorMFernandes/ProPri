@@ -14,14 +14,16 @@
                                 "</div>";
 }
 
-<h3>@ViewData["Title"]</h3>
-<a asp-action="Create">Create New</a>
+<div class="main-content">
+    <h3>@ViewData["Title"]</h3>
+    <a asp-action="Create">Create New</a>
 
-<div id="treeview-parent">
-    <ejs-treeview id="hierarchical" loadOnDemand="false" cssClass="custom" nodeTemplate="@Html.Raw(nodeTemplate)">
-        <e-treeview-fields dataSource="Model" child="nameof(ClassificationIndexViewModel.Children)" 
-                           hasChildren="HasChild" id="Id" text="Name" parentID="ParentId" expanded="Expanded"></e-treeview-fields>
-    </ejs-treeview>
+    <div id="treeview-parent">
+        <ejs-treeview id="hierarchical" loadOnDemand="false" cssClass="custom" nodeTemplate="@Html.Raw(nodeTemplate)">
+            <e-treeview-fields dataSource="Model" child="nameof(ClassificationIndexViewModel.Children)"
+                               hasChildren="HasChild" id="Id" text="Name" parentID="ParentId" expanded="Expanded"></e-treeview-fields>
+        </ejs-treeview>
+    </div>
 </div>
 
 @section Scripts {

@@ -36,3 +36,11 @@ td a {
 .treeview-row {
     width: 45vw;
 }
+
+.table-btn {
+    cursor: pointer;
+}
+
+.table-btn spam {
+    color: var(--light);
+}

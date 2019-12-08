@@ -15,6 +15,8 @@ namespace ProPri.Users.Data.Mappings
         {
             b.ToTable(Table);
 
+            b.Property(u => u.RegistrationDate).HasColumnName("RegistrationDate").HasDefaultValue(DateTime.Now);
+
             b.OwnsOne(u => u.Name, n =>
             {
                 n.Property(no => no.FirstName).IsRequired().HasMaxLength(ConstSizes.PersonFirstNameMin).HasColumnName("FirstName");
