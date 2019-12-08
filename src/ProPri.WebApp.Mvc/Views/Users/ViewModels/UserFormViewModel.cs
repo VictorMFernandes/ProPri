@@ -7,7 +7,10 @@ namespace ProPri.WebApp.Mvc.Views.Users.ViewModels
     public class UserFormViewModel
     {
         public Guid Id { get; set; }
-        public string Name { get; set; }
+        public string FirstName { get; set; }
+        public string Surname { get; set; }
+        public string Email { get; set; }
+
         [DisplayName("Role")]
         public Guid RoleId { get; set; }
 

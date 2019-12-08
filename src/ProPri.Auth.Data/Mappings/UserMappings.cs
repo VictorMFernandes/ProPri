@@ -3,6 +3,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 using ProPri.Core.Constants;
 using ProPri.Users.Domain;
+using System;
 
 namespace ProPri.Users.Data.Mappings
 {
@@ -39,16 +40,16 @@ namespace ProPri.Users.Data.Mappings
             // Note that these relationships are configured with no navigation properties
 
             // Each User can have many UserClaims
-            b.HasMany<IdentityUserClaim<string>>().WithOne().HasForeignKey(uc => uc.UserId).IsRequired();
+            b.HasMany<IdentityUserClaim<Guid>>().WithOne().HasForeignKey(uc => uc.UserId).IsRequired();
 
             // Each User can have many UserLogins
-            b.HasMany<IdentityUserLogin<string>>().WithOne().HasForeignKey(ul => ul.UserId).IsRequired();
+            b.HasMany<IdentityUserLogin<Guid>>().WithOne().HasForeignKey(ul => ul.UserId).IsRequired();
 
             // Each User can have many UserTokens
-            b.HasMany<IdentityUserToken<string>>().WithOne().HasForeignKey(ut => ut.UserId).IsRequired();
+            b.HasMany<IdentityUserToken<Guid>>().WithOne().HasForeignKey(ut => ut.UserId).IsRequired();
 
             // Each User can have many entries in the UserRole join table
-            b.HasMany<IdentityUserRole<string>>().WithOne().HasForeignKey(ur => ur.UserId).IsRequired();
+            b.HasMany<UserRole>().WithOne().HasForeignKey(ur => ur.UserId).IsRequired();
         }
     }
 }

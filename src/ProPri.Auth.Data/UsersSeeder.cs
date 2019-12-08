@@ -8,10 +8,10 @@ namespace ProPri.Users.Data
     public class UsersSeeder
     {
         private readonly UserManager<User> _userManager;
-        private readonly RoleManager<IdentityRole> _roleManager;
+        private readonly RoleManager<Role> _roleManager;
 
         public UsersSeeder(UserManager<User> userManager,
-            RoleManager<IdentityRole> roleManager)
+            RoleManager<Role> roleManager)
         {
             _userManager = userManager;
             _roleManager = roleManager;
@@ -27,19 +27,19 @@ namespace ProPri.Users.Data
         {
             if (!_roleManager.RoleExistsAsync(ConstData.RoleManager).Result)
             {
-                var role = new IdentityRole(ConstData.RoleManager);
+                var role = new Role(ConstData.RoleManager);
                 _roleManager.CreateAsync(role).Wait();
             }
 
             if (!_roleManager.RoleExistsAsync(ConstData.RolePed).Result)
             {
-                var role = new IdentityRole(ConstData.RolePed);
+                var role = new Role(ConstData.RolePed);
                 _roleManager.CreateAsync(role).Wait();
             }
 
             if (!_roleManager.RoleExistsAsync(ConstData.RoleFd).Result)
             {
-                var role = new IdentityRole(ConstData.RoleFd);
+                var role = new Role(ConstData.RoleFd);
                 _roleManager.CreateAsync(role).Wait();
             }
         }

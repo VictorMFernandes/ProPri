@@ -7,14 +7,14 @@ using System.Collections.Generic;
 
 namespace ProPri.Users.Domain
 {
-    public sealed class User : IdentityUser, IAggregateRoot
+    public sealed class User : IdentityUser<Guid>, IAggregateRoot
     {
         #region Properties
 
         public PersonName Name { get; private set; }
         public DateTime RegistrationDate { get; }
 
-        public ICollection<IdentityUserRole<string>> UserRoles { get; set; }
+        public ICollection<UserRole> UserRoles { get; set; }
 
         #endregion
 

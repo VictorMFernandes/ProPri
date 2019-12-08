@@ -1,14 +1,15 @@
 ﻿using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
+using System;
 
 namespace ProPri.Users.Data.Mappings
 {
-    public class UserLoginMappings : IEntityTypeConfiguration<IdentityUserLogin<string>>
+    public class UserLoginMappings : IEntityTypeConfiguration<IdentityUserLogin<Guid>>
     {
         internal const string Table = "tb_user_login";
 
-        public void Configure(EntityTypeBuilder<IdentityUserLogin<string>> b)
+        public void Configure(EntityTypeBuilder<IdentityUserLogin<Guid>> b)
         {
             b.ToTable(Table);
 

@@ -2,14 +2,16 @@
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 using ProPri.Core.Constants;
+using ProPri.Users.Domain;
+using System;
 
 namespace ProPri.Users.Data.Mappings
 {
-    internal class RoleMappings : IEntityTypeConfiguration<IdentityRole>
+    internal class RoleMappings : IEntityTypeConfiguration<Role>
     {
         internal const string Table = "tb_role";
 
-        public void Configure(EntityTypeBuilder<IdentityRole> b)
+        public void Configure(EntityTypeBuilder<Role> b)
         {
             b.ToTable(Table);
 
@@ -30,10 +32,10 @@ namespace ProPri.Users.Data.Mappings
             // Note that these relationships are configured with no navigation properties
 
             // Each Role can have many entries in the UserRole join table
-            b.HasMany<IdentityUserRole<string>>().WithOne().HasForeignKey(ur => ur.RoleId).IsRequired();
+            b.HasMany<UserRole>().WithOne().HasForeignKey(ur => ur.RoleId).IsRequired();
 
             // Each Role can have many associated RoleClaims
-            b.HasMany<IdentityRoleClaim<string>>().WithOne().HasForeignKey(rc => rc.RoleId).IsRequired();
+            b.HasMany<IdentityRoleClaim<Guid>>().WithOne().HasForeignKey(rc => rc.RoleId).IsRequired();
         }
     }
 }

@@ -1,6 +1,7 @@
 ﻿using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
 using ProPri.Users.Application.Queries;
+using ProPri.Users.Application.Queries.Filters;
 using ProPri.WebApp.Mvc.Views.Entries.ViewModels;
 using ProPri.WebApp.Mvc.Views.Users.ViewModels;
 using System;
@@ -12,51 +13,44 @@ namespace ProPri.WebApp.Mvc.Controllers
     public class UsersController : Controller
     {
         private readonly IMapper _mapper;
-        private readonly IUsersQueries _authQueries;
+        private readonly IUsersQueries _usersQueries;
 
-        public UsersController(IMapper mapper, IUsersQueries authQueries)
+        public UsersController(IMapper mapper, IUsersQueries usersQueries)
         {
             _mapper = mapper;
-            _authQueries = authQueries;
+            _usersQueries = usersQueries;
         }
 
         public async Task<IActionResult> Index()
         {
-            var users = await _authQueries.GetUsers();
+            var userFilter = new UserFilter
+            {
+                PageNumber = 1,
+                PageSize = 5
+            };
+
+            var users = await _usersQueries.GetUsers(userFilter);
             return View(_mapper.Map<IEnumerable<UserIndexViewModel>>(users));
         }
 
-        public IActionResult Create()
+        public async Task<IActionResult> Create()
         {
-            var roles = new List<RoleIndexViewModel>
-            {
-                new RoleIndexViewModel{ Id = Guid.NewGuid(), Name = "Admin"},
-                new RoleIndexViewModel{ Id = Guid.NewGuid(), Name = "Teacher"},
-                new RoleIndexViewModel{ Id = Guid.NewGuid(), Name = "Secretary"}
-            };
+            var roles = await _usersQueries.GetAllRoleIdName();
 
             var userFormVm = new UserFormViewModel
             {
-                Roles = roles
+                Roles = _mapper.Map<IEnumerable<RoleIndexViewModel>>(roles)
             };
 
             return View(userFormVm);
         }
 
-        public IActionResult Edit()
+        public async Task<IActionResult> Edit(Guid id)
         {
-            var roles = new List<RoleIndexViewModel>
-            {
-                new RoleIndexViewModel{ Id = Guid.NewGuid(), Name = "Admin"},
-                new RoleIndexViewModel{ Id = Guid.NewGuid(), Name = "Teacher"},
-                new RoleIndexViewModel{ Id = Guid.NewGuid(), Name = "Secretary"}
-            };
+            var userFormVm = _mapper.Map<UserFormViewModel>(await _usersQueries.GetUserById(id));
+            var roles = await _usersQueries.GetAllRoleIdName();
 
-            var userFormVm = new UserFormViewModel
-            {
-                Name = "John Doe",
-                Roles = roles
-            };
+            userFormVm.Roles = _mapper.Map<IEnumerable<RoleIndexViewModel>>(roles);
 
             return View(userFormVm);
         }

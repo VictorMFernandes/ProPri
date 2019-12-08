@@ -1,9 +1,18 @@
-﻿namespace ProPri.Users.Domain.Dtos
+﻿using System;
+
+namespace ProPri.Users.Domain.Dtos
 {
     public class UserIndexDto
     {
-        public string Id { get; set; }
+        public Guid Id { get; set; }
         public string Name { get; set; }
         public string Role { get; set; }
+
+        public UserIndexDto(Guid id, string name, string role)
+        {
+            Id = id;
+            Name = name;
+            Role = role;
+        }
     }
 }

@@ -1,5 +1,6 @@
-﻿using ProPri.Users.Application.Queries.Dtos;
+﻿using ProPri.Core.Helpers;
 using ProPri.Users.Application.Queries.Filters;
+using ProPri.Users.Domain.Dtos;
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
@@ -8,7 +9,17 @@ namespace ProPri.Users.Application.Queries
 {
     public interface IUsersQueries
     {
-        Task<IEnumerable<UserIndexDto>> GetUsers(UserFilter filter);
-        Task<UserIndexDto> GetUserById(Guid userId);
+        #region User
+
+        Task<PaginatedList<UserIndexDto>> GetUsers(UserFilter filter);
+        Task<UserFormDto> GetUserById(Guid userId);
+
+        #endregion
+
+        #region Role
+
+        Task<IEnumerable<RoleIdNameDto>> GetAllRoleIdName();
+
+        #endregion
     }
 }

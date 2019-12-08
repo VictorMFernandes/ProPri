@@ -37,7 +37,7 @@
         @foreach (var user in Model) {
         <tr>
             <td>
-                <a asp-action="Edit" style="line-height: 70px;">@user.Name</a>
+                <a asp-action="Edit" asp-route-id="@user.Id" style="line-height: 70px;">@user.Name</a>
             </td>
             <td class="d-none d-sm-table-cell">
                 <a asp-action="Edit" style="line-height: 70px;">@user.Role</a>

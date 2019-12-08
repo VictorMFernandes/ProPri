@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace ProPri.Users.Application.Queries.Dtos
+namespace ProPri.Users.Domain.Dtos
 {
     public class UserFormDto
     {

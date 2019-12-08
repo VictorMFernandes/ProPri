@@ -1,12 +1,11 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Identity;
-using Microsoft.EntityFrameworkCore;
-using ProPri.Users.Application.Queries.Dtos;
+﻿using ProPri.Core.Helpers;
 using ProPri.Users.Application.Queries.Filters;
 using ProPri.Users.Domain;
+using ProPri.Users.Domain.Dtos;
+using System;
+using System.Collections.Generic;
+using System.Runtime.InteropServices;
+using System.Threading.Tasks;
 
 namespace ProPri.Users.Application.Queries
 {
@@ -19,36 +18,21 @@ namespace ProPri.Users.Application.Queries
             _userRepository = userRepository;
         }
 
-        public async Task<IEnumerable<UserIndexDto>> GetUsers(UserFilter filter)
+        public async Task<PaginatedList<UserIndexDto>> GetUsers(UserFilter filter)
         {
-            var users = _userRepository.GetAllUsers().Select(u =>
-                new UserIndexDto
-                {
-                    Name = u.Name.ToString(),
-                    Role = _userManager.GetRolesAsync(u).Result.FirstOrDefault()
-                });
+            var users = await _userRepository.GetUsers(filter.PageNumber, filter.PageSize);
 
             return users;
         }
 
-        public async Task<UserIndexDto> GetUserById(Guid userId)
+        public async Task<UserFormDto> GetUserById(Guid userId)
         {
-            var users = context.Users
-                .Where(x => x.Roles.Select(y => y.Id).Contains(roleId))
-                .ToList();
+            return await _userRepository.GetUserById(userId);
+        }
 
-            var user = await _userManager.FindByIdAsync(userId.ToString());
-            var role = 
-            var userDto = new UserFormDto
-            {
-                Id = user.Id,
-                FirstName = user.Name.FirstName,
-                Surname = user.Name.Surname,
-                Email = user.Email,
-                RoleId = 
-            };
-
-            return null;
+        public async Task<IEnumerable<RoleIdNameDto>> GetAllRoleIdName()
+        {
+            return await _userRepository.GetAllRoleIdName();
         }
     }
 }
