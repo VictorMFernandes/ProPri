@@ -45,6 +45,11 @@ namespace ProPri.Users.Data.Repository
             return _mapper.Map<UserFormDto>(user);
         }
 
+        public void UpdateUser(User user)
+        {
+            _context.Users.Update(user);
+        }
+
         public async Task<IEnumerable<RoleIdNameDto>> GetAllRoleIdName()
         {
             var roles = await _context.Roles.AsNoTracking().ToListAsync();

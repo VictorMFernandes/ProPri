@@ -9,7 +9,7 @@ using ProPri.Users.Data;
 namespace ProPri.Users.Data.Migrations
 {
     [DbContext(typeof(UsersContext))]
-    [Migration("20191208131912_V1")]
+    [Migration("20191209192720_V1")]
     partial class V1
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -142,6 +142,12 @@ namespace ProPri.Users.Data.Migrations
                     b.Property<int>("AccessFailedCount")
                         .HasColumnType("INTEGER");
 
+                    b.Property<bool>("Active")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<DateTime>("Birthday")
+                        .HasColumnType("TEXT");
+
                     b.Property<string>("ConcurrencyStamp")
                         .IsConcurrencyToken()
                         .HasColumnType("TEXT");
@@ -152,6 +158,9 @@ namespace ProPri.Users.Data.Migrations
 
                     b.Property<bool>("EmailConfirmed")
                         .HasColumnType("INTEGER");
+
+                    b.Property<DateTime>("LastActiveDate")
+                        .HasColumnType("TEXT");
 
                     b.Property<bool>("LockoutEnabled")
                         .HasColumnType("INTEGER");
@@ -175,6 +184,12 @@ namespace ProPri.Users.Data.Migrations
 
                     b.Property<bool>("PhoneNumberConfirmed")
                         .HasColumnType("INTEGER");
+
+                    b.Property<DateTime>("RegistrationDate")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnName("RegistrationDate")
+                        .HasColumnType("TEXT")
+                        .HasDefaultValue(new DateTime(2019, 12, 9, 16, 27, 19, 861, DateTimeKind.Local).AddTicks(7744));
 
                     b.Property<string>("SecurityStamp")
                         .HasColumnType("TEXT");

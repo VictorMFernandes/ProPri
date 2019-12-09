@@ -41,7 +41,11 @@ namespace ProPri.Users.Data.Migrations
                     LockoutEnabled = table.Column<bool>(nullable: false),
                     AccessFailedCount = table.Column<int>(nullable: false),
                     FirstName = table.Column<string>(maxLength: 3, nullable: true),
-                    Surname = table.Column<string>(maxLength: 60, nullable: true)
+                    Surname = table.Column<string>(maxLength: 60, nullable: true),
+                    RegistrationDate = table.Column<DateTime>(nullable: false, defaultValue: new DateTime(2019, 12, 9, 16, 27, 19, 861, DateTimeKind.Local).AddTicks(7744)),
+                    LastActiveDate = table.Column<DateTime>(nullable: false),
+                    Active = table.Column<bool>(nullable: false),
+                    Birthday = table.Column<DateTime>(nullable: false)
                 },
                 constraints: table =>
                 {

@@ -14,6 +14,8 @@ namespace ProPri.Users.Domain
         Task<PaginatedList<UserIndexDto>> GetUsers(int pageNumber, int pageSize);
         Task<UserFormDto> GetUserById(Guid id);
 
+        void UpdateUser(User user);
+
         #endregion
 
         #region Role

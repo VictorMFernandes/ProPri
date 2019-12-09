@@ -3,9 +3,9 @@ using ProPri.Core.Communication.Messages.Common.Notifications;
 
 namespace ProPri.Core.Communication.Handlers
 {
-    public class CommandHandler
+    public abstract class CommandHandler
     {
-        private readonly IMediatorHandler _mediatorHandler;
+        protected readonly IMediatorHandler _mediatorHandler;
 
         protected CommandHandler(IMediatorHandler mediatorHandler)
         {

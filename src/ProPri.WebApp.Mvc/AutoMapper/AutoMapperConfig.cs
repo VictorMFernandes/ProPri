@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using ProPri.Users.Application.Commands;
 using ProPri.Users.Domain;
 using ProPri.Users.Domain.Dtos;
 using ProPri.WebApp.Mvc.Views.Users.ViewModels;
@@ -22,6 +23,8 @@ namespace ProPri.WebApp.Mvc.AutoMapper
 
             CreateMap<Role, RoleIdNameDto>();
             CreateMap<RoleIdNameDto, RoleIndexViewModel>();
+
+            CreateMap<UserFormViewModel, EditUserCommand>();
         }
     }
 }

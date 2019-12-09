@@ -6,6 +6,7 @@ namespace ProPri.WebApp.Mvc.Views.Users.ViewModels
 {
     public class UserFormViewModel
     {
+        public Guid UserId { get; set; }
         public Guid Id { get; set; }
         public string FirstName { get; set; }
         public string Surname { get; set; }
@@ -13,6 +14,7 @@ namespace ProPri.WebApp.Mvc.Views.Users.ViewModels
         public DateTime LastActiveDate { get; set; }
         public DateTime RegistrationDate { get; set; }
         public bool Active { get; set; }
+        public DateTime Birthday { get; set; }
 
         [DisplayName("Role")]
         public Guid RoleId { get; set; }

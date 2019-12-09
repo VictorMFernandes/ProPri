@@ -31,6 +31,11 @@
         </div>
     </div>
     <div class="col-6">
-        <ejs-datepicker id="datepicker"></ejs-datepicker>
+        <div class="form-group">
+            <label asp-for="Birthday" class="control-label"></label>
+            <ejs-datepicker id="datepicker" name="Birthday" ejs-for="Birthday" placeholder="dd/mm/yyyy..." format="dd/MM/yyyy" 
+                            min="DateTime.Now.AddYears(-100)"></ejs-datepicker>
+            <span asp-validation-for="Birthday" class="text-danger"></span>
+        </div>
     </div>
 </div>

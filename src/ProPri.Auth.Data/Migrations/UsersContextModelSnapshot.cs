@@ -143,6 +143,9 @@ namespace ProPri.Users.Data.Migrations
                     b.Property<bool>("Active")
                         .HasColumnType("INTEGER");
 
+                    b.Property<DateTime>("Birthday")
+                        .HasColumnType("TEXT");
+
                     b.Property<string>("ConcurrencyStamp")
                         .IsConcurrencyToken()
                         .HasColumnType("TEXT");
@@ -153,6 +156,9 @@ namespace ProPri.Users.Data.Migrations
 
                     b.Property<bool>("EmailConfirmed")
                         .HasColumnType("INTEGER");
+
+                    b.Property<DateTime>("LastActiveDate")
+                        .HasColumnType("TEXT");
 
                     b.Property<bool>("LockoutEnabled")
                         .HasColumnType("INTEGER");
@@ -181,7 +187,7 @@ namespace ProPri.Users.Data.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnName("RegistrationDate")
                         .HasColumnType("TEXT")
-                        .HasDefaultValue(new DateTime(2019, 12, 8, 15, 30, 34, 827, DateTimeKind.Local).AddTicks(3898));
+                        .HasDefaultValue(new DateTime(2019, 12, 9, 16, 27, 19, 861, DateTimeKind.Local).AddTicks(7744));
 
                     b.Property<string>("SecurityStamp")
                         .HasColumnType("TEXT");

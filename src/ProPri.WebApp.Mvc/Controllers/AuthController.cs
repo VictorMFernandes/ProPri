@@ -1,21 +1,45 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using System.Threading.Tasks;
+using MediatR;
+using Microsoft.AspNetCore.Mvc;
+using ProPri.Core.Communication.Handlers;
+using ProPri.Core.Communication.Messages.Common.Notifications;
 using ProPri.Core.Domain.ValueObjects;
+using ProPri.Users.Application.Commands;
 using ProPri.WebApp.Mvc.Views.Auth.ViewModels;
 
 namespace ProPri.WebApp.Mvc.Controllers
 {
-    public class AuthController : Controller
+    public class AuthController : BaseController
     {
+        private readonly IMediatorHandler _mediatorHandler;
+
+        public AuthController(INotificationHandler<DomainNotification> notifications,
+                              IMediatorHandler mediatorHandler)
+            : base(notifications, mediatorHandler)
+        {
+            _mediatorHandler = mediatorHandler;
+        }
+
         public IActionResult Login()
         {
-            var algo = new PersonName("First", "Second");
             return View();
         }
 
         [HttpPost]
-        public IActionResult Login(LoginViewModel loginVm)
+        public async Task<IActionResult> Login(LoginViewModel loginVm)
         {
-            return View();
+            var loginCommand = new LoginCommand
+            {
+                Email = loginVm.Email,
+                Password = loginVm.Password
+            };
+
+            var result = await _mediatorHandler.SendCommand(loginCommand);
+
+            if (result)
+                return RedirectToAction("Index", "Users");
+
+            return View(loginVm);
         }
 
         public IActionResult Logout()

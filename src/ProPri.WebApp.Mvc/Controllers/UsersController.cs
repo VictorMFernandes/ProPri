@@ -1,5 +1,9 @@
 ﻿using AutoMapper;
+using MediatR;
 using Microsoft.AspNetCore.Mvc;
+using ProPri.Core.Communication.Handlers;
+using ProPri.Core.Communication.Messages.Common.Notifications;
+using ProPri.Users.Application.Commands;
 using ProPri.Users.Application.Queries;
 using ProPri.Users.Application.Queries.Filters;
 using ProPri.WebApp.Mvc.Views.Entries.ViewModels;
@@ -7,18 +11,23 @@ using ProPri.WebApp.Mvc.Views.Users.ViewModels;
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Identity;
 
 namespace ProPri.WebApp.Mvc.Controllers
 {
-    public class UsersController : Controller
+    public class UsersController : BaseController
     {
         private readonly IMapper _mapper;
         private readonly IUsersQueries _usersQueries;
+        private readonly IMediatorHandler _mediatorHandler;
 
-        public UsersController(IMapper mapper, IUsersQueries usersQueries)
+        public UsersController(INotificationHandler<DomainNotification> notifications,
+                               IMapper mapper, IUsersQueries usersQueries,
+                               IMediatorHandler mediatorHandler) : base(notifications, mediatorHandler)
         {
             _mapper = mapper;
             _usersQueries = usersQueries;
+            _mediatorHandler = mediatorHandler;
         }
 
         public async Task<IActionResult> Index()
@@ -52,6 +61,19 @@ namespace ProPri.WebApp.Mvc.Controllers
 
             userFormVm.Roles = _mapper.Map<IEnumerable<RoleIndexViewModel>>(roles);
 
+            return View(userFormVm);
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> Edit(UserFormViewModel userFormVm)
+        {
+            userFormVm.UserId = LoggedUserId;
+            await _mediatorHandler.SendCommand(_mapper.Map<EditUserCommand>(userFormVm));
+
+            if (ValidOperation())
+            {
+                return RedirectToAction("Index");
+            }
             return View(userFormVm);
         }
 
