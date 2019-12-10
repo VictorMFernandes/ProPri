@@ -15,7 +15,7 @@ namespace ProPri.Users.Domain
         public DateTime RegistrationDate { get; }
         public DateTime LastActiveDate { get; private set; }
         public bool Active { get; set; }
-        public DateTime Birthday { get; private set; }
+        public DateTime? Birthday { get; private set; }
 
         public ICollection<UserRole> UserRoles { get; set; }
 
@@ -70,7 +70,7 @@ namespace ProPri.Users.Domain
 
         #endregion
 
-        public void Update(PersonName name, string email, bool active, DateTime birthday)
+        public void Update(PersonName name, string email, bool active, DateTime? birthday)
         {
             Name = name;
             Email = email;

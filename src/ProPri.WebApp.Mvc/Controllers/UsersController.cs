@@ -11,7 +11,8 @@ using ProPri.WebApp.Mvc.Views.Users.ViewModels;
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
-using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Authorization;
+using ProPri.Core.Constants;
 
 namespace ProPri.WebApp.Mvc.Controllers
 {
@@ -30,6 +31,7 @@ namespace ProPri.WebApp.Mvc.Controllers
             _mediatorHandler = mediatorHandler;
         }
 
+        [Authorize(Policy = ConstData.ClaimUsersRead)]
         public async Task<IActionResult> Index()
         {
             var userFilter = new UserFilter
@@ -74,6 +76,10 @@ namespace ProPri.WebApp.Mvc.Controllers
             {
                 return RedirectToAction("Index");
             }
+
+            var roles = await _usersQueries.GetAllRoleIdName();
+            userFormVm.Roles = _mapper.Map<IEnumerable<RoleIndexViewModel>>(roles);
+
             return View(userFormVm);
         }
 

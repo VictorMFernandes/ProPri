@@ -143,7 +143,7 @@ namespace ProPri.Users.Data.Migrations
                     b.Property<bool>("Active")
                         .HasColumnType("INTEGER");
 
-                    b.Property<DateTime>("Birthday")
+                    b.Property<DateTime?>("Birthday")
                         .HasColumnType("TEXT");
 
                     b.Property<string>("ConcurrencyStamp")
@@ -187,7 +187,7 @@ namespace ProPri.Users.Data.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnName("RegistrationDate")
                         .HasColumnType("TEXT")
-                        .HasDefaultValue(new DateTime(2019, 12, 9, 16, 27, 19, 861, DateTimeKind.Local).AddTicks(7744));
+                        .HasDefaultValue(new DateTime(2019, 12, 10, 9, 36, 57, 354, DateTimeKind.Local).AddTicks(5259));
 
                     b.Property<string>("SecurityStamp")
                         .HasColumnType("TEXT");

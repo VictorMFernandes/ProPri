@@ -14,7 +14,7 @@ namespace ProPri.WebApp.Mvc.Views.Users.ViewModels
         public DateTime LastActiveDate { get; set; }
         public DateTime RegistrationDate { get; set; }
         public bool Active { get; set; }
-        public DateTime Birthday { get; set; }
+        public DateTime? Birthday { get; set; }
 
         [DisplayName("Role")]
         public Guid RoleId { get; set; }

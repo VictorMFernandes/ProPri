@@ -12,7 +12,7 @@ namespace ProPri.Users.Application.Commands
         public string Surname { get; set; }
         public string Email { get; set; }
         public bool Active { get; set; }
-        public DateTime Birthday { get; set; }
+        public DateTime? Birthday { get; set; }
         public Guid RoleId { get; set; }
 
         protected EditUserCommand() { }
@@ -43,11 +43,11 @@ namespace ProPri.Users.Application.Commands
             {
                 RuleFor(c => c.UserId)
                     .NotEqual(Guid.Empty)
-                    .WithMessage("UserId is invalid");
+                    .WithMessage("You must be logged in to edit an user");
 
                 RuleFor(c => c.Id)
                     .NotEqual(Guid.Empty)
-                    .WithMessage("EditedUserId is invalid");
+                    .WithMessage("The user you are trying to edit could not be found");
             }
         }
     }

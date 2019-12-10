@@ -1,12 +1,15 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
+using ProPri.Core.Constants;
 using ProPri.WebApp.Mvc.Views.Entries.ViewModels;
-using System;
 using ProPri.WebApp.Mvc.Views.Students.ViewModels;
+using System;
 
 namespace ProPri.WebApp.Mvc.Controllers
 {
     public class StudentsController : Controller
     {
+        [Authorize(Policy = ConstData.ClaimStudentsRead)]
         public IActionResult Index()
         {
             return View();

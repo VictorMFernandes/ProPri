@@ -1,12 +1,16 @@
-﻿@{
+﻿@using Microsoft.AspNetCore.Identity
+@using ProPri.Users.Domain
+@inject SignInManager<User> SignInManager
+
+@{
     var menu = new List<object>();
-    if (false)
+    if (SignInManager.IsSignedIn(User))
     {
         menu = new List<object>()
 {
             new
             {
-                text = "Hi admin@email.com!",
+                text = $"Hi {User.Identity.Name}!",
                 items = new List<object>() {
                     new { text= "Profile", action = "Index", controller = "Classifications"},
                     new { text= "Log out", action = "Logout", controller = "Auth" }

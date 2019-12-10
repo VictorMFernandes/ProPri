@@ -17,6 +17,10 @@
     <Compile Remove="Migrations\20191208183035_V2.Designer.cs" />
     <Compile Remove="Migrations\20191209192453_V3.cs" />
     <Compile Remove="Migrations\20191209192453_V3.Designer.cs" />
+    <Compile Remove="Migrations\20191209192720_V1.cs" />
+    <Compile Remove="Migrations\20191209192720_V1.Designer.cs" />
+    <Compile Remove="Migrations\20191210123304_V2.cs" />
+    <Compile Remove="Migrations\20191210123304_V2.Designer.cs" />
   </ItemGroup>
 
   <ItemGroup>

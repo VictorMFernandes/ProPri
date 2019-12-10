@@ -1,3 +1,5 @@
+using System;
+using System.Security.Claims;
 using AutoMapper;
 using MediatR;
 using Microsoft.AspNetCore.Builder;
@@ -12,6 +14,7 @@ using ProPri.Core.WebApp.Extensions;
 using ProPri.Students.Data;
 using ProPri.Users.Data;
 using ProPri.Users.Domain;
+using ProPri.WebApp.Mvc.Extensions;
 using Syncfusion.Licensing;
 
 namespace ProPri.WebApp.Mvc
@@ -45,12 +48,21 @@ namespace ProPri.WebApp.Mvc
                 }).AddRoles<Role>()
                 .AddEntityFrameworkStores<UsersContext>();
 
-            services.AddAuthorization();
+            services.AddAuthorizationWithPolicies();
+
+            services.ConfigureApplicationCookie(options =>
+            {
+                options.AccessDeniedPath = "/Auth/AccessDenied";
+                options.LoginPath = "/Auth/Login";
+                options.SlidingExpiration = true;
+                options.ExpireTimeSpan = TimeSpan.FromDays(30);
+            });
 
             services.AddControllersWithViews();
 
             services.AddAutoMapper(typeof(Startup));
             services.InjectDependencies();
+            services.InjectMvcDependencies();
             SyncfusionLicenseProvider.RegisterLicense("MTc4NjMyQDMxMzcyZTMzMmUzMElidVVLdGNQQjgxNi95UGNjQVl4MEtMNUFObVNBVzFyV3Z2OStLTHpMRUU9");
             services.AddMediatR(typeof(Startup));
         }
@@ -71,6 +83,7 @@ namespace ProPri.WebApp.Mvc
 
             app.UseRouting();
 
+            app.UseAuthentication();
             app.UseAuthorization();
 
             app.UseEndpoints(endpoints =>

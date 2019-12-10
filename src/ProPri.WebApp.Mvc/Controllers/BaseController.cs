@@ -6,15 +6,24 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Security.Claims;
+using Microsoft.AspNetCore.Authorization;
 
 namespace ProPri.WebApp.Mvc.Controllers
 {
+    [Authorize]
     public class BaseController : Controller
     {
         private readonly DomainNotificationHandler _notifications;
         private readonly IMediatorHandler _mediatorHandler;
 
-        protected Guid LoggedUserId => new Guid(User.FindFirstValue(ClaimTypes.NameIdentifier));
+        protected Guid LoggedUserId
+        {
+            get
+            {
+                var id = User.FindFirstValue(ClaimTypes.NameIdentifier);
+                return id == null ? Guid.Empty : new Guid(id);
+            }
+        }
 
         protected BaseController(INotificationHandler<DomainNotification> notifications,
             IMediatorHandler mediatorHandler)
@@ -28,14 +37,14 @@ namespace ProPri.WebApp.Mvc.Controllers
             return !_notifications.NotificationExists();
         }
 
-        protected IEnumerable<string> GetErrorMessages()
+        private IEnumerable<string> GetErrorMessages()
         {
             return _notifications.GetNotifications().Select(c => c.Value).ToList();
         }
 
-        protected void NotificarErro(string codigo, string mensagem)
+        protected void NotifyError(string code, string message)
         {
-            _mediatorHandler.PublishNotification(new DomainNotification(codigo, mensagem));
+            _mediatorHandler.PublishNotification(new DomainNotification(code, message));
         }
     }
 }

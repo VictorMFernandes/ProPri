@@ -7,19 +7,12 @@
 <div class="row">
 
     <div class="content content-s">
-            <img class="card-img-top" src="https://cdn.cnn.com/cnnnext/dam/assets/191024091949-02-foster-cat-large-169.jpg" alt="Card image cap">
-            @*<div class="e-avatar e-avatar-xlarge " style="background-image: url(''); width: 150px; height: 150px; margin: auto">
-            </div>*@
+        <img class="card-img-top" src="https://cdn.cnn.com/cnnnext/dam/assets/191024091949-02-foster-cat-large-169.jpg" alt="Card image cap">
 
         <div class="card-body">
             <h5 class="card-title">@ViewData["Title"]</h5>
-            <div class="custom-control custom-checkbox" style="margin-top: -10px">
-                <input type="checkbox" class="custom-control-input" asp-for="Active" id="customCheck1">
-                <label class="custom-control-label" for="customCheck1">@Html.DisplayNameFor(model => model.Active)</label>
-            </div>
-            
             <div class="mt-2">
-                <p>Age: 18</p>
+                <age>@Html.ValueFor(model => model.Birthday)</age>
             </div>
         </div>
 
@@ -27,13 +20,13 @@
             <div class="row">
                 <div class="col-4">Last Active:</div>
                 <div class="col-8">
-                    <div class="float-right">12:33 08/12/2019</div>
+                    <div class="float-right">@Html.ValueFor(model => model.LastActiveDate)</div>
                 </div>
             </div>
             <div class="row">
                 <div class="col-4">Registration:</div>
                 <div class="col-8">
-                    <div class="float-right">12:33 08/12/2019</div>
+                    <div class="float-right">@Html.ValueFor(model => model.RegistrationDate)</div>
                 </div>
             </div>
         </div>
@@ -43,7 +36,7 @@
 
         <div class="col-md-10">
             <form asp-action="Edit">
-                <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                
 
                 <partial name="_FormFields" />
 

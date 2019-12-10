@@ -42,10 +42,10 @@ namespace ProPri.Users.Data.Migrations
                     AccessFailedCount = table.Column<int>(nullable: false),
                     FirstName = table.Column<string>(maxLength: 3, nullable: true),
                     Surname = table.Column<string>(maxLength: 60, nullable: true),
-                    RegistrationDate = table.Column<DateTime>(nullable: false, defaultValue: new DateTime(2019, 12, 9, 16, 27, 19, 861, DateTimeKind.Local).AddTicks(7744)),
+                    RegistrationDate = table.Column<DateTime>(nullable: false, defaultValue: new DateTime(2019, 12, 10, 9, 36, 57, 354, DateTimeKind.Local).AddTicks(5259)),
                     LastActiveDate = table.Column<DateTime>(nullable: false),
                     Active = table.Column<bool>(nullable: false),
-                    Birthday = table.Column<DateTime>(nullable: false)
+                    Birthday = table.Column<DateTime>(nullable: true)
                 },
                 constraints: table =>
                 {
