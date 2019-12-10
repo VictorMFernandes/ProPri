@@ -7,32 +7,26 @@ using ProPri.Users.Application.Queries;
 using ProPri.WebApp.Mvc.Views.Auth.ViewModels;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authorization;
-using ProPri.WebApp.Mvc.Managers;
 
 namespace ProPri.WebApp.Mvc.Controllers
 {
     public class AuthController : BaseController
     {
         private readonly IMediatorHandler _mediatorHandler;
-        private readonly IUsersQueries _usersQueries;
-        private readonly PageManager _pageManager;
 
         public AuthController(INotificationHandler<DomainNotification> notifications,
                               IMediatorHandler mediatorHandler,
-                              IUsersQueries usersQueries,
-                              PageManager pageManager)
-            : base(notifications, mediatorHandler)
+                              IUsersQueries usersQueries)
+            : base(notifications, mediatorHandler, usersQueries)
         {
             _mediatorHandler = mediatorHandler;
-            _usersQueries = usersQueries;
-            _pageManager = pageManager;
         }
 
         [AllowAnonymous]
         public IActionResult Login()
         {
-            if (_usersQueries.IsSignedIn(User))
-                return _pageManager.RedirectToMainPage();
+            if (UsersQueries.IsSignedIn(User))
+                return RedirectToMainPage();
 
             return View();
         }
@@ -50,7 +44,7 @@ namespace ProPri.WebApp.Mvc.Controllers
             var result = await _mediatorHandler.SendCommand(loginCommand);
 
             if (result)
-                return _pageManager.RedirectToMainPage();
+                return RedirectToMainPage();
 
             return View(loginVm);
         }

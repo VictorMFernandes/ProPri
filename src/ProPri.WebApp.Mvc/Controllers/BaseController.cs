@@ -1,12 +1,14 @@
 ﻿using MediatR;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using ProPri.Core.Communication.Handlers;
 using ProPri.Core.Communication.Messages.Common.Notifications;
+using ProPri.Core.Constants;
+using ProPri.Users.Application.Queries;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Security.Claims;
-using Microsoft.AspNetCore.Authorization;
 
 namespace ProPri.WebApp.Mvc.Controllers
 {
@@ -15,6 +17,7 @@ namespace ProPri.WebApp.Mvc.Controllers
     {
         private readonly DomainNotificationHandler _notifications;
         private readonly IMediatorHandler _mediatorHandler;
+        protected readonly IUsersQueries UsersQueries;
 
         protected Guid LoggedUserId
         {
@@ -26,10 +29,12 @@ namespace ProPri.WebApp.Mvc.Controllers
         }
 
         protected BaseController(INotificationHandler<DomainNotification> notifications,
-            IMediatorHandler mediatorHandler)
+                                 IMediatorHandler mediatorHandler,
+                                 IUsersQueries usersQueries)
         {
             _notifications = (DomainNotificationHandler)notifications;
             _mediatorHandler = mediatorHandler;
+            UsersQueries = usersQueries;
         }
 
         protected bool ValidOperation()
@@ -45,6 +50,13 @@ namespace ProPri.WebApp.Mvc.Controllers
         protected void NotifyError(string code, string message)
         {
             _mediatorHandler.PublishNotification(new DomainNotification(code, message));
+        }
+
+        protected RedirectToActionResult RedirectToMainPage()
+        {
+            return UsersQueries.IsAuthorized(LoggedUserId, ConstData.ClaimUsersRead)
+                ? RedirectToAction("Index", "Users")
+                : RedirectToAction("Index", "Students");
         }
     }
 }

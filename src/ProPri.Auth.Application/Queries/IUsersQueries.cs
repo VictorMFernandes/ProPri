@@ -26,7 +26,7 @@ namespace ProPri.Users.Application.Queries
 
         #region Claim
 
-        bool IsAuthorized(ClaimsPrincipal user, string claim);
+        bool IsAuthorized(Guid userId, string claim);
 
         #endregion
     }

@@ -62,7 +62,7 @@ namespace ProPri.Users.Application.Queries
 
         #region Claim
 
-        public bool IsAuthorized(ClaimsPrincipal user, string claim)
+        public bool IsAuthorized(Guid userId, string claim)
         {
             // Tem que pegar do banco, nesse http context ainda não tem a claim
             _userManager.Clai
