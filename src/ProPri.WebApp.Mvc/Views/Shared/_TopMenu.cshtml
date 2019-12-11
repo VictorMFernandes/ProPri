@@ -34,7 +34,10 @@
 
 <div class="dock-menu" id="header">
     <ul class="header-list box-shadow">
-        <li id="hamburger" class="icon-menu icon list"></li>
+        @if (SignInManager.IsSignedIn(User))
+        {
+            <li id="hamburger" class="icon-menu icon list"></li>
+        }
         <li class="right-header list">
             <div class="horizontal-menu">
                 <ejs-menu id="horizontal-menubar" items="@menu" orientation="Horizontal" cssClass="dock-menu" select="onMenuItemSelect"></ejs-menu>

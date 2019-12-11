@@ -13,7 +13,7 @@
         </p>
     </div>
 
-    <table class="table table-hover mt-2">
+    <table class="table table-hover mt-2 table-without-img">
         <thead class="thead-dark">
             <tr>
                 <th>
@@ -29,10 +29,10 @@
             {
                 <tr>
                     <td>
-                        <a asp-action="Edit" asp-route-id="@user.Id" style="line-height: 70px;">@user.Name</a>
+                        <a class="table-data" asp-action="Edit" asp-route-id="@user.Id">@user.Name</a>
                     </td>
                     <td class="d-none d-sm-table-cell">
-                        <a asp-action="Edit" style="line-height: 70px;">@user.Role</a>
+                        <a class="table-data" asp-action="Edit">@user.Role</a>
                     </td>
                 </tr>
             }

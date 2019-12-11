@@ -56,7 +56,7 @@ namespace ProPri.WebApp.Mvc.Controllers
         protected async Task<RedirectToActionResult> RedirectToMainPageAsync(Guid userId)
         {
             var result = await UsersQueries.IsAuthorized(userId, ConstData.ClaimUsersRead);
-            
+
             var controller = result ? "Users" : "Students";
 
             return RedirectToAction("Index", controller);

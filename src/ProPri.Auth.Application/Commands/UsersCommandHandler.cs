@@ -58,11 +58,18 @@ namespace ProPri.Users.Application.Commands
             var user = await _userManager.FindByEmailAsync(request.Email);
 
             if (user == null)
+            {
+                await MediatorHandler.PublishNotification(new DomainNotification("user", "Invalid login or e-mail"));
                 return new LoginCommandResult(false);
+            }
 
             var result = await _signInManager.PasswordSignInAsync(user, request.Password, true, false);
-            
-            return result.Succeeded ? new LoginCommandResult(true, user.Id) : new LoginCommandResult(false);
+
+            if (result.Succeeded)
+                return new LoginCommandResult(true, user.Id);
+
+            await MediatorHandler.PublishNotification(new DomainNotification("user", "Invalid login or e-mail"));
+            return new LoginCommandResult(false);
         }
 
         public async Task<bool> Handle(LogoutCommand request, CancellationToken cancellationToken)

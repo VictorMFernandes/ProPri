@@ -1,4 +1,8 @@
-﻿@{
+﻿@using Microsoft.AspNetCore.Identity
+@using ProPri.Users.Domain
+@inject SignInManager<User> SignInManager
+
+@{
     var menu = new List<object>
 {
         new
@@ -39,8 +43,11 @@
     };
 }
 
-<ejs-sidebar id="sidebar-menu" class="dock-menu" width="220px" dockSize="50px" target="#main-content-wrapper" enableDock="true" type="Over">
-    <e-content-template>
-        <ejs-menu id="main-menubar" items="@menu" orientation="Vertical" cssClass="dock-menu" select="onMenuItemSelect"></ejs-menu>
-    </e-content-template>
-</ejs-sidebar>
+@if (SignInManager.IsSignedIn(User))
+{
+    <ejs-sidebar id="sidebar-menu" class="dock-menu" width="220px" dockSize="50px" target="#main-content-wrapper" enableDock="true" type="Over">
+        <e-content-template>
+            <ejs-menu id="main-menubar" items="@menu" orientation="Vertical" cssClass="dock-menu" select="onMenuItemSelect"></ejs-menu>
+        </e-content-template>
+    </ejs-sidebar>
+}

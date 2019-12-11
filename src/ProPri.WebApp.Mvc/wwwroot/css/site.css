@@ -19,6 +19,7 @@ html, body {
 /* content area styles */
 #main-content-wrapper {
     height: 100vh;
+    width: 100vw;
     z-index: 5;
     background-color: #F9FAFB;
     padding: 20px 20px 60px 20px;
@@ -28,9 +29,9 @@ html, body {
     padding: 20px;
     background-color: white;
     border: 1px solid #E9EAEB;
-    display: inline-flex;
+    display: block;
     flex-direction: column;
-    min-width: 97%;
+    min-width: 96%;
     border-radius: 0.25rem !important;
     box-shadow: 0 .25rem .75rem rgba(0, 0, 0, .05);
 }
@@ -38,7 +39,7 @@ html, body {
 .content {
     background-color: white;
     border: 1px solid #E9EAEB;
-    display: inline-flex;
+    display: block;
     flex-direction: column;
     border-radius: 0.25rem !important;
     box-shadow: 0 .25rem .75rem rgba(0, 0, 0, .05);
@@ -52,6 +53,12 @@ html, body {
     padding: 20px;
     width: 78%;
     margin-left: 15px;
+}
+
+.content-centered {
+    margin: auto !important;
+    max-width: 400px;
+    padding: 20px;
 }
 
 .border-top {

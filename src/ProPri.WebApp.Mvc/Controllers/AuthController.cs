@@ -60,11 +60,13 @@ namespace ProPri.WebApp.Mvc.Controllers
             return View();
         }
 
+        [AllowAnonymous]
         public IActionResult RecoverPassword(LoginViewModel loginVm)
         {
             return View(loginVm);
         }
 
+        [AllowAnonymous]
         [HttpPost]
         public IActionResult RecoverPassword(string email)
         {

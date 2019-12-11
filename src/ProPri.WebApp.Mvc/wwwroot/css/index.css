@@ -9,6 +9,36 @@ td a {
         text-decoration: none;
     }
 
+.table-btn {
+    cursor: pointer;
+}
+
+    .table-btn spam {
+        color: var(--light);
+    }
+
+.table-with-img tbody a.table-data,
+.table-with-img tbody .table-img {
+    line-height: 100px !important;
+}
+
+.table-with-img td {
+    padding: 0 0.75rem !important;
+}
+
+.table-with-img .table-img {
+    width: 100px;
+    height: 100px
+}
+
+.table-without-img tbody a.table-data {
+    line-height: 60px;
+}
+
+.table-without-img td {
+    padding: 0 0.75rem !important;
+}
+
 /*treeview*/
 #treeview-parent {
     margin: auto;
@@ -29,18 +59,10 @@ td a {
     pointer-events: auto;
 }
 
-.treeview-btn spam {
-    color: var(--light);
-}
+    .treeview-btn spam {
+        color: var(--light);
+    }
 
 .treeview-row {
     width: 45vw;
-}
-
-.table-btn {
-    cursor: pointer;
-}
-
-.table-btn spam {
-    color: var(--light);
 }
