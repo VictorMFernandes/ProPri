@@ -2,7 +2,7 @@
 
 namespace ProPri.Users.Application.Commands
 {
-    public class LogoutCommand : Command
+    public class LogoutCommand : CommandWithoutResult
     {
         public LogoutCommand()
         {

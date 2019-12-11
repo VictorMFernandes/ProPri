@@ -7,7 +7,6 @@ using System;
 using System.Collections.Generic;
 using System.Security.Claims;
 using System.Threading.Tasks;
-using ProPri.Core.Constants;
 
 namespace ProPri.Users.Application.Queries
 {
@@ -15,17 +14,14 @@ namespace ProPri.Users.Application.Queries
     {
         private readonly IUserRepository _userRepository;
         private readonly SignInManager<User> _signInManager;
-        private readonly UserManager<User> _userManager;
 
         #region Constructors
 
         public UsersQueries(IUserRepository userRepository,
-                            SignInManager<User> signInManager,
-                            UserManager<User> userManager)
+                            SignInManager<User> signInManager)
         {
             _userRepository = userRepository;
             _signInManager = signInManager;
-            _userManager = userManager;
         }
 
         #endregion
@@ -41,7 +37,7 @@ namespace ProPri.Users.Application.Queries
 
         public async Task<UserFormDto> GetUserById(Guid userId)
         {
-            return await _userRepository.GetUserById(userId);
+            return await _userRepository.GetUserByIdWithUserRoles(userId);
         }
 
         public bool IsSignedIn(ClaimsPrincipal user)
@@ -62,12 +58,9 @@ namespace ProPri.Users.Application.Queries
 
         #region Claim
 
-        public bool IsAuthorized(Guid userId, string claim)
+        public async Task<bool> IsAuthorized(Guid userId, string claimValue)
         {
-            // Tem que pegar do banco, nesse http context ainda não tem a claim
-            _userManager.Clai
-            var result = user.HasClaim(c => c.Value == claim);
-            return result;
+            return await _userRepository.HasClaim(userId, claimValue);
         }
 
         #endregion

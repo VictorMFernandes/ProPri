@@ -12,8 +12,7 @@ namespace ProPri.Users.Domain
         #region User
 
         Task<PaginatedList<UserIndexDto>> GetUsers(int pageNumber, int pageSize);
-        Task<UserFormDto> GetUserById(Guid id);
-
+        Task<UserFormDto> GetUserByIdWithUserRoles(Guid id);
         void UpdateUser(User user);
 
         #endregion
@@ -21,6 +20,12 @@ namespace ProPri.Users.Domain
         #region Role
 
         Task<IEnumerable<RoleIdNameDto>> GetAllRoleIdName();
+
+        #endregion
+
+        #region Claim
+
+        Task<bool> HasClaim(Guid userId, string claimValue);
 
         #endregion
     }

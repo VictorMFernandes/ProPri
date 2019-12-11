@@ -31,7 +31,7 @@ namespace ProPri.Core.WebApp.Extensions
             services.AddScoped<IUserRepository, UserRepository>();
 
             services.AddScoped<IRequestHandler<EditUserCommand, bool>, UsersCommandHandler>();
-            services.AddScoped<IRequestHandler<LoginCommand, bool>, UsersCommandHandler>();
+            services.AddScoped<IRequestHandler<LoginCommand, LoginCommandResult>, UsersCommandHandler>();
             services.AddScoped<IRequestHandler<LogoutCommand, bool>, UsersCommandHandler>();
         }
     }

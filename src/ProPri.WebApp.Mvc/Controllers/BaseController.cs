@@ -9,6 +9,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Security.Claims;
+using System.Threading.Tasks;
 
 namespace ProPri.WebApp.Mvc.Controllers
 {
@@ -52,11 +53,13 @@ namespace ProPri.WebApp.Mvc.Controllers
             _mediatorHandler.PublishNotification(new DomainNotification(code, message));
         }
 
-        protected RedirectToActionResult RedirectToMainPage()
+        protected async Task<RedirectToActionResult> RedirectToMainPageAsync(Guid userId)
         {
-            return UsersQueries.IsAuthorized(LoggedUserId, ConstData.ClaimUsersRead)
-                ? RedirectToAction("Index", "Users")
-                : RedirectToAction("Index", "Students");
+            var result = await UsersQueries.IsAuthorized(userId, ConstData.ClaimUsersRead);
+            
+            var controller = result ? "Users" : "Students";
+
+            return RedirectToAction("Index", controller);
         }
     }
 }

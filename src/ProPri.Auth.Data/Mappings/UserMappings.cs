@@ -15,7 +15,7 @@ namespace ProPri.Users.Data.Mappings
         {
             b.ToTable(Table);
 
-            b.Property(u => u.RegistrationDate).HasColumnName("RegistrationDate").HasDefaultValue(DateTime.Now);
+            b.Property(u => u.RegistrationDate).HasColumnName("RegistrationDate").IsRequired();
 
             b.OwnsOne(u => u.Name, n =>
             {

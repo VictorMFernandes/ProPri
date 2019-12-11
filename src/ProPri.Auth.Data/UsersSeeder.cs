@@ -1,8 +1,8 @@
-﻿using System.Security.Claims;
-using Microsoft.AspNetCore.Identity;
+﻿using Microsoft.AspNetCore.Identity;
 using ProPri.Core.Constants;
 using ProPri.Core.Domain.ValueObjects;
 using ProPri.Users.Domain;
+using System.Security.Claims;
 
 namespace ProPri.Users.Data
 {
@@ -11,15 +11,11 @@ namespace ProPri.Users.Data
         private readonly UserManager<User> _userManager;
         private readonly RoleManager<Role> _roleManager;
 
-        private readonly IUserRepository _userRepository;
-
         public UsersSeeder(UserManager<User> userManager,
-                           RoleManager<Role> roleManager,
-                           IUserRepository userRepository)
+                           RoleManager<Role> roleManager)
         {
             _userManager = userManager;
             _roleManager = roleManager;
-            _userRepository = userRepository;
         }
 
         public void Seed()
@@ -53,7 +49,7 @@ namespace ProPri.Users.Data
             {
                 var role = new Role(ConstData.RoleFd);
                 _roleManager.CreateAsync(role).Wait();
-                
+
                 AddFdClaims(role);
             }
         }

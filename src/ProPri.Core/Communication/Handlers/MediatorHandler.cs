@@ -14,7 +14,12 @@ namespace ProPri.Core.Communication.Handlers
             _mediator = mediator;
         }
 
-        public async Task<bool> SendCommand<T>(T command) where T : Command
+        public async Task<bool> SendCommand<T>(T command) where T : CommandWithoutResult
+        {
+            return await _mediator.Send(command);
+        }
+
+        public async Task<TResult> SendCommand<T, TResult>(T command) where T : CommandWithResult<TResult> where TResult : CommandResult
         {
             return await _mediator.Send(command);
         }

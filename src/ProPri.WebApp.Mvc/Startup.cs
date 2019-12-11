@@ -1,5 +1,3 @@
-using System;
-using System.Security.Claims;
 using AutoMapper;
 using MediatR;
 using Microsoft.AspNetCore.Builder;
@@ -16,6 +14,7 @@ using ProPri.Users.Data;
 using ProPri.Users.Domain;
 using ProPri.WebApp.Mvc.Extensions;
 using Syncfusion.Licensing;
+using System;
 
 namespace ProPri.WebApp.Mvc
 {
@@ -62,7 +61,6 @@ namespace ProPri.WebApp.Mvc
 
             services.AddAutoMapper(typeof(Startup));
             services.InjectDependencies();
-            services.InjectMvcDependencies();
             SyncfusionLicenseProvider.RegisterLicense("MTc4NjMyQDMxMzcyZTMzMmUzMElidVVLdGNQQjgxNi95UGNjQVl4MEtMNUFObVNBVzFyV3Z2OStLTHpMRUU9");
             services.AddMediatR(typeof(Startup));
         }

@@ -24,6 +24,8 @@ namespace ProPri.Users.Data.Repository
             _mapper = mapper;
         }
 
+        #region User
+
         public async Task<PaginatedList<UserIndexDto>> GetUsers(int pageNumber, int pageSize)
         {
             var users = await PaginatedList<UserIndexDto>.Create(_context.Users
@@ -37,7 +39,7 @@ namespace ProPri.Users.Data.Repository
             return users;
         }
 
-        public async Task<UserFormDto> GetUserById(Guid id)
+        public async Task<UserFormDto> GetUserByIdWithUserRoles(Guid id)
         {
             var user = await _context.Users.AsNoTracking()
                 .Include(u => u.UserRoles)
@@ -50,11 +52,34 @@ namespace ProPri.Users.Data.Repository
             _context.Users.Update(user);
         }
 
+        #endregion
+
+        #region Role
+
         public async Task<IEnumerable<RoleIdNameDto>> GetAllRoleIdName()
         {
             var roles = await _context.Roles.AsNoTracking().ToListAsync();
             return _mapper.Map<IEnumerable<RoleIdNameDto>>(roles);
         }
+
+        #endregion
+
+        #region Claim
+
+        public async Task<bool> HasClaim(Guid userId, string claimValue)
+        {
+            var userRole = await _context.UserRoles
+                .AsNoTracking()
+                .Include(ur => ur.Role)
+                .ThenInclude(r => r.RoleClaims)
+                .FirstOrDefaultAsync(ur => ur.UserId == userId);
+
+            var result = userRole.Role.RoleClaims.Any(rc => rc.ClaimValue == claimValue);
+
+            return result;
+        }
+
+        #endregion
 
         public void Dispose()
         {

@@ -4,7 +4,7 @@ using System;
 
 namespace ProPri.Users.Application.Commands
 {
-    public class EditUserCommand : Command
+    public class EditUserCommand : CommandWithoutResult
     {
         public Guid UserId { get; private set; }
         public Guid Id { get; private set; }

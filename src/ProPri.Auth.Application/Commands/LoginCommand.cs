@@ -3,7 +3,7 @@ using ProPri.Core.Communication.Messages;
 
 namespace ProPri.Users.Application.Commands
 {
-    public class LoginCommand : Command
+    public class LoginCommand : CommandWithResult<LoginCommandResult>
     {
         public string Email { get; set; }
         public string Password { get; set; }

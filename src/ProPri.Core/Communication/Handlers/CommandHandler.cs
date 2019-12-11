@@ -5,11 +5,11 @@ namespace ProPri.Core.Communication.Handlers
 {
     public abstract class CommandHandler
     {
-        protected readonly IMediatorHandler _mediatorHandler;
+        protected readonly IMediatorHandler MediatorHandler;
 
         protected CommandHandler(IMediatorHandler mediatorHandler)
         {
-            _mediatorHandler = mediatorHandler;
+            MediatorHandler = mediatorHandler;
         }
 
         protected bool ValidateCommand(Command command)
@@ -18,7 +18,7 @@ namespace ProPri.Core.Communication.Handlers
 
             foreach (var error in command.ValidationResult.Errors)
             {
-                _mediatorHandler.PublishNotification(new DomainNotification(command.Type, error.ErrorMessage));
+                MediatorHandler.PublishNotification(new DomainNotification(command.Type, error.ErrorMessage));
             }
 
             return false;

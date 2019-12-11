@@ -1,8 +1,10 @@
 ﻿using AutoMapper;
 using MediatR;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using ProPri.Core.Communication.Handlers;
 using ProPri.Core.Communication.Messages.Common.Notifications;
+using ProPri.Core.Constants;
 using ProPri.Users.Application.Commands;
 using ProPri.Users.Application.Queries;
 using ProPri.Users.Application.Queries.Filters;
@@ -11,8 +13,6 @@ using ProPri.WebApp.Mvc.Views.Users.ViewModels;
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
-using Microsoft.AspNetCore.Authorization;
-using ProPri.Core.Constants;
 
 namespace ProPri.WebApp.Mvc.Controllers
 {
@@ -24,7 +24,8 @@ namespace ProPri.WebApp.Mvc.Controllers
 
         public UsersController(INotificationHandler<DomainNotification> notifications,
                                IMapper mapper, IUsersQueries usersQueries,
-                               IMediatorHandler mediatorHandler) : base(notifications, mediatorHandler)
+                               IMediatorHandler mediatorHandler)
+            : base(notifications, mediatorHandler, usersQueries)
         {
             _mapper = mapper;
             _usersQueries = usersQueries;

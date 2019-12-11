@@ -1,10 +1,9 @@
-﻿using System;
-using FluentValidation.Results;
-using MediatR;
+﻿using FluentValidation.Results;
+using System;
 
 namespace ProPri.Core.Communication.Messages
 {
-    public abstract class Command : Message, IRequest<bool>
+    public abstract class Command : Message
     {
         public DateTime Date { get; }
         public ValidationResult ValidationResult { get; set; }

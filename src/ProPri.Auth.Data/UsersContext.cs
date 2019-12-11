@@ -8,9 +8,9 @@ using System.Threading.Tasks;
 
 namespace ProPri.Users.Data
 {
-    public class UsersContext : IdentityDbContext<User, Role, Guid, 
-        IdentityUserClaim<Guid>, UserRole, IdentityUserLogin<Guid>, 
-        IdentityRoleClaim<Guid>, IdentityUserToken<Guid>>, IUnitOfWork
+    public class UsersContext : IdentityDbContext<User, Role, Guid,
+        IdentityUserClaim<Guid>, UserRole, IdentityUserLogin<Guid>,
+        RoleClaim, IdentityUserToken<Guid>>, IUnitOfWork
     {
         public UsersContext(DbContextOptions<UsersContext> options)
             : base(options)

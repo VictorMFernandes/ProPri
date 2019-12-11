@@ -1,9 +1,7 @@
-﻿using Microsoft.AspNetCore.Identity;
-using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 using ProPri.Core.Constants;
 using ProPri.Users.Domain;
-using System;
 
 namespace ProPri.Users.Data.Mappings
 {
@@ -35,7 +33,10 @@ namespace ProPri.Users.Data.Mappings
             b.HasMany<UserRole>().WithOne().HasForeignKey(ur => ur.RoleId).IsRequired();
 
             // Each Role can have many associated RoleClaims
-            b.HasMany<IdentityRoleClaim<Guid>>().WithOne().HasForeignKey(rc => rc.RoleId).IsRequired();
+            b.HasMany(r => r.RoleClaims)
+                .WithOne(rc => rc.Role)
+                .HasForeignKey(rc => rc.RoleId)
+                .IsRequired();
         }
     }
 }

@@ -1,4 +1,5 @@
 ﻿using MediatR;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using ProPri.Core.Communication.Handlers;
 using ProPri.Core.Communication.Messages.Common.Notifications;
@@ -6,7 +7,6 @@ using ProPri.Users.Application.Commands;
 using ProPri.Users.Application.Queries;
 using ProPri.WebApp.Mvc.Views.Auth.ViewModels;
 using System.Threading.Tasks;
-using Microsoft.AspNetCore.Authorization;
 
 namespace ProPri.WebApp.Mvc.Controllers
 {
@@ -23,10 +23,10 @@ namespace ProPri.WebApp.Mvc.Controllers
         }
 
         [AllowAnonymous]
-        public IActionResult Login()
+        public async Task<IActionResult> Login()
         {
             if (UsersQueries.IsSignedIn(User))
-                return RedirectToMainPage();
+                return await RedirectToMainPageAsync(LoggedUserId);
 
             return View();
         }
@@ -41,10 +41,10 @@ namespace ProPri.WebApp.Mvc.Controllers
                 Password = loginVm.Password
             };
 
-            var result = await _mediatorHandler.SendCommand(loginCommand);
+            var loginResult = await _mediatorHandler.SendCommand<LoginCommand, LoginCommandResult>(loginCommand);
 
-            if (result)
-                return RedirectToMainPage();
+            if (loginResult.Success)
+                return await RedirectToMainPageAsync(loginResult.UserId);
 
             return View(loginVm);
         }

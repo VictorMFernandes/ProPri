@@ -9,7 +9,7 @@ using ProPri.Users.Data;
 namespace ProPri.Users.Data.Migrations
 {
     [DbContext(typeof(UsersContext))]
-    [Migration("20191210123658_V1")]
+    [Migration("20191211130604_V1")]
     partial class V1
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -17,28 +17,6 @@ namespace ProPri.Users.Data.Migrations
 #pragma warning disable 612, 618
             modelBuilder
                 .HasAnnotation("ProductVersion", "3.1.0");
-
-            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<System.Guid>", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("INTEGER");
-
-                    b.Property<string>("ClaimType")
-                        .HasColumnType("TEXT");
-
-                    b.Property<string>("ClaimValue")
-                        .HasColumnType("TEXT");
-
-                    b.Property<Guid>("RoleId")
-                        .HasColumnType("TEXT");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("RoleId");
-
-                    b.ToTable("tb_role_claim");
-                });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserClaim<System.Guid>", b =>
                 {
@@ -133,6 +111,28 @@ namespace ProPri.Users.Data.Migrations
                     b.ToTable("tb_role");
                 });
 
+            modelBuilder.Entity("ProPri.Users.Domain.RoleClaim", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("INTEGER");
+
+                    b.Property<string>("ClaimType")
+                        .HasColumnType("TEXT");
+
+                    b.Property<string>("ClaimValue")
+                        .HasColumnType("TEXT");
+
+                    b.Property<Guid>("RoleId")
+                        .HasColumnType("TEXT");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("RoleId");
+
+                    b.ToTable("tb_role_claim");
+                });
+
             modelBuilder.Entity("ProPri.Users.Domain.User", b =>
                 {
                     b.Property<Guid>("Id")
@@ -186,10 +186,8 @@ namespace ProPri.Users.Data.Migrations
                         .HasColumnType("INTEGER");
 
                     b.Property<DateTime>("RegistrationDate")
-                        .ValueGeneratedOnAdd()
                         .HasColumnName("RegistrationDate")
-                        .HasColumnType("TEXT")
-                        .HasDefaultValue(new DateTime(2019, 12, 10, 9, 36, 57, 354, DateTimeKind.Local).AddTicks(5259));
+                        .HasColumnType("TEXT");
 
                     b.Property<string>("SecurityStamp")
                         .HasColumnType("TEXT");
@@ -228,15 +226,6 @@ namespace ProPri.Users.Data.Migrations
                     b.ToTable("tb_user_role");
                 });
 
-            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<System.Guid>", b =>
-                {
-                    b.HasOne("ProPri.Users.Domain.Role", null)
-                        .WithMany()
-                        .HasForeignKey("RoleId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-                });
-
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserClaim<System.Guid>", b =>
                 {
                     b.HasOne("ProPri.Users.Domain.User", null)
@@ -260,6 +249,15 @@ namespace ProPri.Users.Data.Migrations
                     b.HasOne("ProPri.Users.Domain.User", null)
                         .WithMany()
                         .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+                });
+
+            modelBuilder.Entity("ProPri.Users.Domain.RoleClaim", b =>
+                {
+                    b.HasOne("ProPri.Users.Domain.Role", "Role")
+                        .WithMany("RoleClaims")
+                        .HasForeignKey("RoleId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
                 });

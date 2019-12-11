@@ -13,7 +13,7 @@ namespace ProPri.Users.Application.Commands
 {
     public class UsersCommandHandler : CommandHandler,
         IRequestHandler<EditUserCommand, bool>,
-        IRequestHandler<LoginCommand, bool>,
+        IRequestHandler<LoginCommand, LoginCommandResult>,
         IRequestHandler<LogoutCommand, bool>
     {
         private readonly IUserRepository _userRepository;
@@ -40,7 +40,7 @@ namespace ProPri.Users.Application.Commands
             var editedUser = await _userManager.FindByIdAsync(request.Id.ToString());
             if (editedUser == null)
             {
-                await _mediatorHandler.PublishNotification(new DomainNotification("user", "The user you are trying to edit could not be found"));
+                await MediatorHandler.PublishNotification(new DomainNotification("user", "The user you are trying to edit could not be found"));
                 return false;
             }
 
@@ -51,18 +51,18 @@ namespace ProPri.Users.Application.Commands
             return await _userRepository.UnitOfWork.Commit();
         }
 
-        public async Task<bool> Handle(LoginCommand request, CancellationToken cancellationToken)
+        public async Task<LoginCommandResult> Handle(LoginCommand request, CancellationToken cancellationToken)
         {
-            if (!ValidateCommand(request)) return false;
+            if (!ValidateCommand(request)) return new LoginCommandResult(false);
 
             var user = await _userManager.FindByEmailAsync(request.Email);
 
             if (user == null)
-                return false;
+                return new LoginCommandResult(false);
 
             var result = await _signInManager.PasswordSignInAsync(user, request.Password, true, false);
             
-            return result.Succeeded;
+            return result.Succeeded ? new LoginCommandResult(true, user.Id) : new LoginCommandResult(false);
         }
 
         public async Task<bool> Handle(LogoutCommand request, CancellationToken cancellationToken)
@@ -78,7 +78,7 @@ namespace ProPri.Users.Application.Commands
             var user = await _userManager.FindByIdAsync(userId.ToString());
             if (user == null)
             {
-                await _mediatorHandler.PublishNotification(new DomainNotification("user", "Your user could not be found"));
+                await MediatorHandler.PublishNotification(new DomainNotification("user", "Your user could not be found"));
                 return null;
             }
 
@@ -87,7 +87,7 @@ namespace ProPri.Users.Application.Commands
 
             if (await _userManager.IsInRoleAsync(user, role)) return user;
 
-            await _mediatorHandler.PublishNotification(new DomainNotification("user", "You have no permission to perform this action"));
+            await MediatorHandler.PublishNotification(new DomainNotification("user", "You have no permission to perform this action"));
             return null;
         }
     }
