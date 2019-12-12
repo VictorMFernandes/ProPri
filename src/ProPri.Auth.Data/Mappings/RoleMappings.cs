@@ -26,13 +26,13 @@ namespace ProPri.Users.Data.Mappings
             b.Property(u => u.Name).HasMaxLength(ConstSizes.ProfileNameMax);
             b.Property(u => u.NormalizedName).HasMaxLength(ConstSizes.ProfileNameMax);
 
-            // The relationships between Role and other entity types
+            // The relationships between ActiveUserWithRoleExists and other entity types
             // Note that these relationships are configured with no navigation properties
 
-            // Each Role can have many entries in the UserRole join table
+            // Each ActiveUserWithRoleExists can have many entries in the UserRole join table
             b.HasMany<UserRole>().WithOne().HasForeignKey(ur => ur.RoleId).IsRequired();
 
-            // Each Role can have many associated RoleClaims
+            // Each ActiveUserWithRoleExists can have many associated RoleClaims
             b.HasMany(r => r.RoleClaims)
                 .WithOne(rc => rc.Role)
                 .HasForeignKey(rc => rc.RoleId)

@@ -5,21 +5,21 @@ using System;
 
 namespace ProPri.WebApp.Mvc.Extensions
 {
-    [HtmlTargetElement("*", Attributes = "suppress-by-claim")]
-    public class SuppressByClaimTagHelper : TagHelper
+    [HtmlTargetElement("*", Attributes = "show-by-claim")]
+    public class ShowByClaimTagHelper : TagHelper
     {
         private readonly IHttpContextAccessor _contextAccessor;
         private readonly IUsersQueries _usersQueries;
 
-        public SuppressByClaimTagHelper(IHttpContextAccessor contextAccessor,
+        public ShowByClaimTagHelper(IHttpContextAccessor contextAccessor,
                                         IUsersQueries usersQueries)
         {
             _contextAccessor = contextAccessor;
             _usersQueries = usersQueries;
         }
 
-        [HtmlAttributeName("suppress-by-claim")]
-        public string IdentityClaimValue { get; set; }
+        [HtmlAttributeName("show-by-claim")]
+        public string ShowClaimValue { get; set; }
 
         public override void Process(TagHelperContext context, TagHelperOutput output)
         {
@@ -28,12 +28,13 @@ namespace ProPri.WebApp.Mvc.Extensions
             if (output == null)
                 throw new ArgumentNullException(nameof(output));
 
+            if (string.IsNullOrEmpty(ShowClaimValue)) return;
+
             var userId = AuthorizationExtensions.GetLoggedUserId(_contextAccessor.HttpContext.User);
-            var hasAccess = _usersQueries.IsAuthorized(userId, IdentityClaimValue).Result;
+            var hasAccess = _usersQueries.IsAuthorized(userId, ShowClaimValue).Result;
 
-            if (hasAccess) return;
-
-            output.SuppressOutput();
+            if (hasAccess)
+                output.SuppressOutput();
         }
     }
 }

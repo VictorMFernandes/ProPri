@@ -18,7 +18,7 @@ namespace ProPri.Users.Application.Queries
 
         #endregion
 
-        #region Role
+        #region ActiveUserWithRoleExists
 
         Task<IEnumerable<RoleIdNameDto>> GetAllRoleIdName();
 

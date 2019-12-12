@@ -7,5 +7,15 @@ namespace ProPri.Users.Domain
     {
         public virtual User User { get; set; }
         public virtual Role Role { get; set; }
+
+        public UserRole()
+        {
+
+        }
+
+        public UserRole(Role role)
+        {
+            RoleId = role.Id;
+        }
     }
 }

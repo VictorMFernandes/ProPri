@@ -7,29 +7,7 @@
 <div class="row">
 
     <div class="content content-s">
-        <img class="card-img-top" src="https://cdn.cnn.com/cnnnext/dam/assets/191024091949-02-foster-cat-large-169.jpg" alt="Card image cap">
-
-        <div class="card-body">
-            <h5 class="card-title">@ViewData["Title"]</h5>
-            <div class="mt-2">
-                <age>@Html.ValueFor(model => model.Birthday)</age>
-            </div>
-        </div>
-
-        <div class="card-footer">
-            <div class="row">
-                <div class="col-4">Last Active:</div>
-                <div class="col-8">
-                    <div class="float-right">@Html.ValueFor(model => model.LastActiveDate)</div>
-                </div>
-            </div>
-            <div class="row">
-                <div class="col-4">Registration:</div>
-                <div class="col-8">
-                    <div class="float-right">@Html.ValueFor(model => model.RegistrationDate)</div>
-                </div>
-            </div>
-        </div>
+        <partial name="_Details" />
     </div>
 
     <div class="content content-g">
@@ -37,7 +15,6 @@
         <div class="col-md-10">
             <form asp-action="Edit">
                 
-
                 <partial name="_FormFields" />
 
                 <input type="hidden" asp-for="Id" />

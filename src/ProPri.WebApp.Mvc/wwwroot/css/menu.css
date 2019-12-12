@@ -49,7 +49,7 @@
     line-height: 35px;
 }
 
-.e-popup-open {
+.e-menu-wrapper.e-popup-open {
     width: 220px !important;
 }
 

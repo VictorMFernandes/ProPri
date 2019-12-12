@@ -84,7 +84,7 @@ namespace ProPri.Users.Data.Migrations
                     b.ToTable("tb_user_token");
                 });
 
-            modelBuilder.Entity("ProPri.Users.Domain.Role", b =>
+            modelBuilder.Entity("ProPri.Users.Domain.ActiveUserWithRoleExists", b =>
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
@@ -255,7 +255,7 @@ namespace ProPri.Users.Data.Migrations
 
             modelBuilder.Entity("ProPri.Users.Domain.RoleClaim", b =>
                 {
-                    b.HasOne("ProPri.Users.Domain.Role", "Role")
+                    b.HasOne("ProPri.Users.Domain.ActiveUserWithRoleExists", "ActiveUserWithRoleExists")
                         .WithMany("RoleClaims")
                         .HasForeignKey("RoleId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -292,7 +292,7 @@ namespace ProPri.Users.Data.Migrations
 
             modelBuilder.Entity("ProPri.Users.Domain.UserRole", b =>
                 {
-                    b.HasOne("ProPri.Users.Domain.Role", "Role")
+                    b.HasOne("ProPri.Users.Domain.ActiveUserWithRoleExists", "ActiveUserWithRoleExists")
                         .WithMany("UserRoles")
                         .HasForeignKey("RoleId")
                         .OnDelete(DeleteBehavior.Cascade)

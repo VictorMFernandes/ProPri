@@ -4,6 +4,8 @@ using ProPri.Core.Domain.ValueObjects;
 using ProPri.Core.Validation;
 using System;
 using System.Collections.Generic;
+using System.Linq;
+using ProPri.Core.Constants;
 
 namespace ProPri.Users.Domain
 {
@@ -18,6 +20,7 @@ namespace ProPri.Users.Domain
         public DateTime? Birthday { get; private set; }
 
         public ICollection<UserRole> UserRoles { get; set; }
+        public Role Role => UserRoles.Single().Role;
 
         #endregion
 
@@ -70,19 +73,62 @@ namespace ProPri.Users.Domain
 
         #endregion
 
-        public void Update(PersonName name, string email, bool active, DateTime? birthday)
+        public bool UpdateUser(User user, PersonName name, string email, DateTime? birthday, bool active, Role role)
         {
-            Name = name;
-            Email = email;
-            Active = active;
-            Birthday = birthday;
+            user.Name = name;
+            user.Email = email;
+            user.Birthday = birthday;
+
+            if (!UpdateUserActive(user, active))
+                return false;
+
+            if (!UpdateUserRole(user, role))
+                return false;
 
             Validate();
+
+            return true;
+        }
+
+        private bool UpdateUserActive(User user, bool active)
+        {
+            if (user.HasRole(ConstData.RoleManager) && !HasRole(ConstData.RoleManager))
+                return false;
+
+            user.Active = active;
+            return true;
+        }
+
+        private bool UpdateUserRole(User user, Role role)
+        {
+            if (user.HasRole(ConstData.RoleManager) && !HasRole(ConstData.RoleManager))
+                return false;
+
+            if (role.Name == ConstData.RoleManager && !HasRole(ConstData.RoleManager))
+                return false;
+
+            if (role.Name == user.Role.Name)
+                return true;
+
+            user.UserRoles.Clear();
+            user.UserRoles.Add(new UserRole(role));
+
+            return true;
         }
 
         public void UpdateLastActiveDate()
         {
             LastActiveDate = DateTime.Now;
+        }
+
+        public bool HasRole(string role)
+        {
+            return UserRoles.Single().Role.Name == role;
+        }
+
+        public bool HasClaim(string claim)
+        {
+            return UserRoles.Single().Role.RoleClaims.Any(rc => rc.ClaimValue == claim);
         }
     }
 }

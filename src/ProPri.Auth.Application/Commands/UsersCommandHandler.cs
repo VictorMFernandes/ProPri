@@ -5,7 +5,6 @@ using ProPri.Core.Communication.Messages.Common.Notifications;
 using ProPri.Core.Constants;
 using ProPri.Core.Domain.ValueObjects;
 using ProPri.Users.Domain;
-using System;
 using System.Threading;
 using System.Threading.Tasks;
 
@@ -33,11 +32,22 @@ namespace ProPri.Users.Application.Commands
         {
             if (!ValidateCommand(request)) return false;
 
-            var user = await GetLoggedUser(request.UserId, ConstData.RoleManager);
-            if (user == null)
+            var performingUser = await _userRepository.GetUserById(request.UserId);
+            if (performingUser == null)
+            {
+                await MediatorHandler.PublishNotification(new DomainNotification("user", "Your user could not be found"));
                 return false;
+            }
 
-            var editedUser = await _userManager.FindByIdAsync(request.Id.ToString());
+            performingUser.UpdateLastActiveDate();
+            
+            if (!performingUser.HasClaim(ConstData.ClaimUsersWrite))
+            {
+                await MediatorHandler.PublishNotification(new DomainNotification("user", "You don't have permission to edit a user"));
+                return false;
+            }
+
+            var editedUser = await _userRepository.GetUserById(request.Id);
             if (editedUser == null)
             {
                 await MediatorHandler.PublishNotification(new DomainNotification("user", "The user you are trying to edit could not be found"));
@@ -45,8 +55,25 @@ namespace ProPri.Users.Application.Commands
             }
 
             var name = new PersonName(request.FirstName, request.Surname);
-            editedUser.Update(name, request.Email, request.Active, request.Birthday);
+            var role = await _userRepository.GetRoleById(request.RoleId);
 
+            if (editedUser.HasRole(ConstData.RoleManager) &&
+                (!request.Active || role.Name != ConstData.RoleManager) &&
+                await _userRepository.QtyOfActiveUsersInRole(ConstData.RoleManager) == 1)
+            {
+                await MediatorHandler.PublishNotification(new DomainNotification("user", $"There must be at least one active user in the role of {ConstData.RoleManager}"));
+                return false;
+            }
+
+            var updateValid = performingUser.UpdateUser(editedUser, name, request.Email, request.Birthday, request.Active, role);
+            
+            if (!updateValid)
+            {
+                await MediatorHandler.PublishNotification(new DomainNotification("user", "You don't have permission to edit this user"));
+                return false;
+            }
+
+            _userRepository.UpdateUser(performingUser);
             _userRepository.UpdateUser(editedUser);
             return await _userRepository.UnitOfWork.Commit();
         }
@@ -78,24 +105,6 @@ namespace ProPri.Users.Application.Commands
 
             await _signInManager.SignOutAsync();
             return true;
-        }
-
-        private async Task<User> GetLoggedUser(Guid userId, string role)
-        {
-            var user = await _userManager.FindByIdAsync(userId.ToString());
-            if (user == null)
-            {
-                await MediatorHandler.PublishNotification(new DomainNotification("user", "Your user could not be found"));
-                return null;
-            }
-
-            user.UpdateLastActiveDate();
-            await _userRepository.UnitOfWork.Commit();
-
-            if (await _userManager.IsInRoleAsync(user, role)) return user;
-
-            await MediatorHandler.PublishNotification(new DomainNotification("user", "You have no permission to perform this action"));
-            return null;
         }
     }
 }

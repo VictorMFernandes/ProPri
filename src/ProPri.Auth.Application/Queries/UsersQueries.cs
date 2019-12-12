@@ -37,7 +37,7 @@ namespace ProPri.Users.Application.Queries
 
         public async Task<UserFormDto> GetUserById(Guid userId)
         {
-            return await _userRepository.GetUserByIdWithUserRoles(userId);
+            return await _userRepository.GetUserFormById(userId);
         }
 
         public bool IsSignedIn(ClaimsPrincipal user)
@@ -47,7 +47,7 @@ namespace ProPri.Users.Application.Queries
 
         #endregion
 
-        #region Role
+        #region ActiveUserWithRoleExists
 
         public async Task<IEnumerable<RoleIdNameDto>> GetAllRoleIdName()
         {

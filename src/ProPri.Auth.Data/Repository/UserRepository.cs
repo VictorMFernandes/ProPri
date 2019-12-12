@@ -39,7 +39,7 @@ namespace ProPri.Users.Data.Repository
             return users;
         }
 
-        public async Task<UserFormDto> GetUserByIdWithUserRoles(Guid id)
+        public async Task<UserFormDto> GetUserFormById(Guid id)
         {
             var user = await _context.Users.AsNoTracking()
                 .Include(u => u.UserRoles)
@@ -47,19 +47,45 @@ namespace ProPri.Users.Data.Repository
             return _mapper.Map<UserFormDto>(user);
         }
 
+        public async Task<User> GetUserById(Guid id)
+        {
+            var user = await _context.Users
+                .Include(u => u.UserRoles)
+                .ThenInclude(ur => ur.Role)
+                .ThenInclude(r => r.RoleClaims)
+                .FirstOrDefaultAsync(u => u.Id == id);
+            return user;
+        }
+
         public void UpdateUser(User user)
         {
             _context.Users.Update(user);
         }
 
+        public async Task<int> QtyOfActiveUsersInRole(string roleName)
+        {
+            return await _context.UserRoles
+                .AsNoTracking()
+                .Include(ur => ur.User)
+                .Include(ur => ur.Role)
+                .CountAsync(ur => ur.User.Active && ur.Role.Name == roleName);
+        }
+
         #endregion
 
-        #region Role
+        #region ActiveUserWithRoleExists
 
         public async Task<IEnumerable<RoleIdNameDto>> GetAllRoleIdName()
         {
             var roles = await _context.Roles.AsNoTracking().ToListAsync();
             return _mapper.Map<IEnumerable<RoleIdNameDto>>(roles);
+        }
+
+        public async Task<Role> GetRoleById(Guid id)
+        {
+            var role = await _context.Roles.AsNoTracking()
+                .FirstOrDefaultAsync(r => r.Id == id);
+            return role;
         }
 
         #endregion
