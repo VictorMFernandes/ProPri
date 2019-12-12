@@ -68,6 +68,9 @@ namespace ProPri.Users.Data.Repository
 
         public async Task<bool> HasClaim(Guid userId, string claimValue)
         {
+            if (userId == Guid.Empty)
+                return false;
+
             var userRole = await _context.UserRoles
                 .AsNoTracking()
                 .Include(ur => ur.Role)

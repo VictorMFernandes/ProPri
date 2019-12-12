@@ -49,6 +49,10 @@
     line-height: 35px;
 }
 
+.e-popup-open {
+    width: 220px !important;
+}
+
 /* end of horizontal-menu styles */
 /* vertical-menu styles */
 

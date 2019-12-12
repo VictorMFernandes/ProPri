@@ -10,6 +10,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Security.Claims;
 using System.Threading.Tasks;
+using ProPri.WebApp.Mvc.Extensions;
 
 namespace ProPri.WebApp.Mvc.Controllers
 {
@@ -20,14 +21,7 @@ namespace ProPri.WebApp.Mvc.Controllers
         private readonly IMediatorHandler _mediatorHandler;
         protected readonly IUsersQueries UsersQueries;
 
-        protected Guid LoggedUserId
-        {
-            get
-            {
-                var id = User.FindFirstValue(ClaimTypes.NameIdentifier);
-                return id == null ? Guid.Empty : new Guid(id);
-            }
-        }
+        protected Guid LoggedUserId => AuthorizationExtensions.GetLoggedUserId(User);
 
         protected BaseController(INotificationHandler<DomainNotification> notifications,
                                  IMediatorHandler mediatorHandler,
