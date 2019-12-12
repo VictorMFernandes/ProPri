@@ -1,5 +1,4 @@
 ﻿using FluentValidation;
-using ProPri.Core.Communication.Messages;
 using System;
 
 namespace ProPri.Users.Application.Commands

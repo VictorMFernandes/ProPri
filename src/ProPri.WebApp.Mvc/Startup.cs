@@ -44,6 +44,7 @@ namespace ProPri.WebApp.Mvc
                     options.Password.RequireUppercase = false;
                     options.Password.RequireNonAlphanumeric = false;
                     options.Password.RequiredLength = ConstSizes.UserPasswordMin;
+                    options.SignIn.RequireConfirmedEmail = true;
                 }).AddRoles<Role>()
                 .AddEntityFrameworkStores<UsersContext>();
 

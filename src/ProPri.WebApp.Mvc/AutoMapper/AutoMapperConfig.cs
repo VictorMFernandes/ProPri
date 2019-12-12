@@ -25,6 +25,7 @@ namespace ProPri.WebApp.Mvc.AutoMapper
             CreateMap<RoleIdNameDto, RoleIndexViewModel>();
 
             CreateMap<UserFormViewModel, EditUserCommand>();
+            CreateMap<UserFormViewModel, CreateUserCommand>();
         }
     }
 }

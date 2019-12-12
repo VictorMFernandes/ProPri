@@ -11,8 +11,13 @@ namespace ProPri.WebApp.Mvc.Extensions
             {
                 options.AddPolicy(ConstData.ClaimUsersRead,
                     policy => policy.RequireClaim(ConstData.ClaimTypeAuthorization, ConstData.ClaimUsersRead));
+                options.AddPolicy(ConstData.ClaimUsersWrite,
+                    policy => policy.RequireClaim(ConstData.ClaimTypeAuthorization, ConstData.ClaimUsersWrite));
+
                 options.AddPolicy(ConstData.ClaimStudentsRead,
                     policy => policy.RequireClaim(ConstData.ClaimTypeAuthorization, ConstData.ClaimStudentsRead));
+                options.AddPolicy(ConstData.ClaimStudentsWrite,
+                    policy => policy.RequireClaim(ConstData.ClaimTypeAuthorization, ConstData.ClaimStudentsWrite));
             });
         }
     }

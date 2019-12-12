@@ -1,4 +1,5 @@
-﻿using ProPri.Core.Data;
+﻿using Microsoft.AspNetCore.Identity;
+using ProPri.Core.Data;
 using ProPri.Core.Helpers;
 using ProPri.Users.Domain.Dtos;
 using System;
@@ -12,10 +13,19 @@ namespace ProPri.Users.Domain
         #region User
 
         Task<PaginatedList<UserIndexDto>> GetUsers(int pageNumber, int pageSize);
-        Task<UserFormDto> GetUserFormById(Guid id);
-        void UpdateUser(User user);
         Task<User> GetUserById(Guid id);
+        Task<User> GetUserByEmail(string email);
+        Task<UserFormDto> GetUserFormById(Guid id);
+        Task<IdentityResult> CreateUser(User user, string tempPassword);
+        void UpdateUser(User user);
         Task<int> QtyOfActiveUsersInRole(string roleName);
+
+        #endregion
+
+        #region Auth
+
+        Task<SignInResult> SignIn(string email, string password);
+        Task SignOut();
 
         #endregion
 

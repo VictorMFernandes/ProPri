@@ -1,11 +1,12 @@
 ﻿using Microsoft.AspNetCore.Identity;
+using ProPri.Core.Constants;
 using ProPri.Core.Domain;
 using ProPri.Core.Domain.ValueObjects;
+using ProPri.Core.Helpers;
 using ProPri.Core.Validation;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using ProPri.Core.Constants;
 
 namespace ProPri.Users.Domain
 {
@@ -26,29 +27,33 @@ namespace ProPri.Users.Domain
 
         #region Constructors
 
-        private User()
-        {
+        private User() { }
 
+        private User(PersonName name, string email, DateTime? birthday, Role role)
+        {
+            InitializeCollections();
+
+            Name = name;
+            Email = email;
+            UserName = Email;
+            Birthday = birthday;
+            UserRoles.Add(new UserRole(role));
+            RegistrationDate = DateTime.Now;
+
+            Validate();
         }
 
+        // TODO remover esse construtor e criar uma factory para dar o seed quando for para produção
         public User(PersonName name, string email)
         {
+            InitializeCollections();
+
             Name = name;
             Email = email;
             UserName = email;
             RegistrationDate = DateTime.Now;
             Active = true;
-
-            Validate();
-        }
-
-        public User(PersonName name, string email, string phone)
-        {
-            Name = name;
-            Email = email;
-            UserName = email;
-            PhoneNumber = phone;
-            RegistrationDate = DateTime.Now;
+            EmailConfirmed = true;
 
             Validate();
         }
@@ -59,6 +64,7 @@ namespace ProPri.Users.Domain
 
         private void InitializeCollections()
         {
+            UserRoles = new List<UserRole>();
         }
 
         public override string ToString()
@@ -72,6 +78,18 @@ namespace ProPri.Users.Domain
         }
 
         #endregion
+
+        public User CreateUser(PersonName name, string email, DateTime? birthday, Role role)
+        {
+            if (role.Name == ConstData.RoleManager && !HasRole(ConstData.RoleManager))
+                return null;
+
+            var user = new User(name, email, birthday, role);
+
+            user.Validate();
+
+            return user;
+        }
 
         public bool UpdateUser(User user, PersonName name, string email, DateTime? birthday, bool active, Role role)
         {
@@ -129,6 +147,11 @@ namespace ProPri.Users.Domain
         public bool HasClaim(string claim)
         {
             return UserRoles.Single().Role.RoleClaims.Any(rc => rc.ClaimValue == claim);
+        }
+
+        public string GenerateTempPassword()
+        {
+            return StringHelper.RandomString(ConstSizes.UserPasswordMin);
         }
     }
 }

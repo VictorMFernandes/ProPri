@@ -1,6 +1,6 @@
-﻿using System.ComponentModel;
+﻿using ProPri.Core.Constants;
+using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
-using ProPri.Core.Constants;
 
 namespace ProPri.WebApp.Mvc.Views.Auth.ViewModels
 {

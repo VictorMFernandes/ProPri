@@ -1,5 +1,4 @@
 ﻿using MediatR;
-using Microsoft.AspNetCore.Identity;
 using ProPri.Core.Communication.Handlers;
 using ProPri.Core.Communication.Messages.Common.Notifications;
 using ProPri.Core.Constants;
@@ -11,21 +10,62 @@ using System.Threading.Tasks;
 namespace ProPri.Users.Application.Commands
 {
     public class UsersCommandHandler : CommandHandler,
+        IRequestHandler<CreateUserCommand, bool>,
         IRequestHandler<EditUserCommand, bool>,
         IRequestHandler<LoginCommand, LoginCommandResult>,
         IRequestHandler<LogoutCommand, bool>
     {
         private readonly IUserRepository _userRepository;
-        private readonly UserManager<User> _userManager;
-        private readonly SignInManager<User> _signInManager;
+        
 
-        public UsersCommandHandler(IMediatorHandler mediatorHandler, IUserRepository userRepository,
-                                   UserManager<User> userManager, SignInManager<User> signInManager)
+        public UsersCommandHandler(IMediatorHandler mediatorHandler,
+                                   IUserRepository userRepository)
             : base(mediatorHandler)
         {
             _userRepository = userRepository;
-            _userManager = userManager;
-            _signInManager = signInManager;
+        }
+
+        public async Task<bool> Handle(CreateUserCommand request, CancellationToken cancellationToken)
+        {
+            if (!ValidateCommand(request)) return false;
+
+            var performingUser = await _userRepository.GetUserById(request.UserId);
+            if (performingUser == null)
+            {
+                await MediatorHandler.PublishNotification(new DomainNotification("user", "Your user could not be found"));
+                return false;
+            }
+
+            performingUser.UpdateLastActiveDate();
+
+            if (!performingUser.HasClaim(ConstData.ClaimUsersWrite))
+            {
+                await MediatorHandler.PublishNotification(new DomainNotification("user", "You don't have permission to create a user"));
+                return false;
+            }
+
+            var name = new PersonName(request.FirstName, request.Surname);
+            var role = await _userRepository.GetRoleById(request.RoleId);
+            var createdUser = performingUser.CreateUser(name, request.Email, request.Birthday, role);
+
+            if (createdUser == null)
+            {
+                await MediatorHandler.PublishNotification(new DomainNotification("user", "You don't have permission to create a user with that role"));
+                return false;
+            }
+
+            _userRepository.UpdateUser(performingUser);
+            var tempPassword = createdUser.GenerateTempPassword();
+            var createResult = await _userRepository.CreateUser(createdUser, tempPassword);
+
+            if (createResult.Succeeded) return await _userRepository.UnitOfWork.Commit();
+
+            foreach (var error in createResult.Errors)
+            {
+                await MediatorHandler.PublishNotification(new DomainNotification("user", error.Description));
+            }
+
+            return false;
         }
 
         public async Task<bool> Handle(EditUserCommand request, CancellationToken cancellationToken)
@@ -82,7 +122,7 @@ namespace ProPri.Users.Application.Commands
         {
             if (!ValidateCommand(request)) return new LoginCommandResult(false);
 
-            var user = await _userManager.FindByEmailAsync(request.Email);
+            var user = await _userRepository.GetUserByEmail(request.Email);
 
             if (user == null)
             {
@@ -90,10 +130,13 @@ namespace ProPri.Users.Application.Commands
                 return new LoginCommandResult(false);
             }
 
-            var result = await _signInManager.PasswordSignInAsync(user, request.Password, true, false);
+            var loginResult = await _userRepository.SignIn(user.Email, request.Password);
 
-            if (result.Succeeded)
+            if (loginResult.Succeeded)
                 return new LoginCommandResult(true, user.Id);
+
+            if (loginResult.IsNotAllowed)
+                return new LoginCommandResult(false, user.Id, true);
 
             await MediatorHandler.PublishNotification(new DomainNotification("user", "Invalid login or e-mail"));
             return new LoginCommandResult(false);
@@ -103,7 +146,7 @@ namespace ProPri.Users.Application.Commands
         {
             if (!ValidateCommand(request)) return false;
 
-            await _signInManager.SignOutAsync();
+            await _userRepository.SignOut();
             return true;
         }
     }

@@ -45,6 +45,7 @@ namespace ProPri.WebApp.Mvc.Controllers
             return View(_mapper.Map<IEnumerable<UserIndexViewModel>>(users));
         }
 
+        [Authorize(Policy = ConstData.ClaimUsersWrite)]
         public async Task<IActionResult> Create()
         {
             var roles = await _usersQueries.GetAllRoleIdName();
@@ -53,6 +54,24 @@ namespace ProPri.WebApp.Mvc.Controllers
             {
                 Roles = _mapper.Map<IEnumerable<RoleIndexViewModel>>(roles)
             };
+
+            return View(userFormVm);
+        }
+
+        [Authorize(Policy = ConstData.ClaimUsersWrite)]
+        [HttpPost]
+        public async Task<IActionResult> Create(UserFormViewModel userFormVm)
+        {
+            userFormVm.UserId = LoggedUserId;
+            await _mediatorHandler.SendCommand(_mapper.Map<CreateUserCommand>(userFormVm));
+
+            if (ValidOperation())
+            {
+                return RedirectToAction("Index");
+            }
+
+            var roles = await _usersQueries.GetAllRoleIdName();
+            userFormVm.Roles = _mapper.Map<IEnumerable<RoleIndexViewModel>>(roles);
 
             return View(userFormVm);
         }
@@ -67,6 +86,7 @@ namespace ProPri.WebApp.Mvc.Controllers
             return View(userFormVm);
         }
 
+        [Authorize(Policy = ConstData.ClaimUsersWrite)]
         [HttpPost]
         public async Task<IActionResult> Edit(UserFormViewModel userFormVm)
         {
@@ -82,20 +102,6 @@ namespace ProPri.WebApp.Mvc.Controllers
             userFormVm.Roles = _mapper.Map<IEnumerable<RoleIndexViewModel>>(roles);
 
             return View(userFormVm);
-        }
-
-        public IActionResult Delete(Guid id)
-        {
-            // Pegar palavra
-            // Checar se é null
-            return PartialView("_Delete", new EntryIndexViewModel { Id = id });
-        }
-
-        [HttpPost]
-        public IActionResult Delete(EntryIndexViewModel entryIndexVm)
-        {
-            var url = Url.Action("Index", "Palavras");
-            return Json(new { success = true, url });
         }
     }
 }

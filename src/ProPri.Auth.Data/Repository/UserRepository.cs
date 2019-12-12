@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using ProPri.Core.Data;
 using ProPri.Core.Helpers;
@@ -15,13 +16,19 @@ namespace ProPri.Users.Data.Repository
     {
         private readonly IMapper _mapper;
         private readonly UsersContext _context;
+        private readonly UserManager<User> _userManager;
+        private readonly SignInManager<User> _signInManager;
 
         public IUnitOfWork UnitOfWork => _context;
 
-        public UserRepository(UsersContext context, IMapper mapper)
+        public UserRepository(UsersContext context, IMapper mapper,
+                              UserManager<User> userManager,
+                              SignInManager<User> signInManager)
         {
             _context = context;
             _mapper = mapper;
+            _userManager = userManager;
+            _signInManager = signInManager;
         }
 
         #region User
@@ -37,6 +44,11 @@ namespace ProPri.Users.Data.Repository
                 ), pageNumber, pageSize);
 
             return users;
+        }
+
+        public async Task<User> GetUserByEmail(string email)
+        {
+            return await _userManager.FindByEmailAsync(email);
         }
 
         public async Task<UserFormDto> GetUserFormById(Guid id)
@@ -57,6 +69,13 @@ namespace ProPri.Users.Data.Repository
             return user;
         }
 
+        public async Task<IdentityResult> CreateUser(User user, string tempPassword)
+        {
+            var result = await _userManager.CreateAsync(user, tempPassword);
+
+            return result;
+        }
+
         public void UpdateUser(User user)
         {
             _context.Users.Update(user);
@@ -73,7 +92,21 @@ namespace ProPri.Users.Data.Repository
 
         #endregion
 
-        #region ActiveUserWithRoleExists
+        #region Auth
+
+        public async Task<SignInResult> SignIn(string email, string password)
+        {
+            return await _signInManager.PasswordSignInAsync(email, password, true, false);
+        }
+
+        public async Task SignOut()
+        {
+            await _signInManager.SignOutAsync();
+        }
+
+        #endregion
+
+        #region Role
 
         public async Task<IEnumerable<RoleIdNameDto>> GetAllRoleIdName()
         {
