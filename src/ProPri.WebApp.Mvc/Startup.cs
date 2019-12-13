@@ -36,17 +36,17 @@ namespace ProPri.WebApp.Mvc
                 options.UseSqlite(Configuration.GetConnectionString("DefaultConnection")));
 
             services.AddIdentity<User, Role>(options =>
-                {
-                    options.Stores.MaxLengthForKeys = 128;
-                    options.User.RequireUniqueEmail = true;
-                    options.Password.RequireDigit = true;
-                    options.Password.RequireLowercase = false;
-                    options.Password.RequireUppercase = false;
-                    options.Password.RequireNonAlphanumeric = false;
-                    options.Password.RequiredLength = ConstSizes.UserPasswordMin;
-                    options.SignIn.RequireConfirmedEmail = true;
-                }).AddRoles<Role>()
-                .AddEntityFrameworkStores<UsersContext>();
+            {
+                options.Stores.MaxLengthForKeys = 128;
+                options.User.RequireUniqueEmail = true;
+                options.Password.RequireDigit = true;
+                options.Password.RequireLowercase = false;
+                options.Password.RequireUppercase = false;
+                options.Password.RequireNonAlphanumeric = false;
+                options.Password.RequiredLength = ConstSizes.UserPasswordMin;
+                options.SignIn.RequireConfirmedEmail = true;
+            }).AddRoles<Role>()
+            .AddEntityFrameworkStores<UsersContext>();
 
             services.AddAuthorizationWithPolicies();
 

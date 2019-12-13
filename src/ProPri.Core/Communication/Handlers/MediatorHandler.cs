@@ -1,6 +1,9 @@
 ﻿using MediatR;
+using Microsoft.EntityFrameworkCore;
 using ProPri.Core.Communication.Messages;
 using ProPri.Core.Communication.Messages.Common.Notifications;
+using ProPri.Core.Domain;
+using System.Linq;
 using System.Threading.Tasks;
 
 namespace ProPri.Core.Communication.Handlers
@@ -27,6 +30,33 @@ namespace ProPri.Core.Communication.Handlers
         public async Task PublishNotification<T>(T notification) where T : DomainNotification
         {
             await _mediator.Publish(notification);
+        }
+
+        public async Task PublishEvent<T>(T evento) where T : Event
+        {
+            await _mediator.Publish(evento);
+        }
+        
+        public async Task PublishEvents<T>(T context) where T : DbContext
+        {
+            var domainEntities = context.ChangeTracker
+                .Entries<Entity>()
+                .Where(x => x.Entity.Notifications != null && x.Entity.Notifications.Any())
+                .ToList();
+
+            var domainEvents = domainEntities
+                .SelectMany(x => x.Entity.Notifications)
+                .ToList();
+
+            domainEntities.ForEach(entity => entity.Entity.CleanEvents());
+
+            var tasks = domainEvents
+                .Select(async (domainEvent) =>
+                {
+                    await PublishEvent(domainEvent);
+                });
+
+            await Task.WhenAll(tasks);
         }
     }
 }

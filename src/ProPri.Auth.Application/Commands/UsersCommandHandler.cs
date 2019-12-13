@@ -4,8 +4,10 @@ using ProPri.Core.Communication.Messages.Common.Notifications;
 using ProPri.Core.Constants;
 using ProPri.Core.Domain.ValueObjects;
 using ProPri.Users.Domain;
+using System;
 using System.Threading;
 using System.Threading.Tasks;
+using ProPri.Core.Communication.Messages.Common.Events.IntegrationEvents;
 
 namespace ProPri.Users.Application.Commands
 {
@@ -30,20 +32,9 @@ namespace ProPri.Users.Application.Commands
         {
             if (!ValidateCommand(request)) return false;
 
-            var performingUser = await _userRepository.GetUserById(request.UserId);
+            var performingUser = await GetPerformingUser(request.LoggedUserId, ConstData.ClaimUsersWrite);
             if (performingUser == null)
-            {
-                await MediatorHandler.PublishNotification(new DomainNotification("user", "Your user could not be found"));
                 return false;
-            }
-
-            performingUser.UpdateLastActiveDate();
-
-            if (!performingUser.HasClaim(ConstData.ClaimUsersWrite))
-            {
-                await MediatorHandler.PublishNotification(new DomainNotification("user", "You don't have permission to create a user"));
-                return false;
-            }
 
             var name = new PersonName(request.FirstName, request.Surname);
             var role = await _userRepository.GetRoleById(request.RoleId);
@@ -59,7 +50,12 @@ namespace ProPri.Users.Application.Commands
             var tempPassword = createdUser.GenerateTempPassword();
             var createResult = await _userRepository.CreateUser(createdUser, tempPassword);
 
-            if (createResult.Succeeded) return await _userRepository.UnitOfWork.Commit();
+            if (createResult.Succeeded)
+            {
+                await _userRepository.UnitOfWork.Commit();
+                await MediatorHandler.PublishEvent(new UserCreatedEvent(createdUser.Id, createdUser.Name.ToString(), tempPassword));
+                return true;
+            }
 
             foreach (var error in createResult.Errors)
             {
@@ -73,20 +69,9 @@ namespace ProPri.Users.Application.Commands
         {
             if (!ValidateCommand(request)) return false;
 
-            var performingUser = await _userRepository.GetUserById(request.UserId);
+            var performingUser = await GetPerformingUser(request.LoggedUserId, ConstData.ClaimUsersWrite);
             if (performingUser == null)
-            {
-                await MediatorHandler.PublishNotification(new DomainNotification("user", "Your user could not be found"));
                 return false;
-            }
-
-            performingUser.UpdateLastActiveDate();
-
-            if (!performingUser.HasClaim(ConstData.ClaimUsersWrite))
-            {
-                await MediatorHandler.PublishNotification(new DomainNotification("user", "You don't have permission to edit a user"));
-                return false;
-            }
 
             var editedUser = await _userRepository.GetUserById(request.Id);
             if (editedUser == null)
@@ -176,6 +161,23 @@ namespace ProPri.Users.Application.Commands
 
             _userRepository.UpdateUser(user);
             return await _userRepository.UnitOfWork.Commit();
+        }
+
+        public async Task<User> GetPerformingUser(Guid userId, string claim)
+        {
+            var performingUser = await _userRepository.GetUserById(userId);
+            if (performingUser == null)
+            {
+                await MediatorHandler.PublishNotification(new DomainNotification("user", "Your user could not be found"));
+                return null;
+            }
+
+            performingUser.UpdateLastActiveDate();
+
+            if (performingUser.HasClaim(claim)) return performingUser;
+
+            await MediatorHandler.PublishNotification(new DomainNotification("user", "You don't have permission to edit a user"));
+            return null;
         }
     }
 }

@@ -7,7 +7,7 @@ namespace ProPri.Users.Application.Commands
 {
     public class CreateUserCommand : CommandWithoutResult
     {
-        public Guid UserId { get; protected set; }
+        public Guid LoggedUserId { get; protected set; }
         public string FirstName { get; set; }
         public string Surname { get; set; }
         public string Email { get; set; }
@@ -25,7 +25,7 @@ namespace ProPri.Users.Application.Commands
         {
             public CreateUserCommandValidation()
             {
-                RuleFor(c => c.UserId)
+                RuleFor(c => c.LoggedUserId)
                     .NotEqual(Guid.Empty)
                     .WithMessage("You must be logged in to edit an user");
 

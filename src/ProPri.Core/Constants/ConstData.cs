@@ -6,9 +6,9 @@
 
         public const string SimplePassword = "12345678";
 
-        public const string OwnerEmail = "victorfernandes92@gmail.com";
-        public const string OwnerFirstName = "Victor";
-        public const string OwnerSurname = "Miranda Fernandes";
+        public const string OwnerEmail = "manager@email.com";
+        public const string OwnerFirstName = "ManagerFirstName";
+        public const string OwnerSurname = "ManagerSurname";
 
         public const string PedEmail = "ped@email.com";
         public const string PedFirstName = "PedFirstName";

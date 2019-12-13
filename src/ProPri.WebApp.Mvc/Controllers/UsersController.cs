@@ -62,7 +62,7 @@ namespace ProPri.WebApp.Mvc.Controllers
         [HttpPost]
         public async Task<IActionResult> Create(UserFormViewModel userFormVm)
         {
-            userFormVm.UserId = LoggedUserId;
+            userFormVm.LoggedUserId = LoggedUserId;
             await _mediatorHandler.SendCommand(_mapper.Map<CreateUserCommand>(userFormVm));
 
             if (ValidOperation())
@@ -90,7 +90,7 @@ namespace ProPri.WebApp.Mvc.Controllers
         [HttpPost]
         public async Task<IActionResult> Edit(UserFormViewModel userFormVm)
         {
-            userFormVm.UserId = LoggedUserId;
+            userFormVm.LoggedUserId = LoggedUserId;
             await _mediatorHandler.SendCommand(_mapper.Map<EditUserCommand>(userFormVm));
 
             if (ValidOperation())

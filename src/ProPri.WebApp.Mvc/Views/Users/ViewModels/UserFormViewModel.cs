@@ -6,7 +6,7 @@ namespace ProPri.WebApp.Mvc.Views.Users.ViewModels
 {
     public class UserFormViewModel
     {
-        public Guid UserId { get; set; }
+        public Guid LoggedUserId { get; set; }
         public Guid Id { get; set; }
         public string FirstName { get; set; }
         public string Surname { get; set; }
