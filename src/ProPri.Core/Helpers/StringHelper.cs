@@ -4,15 +4,20 @@ namespace ProPri.Core.Helpers
 {
     public static class StringHelper
     {
-        public static string RandomString(int length)
+        public static string RandomPassword(int length)
         {
-            const string chars = "abcdefghijklmnopqrstuvwxyz0123456789";
+            const string chars = "abcdefghijklmnopqrstuvwxyz";
+            const string numbers = "0123456789";
+
             var stringChars = new char[length];
             var random = new Random();
 
             for (var i = 0; i < stringChars.Length; i++)
             {
-                stringChars[i] = chars[random.Next(chars.Length)];
+                if (i % 2 == 0)
+                    stringChars[i] = chars[random.Next(chars.Length)];
+                else
+                    stringChars[i] = numbers[random.Next(numbers.Length)];
             }
 
             return new string(stringChars);

@@ -104,6 +104,11 @@ namespace ProPri.Users.Data.Repository
             await _signInManager.SignOutAsync();
         }
 
+        public async Task<IdentityResult> ChangePassword(User user, string currentPassword, string newPassword)
+        {
+            return await _userManager.ChangePasswordAsync(user, currentPassword, newPassword);
+        }
+
         #endregion
 
         #region Role
@@ -136,7 +141,7 @@ namespace ProPri.Users.Data.Repository
                 .ThenInclude(r => r.RoleClaims)
                 .FirstOrDefaultAsync(ur => ur.UserId == userId);
 
-            var result = userRole.Role.RoleClaims.Any(rc => rc.ClaimValue == claimValue);
+            var result = userRole?.Role.RoleClaims.Any(rc => rc.ClaimValue == claimValue) ?? false;
 
             return result;
         }

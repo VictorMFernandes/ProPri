@@ -13,10 +13,11 @@ namespace ProPri.Users.Application.Commands
         IRequestHandler<CreateUserCommand, bool>,
         IRequestHandler<EditUserCommand, bool>,
         IRequestHandler<LoginCommand, LoginCommandResult>,
-        IRequestHandler<LogoutCommand, bool>
+        IRequestHandler<LogoutCommand, bool>,
+        IRequestHandler<NewPasswordCommand, bool>
     {
         private readonly IUserRepository _userRepository;
-        
+
 
         public UsersCommandHandler(IMediatorHandler mediatorHandler,
                                    IUserRepository userRepository)
@@ -80,7 +81,7 @@ namespace ProPri.Users.Application.Commands
             }
 
             performingUser.UpdateLastActiveDate();
-            
+
             if (!performingUser.HasClaim(ConstData.ClaimUsersWrite))
             {
                 await MediatorHandler.PublishNotification(new DomainNotification("user", "You don't have permission to edit a user"));
@@ -106,7 +107,7 @@ namespace ProPri.Users.Application.Commands
             }
 
             var updateValid = performingUser.UpdateUser(editedUser, name, request.Email, request.Birthday, request.Active, role);
-            
+
             if (!updateValid)
             {
                 await MediatorHandler.PublishNotification(new DomainNotification("user", "You don't have permission to edit this user"));
@@ -130,6 +131,12 @@ namespace ProPri.Users.Application.Commands
                 return new LoginCommandResult(false);
             }
 
+            if (!user.Active)
+            {
+                await MediatorHandler.PublishNotification(new DomainNotification("user", "Your account isn't activated"));
+                return new LoginCommandResult(false);
+            }
+
             var loginResult = await _userRepository.SignIn(user.Email, request.Password);
 
             if (loginResult.Succeeded)
@@ -148,6 +155,27 @@ namespace ProPri.Users.Application.Commands
 
             await _userRepository.SignOut();
             return true;
+        }
+
+        public async Task<bool> Handle(NewPasswordCommand request, CancellationToken cancellationToken)
+        {
+            if (!ValidateCommand(request)) return false;
+
+            var user = await _userRepository.GetUserById(request.UserId);
+
+            var result = await _userRepository.ChangePassword(user, request.CurrentPassword, request.Password);
+
+            if (!result.Succeeded)
+                return false;
+
+            user.EmailConfirmed = true;
+            var signInResult = await _userRepository.SignIn(user.Email, request.Password);
+
+            if (!signInResult.Succeeded)
+                return false;
+
+            _userRepository.UpdateUser(user);
+            return await _userRepository.UnitOfWork.Commit();
         }
     }
 }

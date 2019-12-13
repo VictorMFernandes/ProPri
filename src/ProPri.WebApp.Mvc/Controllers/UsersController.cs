@@ -8,7 +8,6 @@ using ProPri.Core.Constants;
 using ProPri.Users.Application.Commands;
 using ProPri.Users.Application.Queries;
 using ProPri.Users.Application.Queries.Filters;
-using ProPri.WebApp.Mvc.Views.Entries.ViewModels;
 using ProPri.WebApp.Mvc.Views.Users.ViewModels;
 using System;
 using System.Collections.Generic;
@@ -52,6 +51,7 @@ namespace ProPri.WebApp.Mvc.Controllers
 
             var userFormVm = new UserFormViewModel
             {
+                Active = true,
                 Roles = _mapper.Map<IEnumerable<RoleIndexViewModel>>(roles)
             };
 

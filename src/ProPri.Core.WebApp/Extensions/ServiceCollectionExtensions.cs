@@ -20,7 +20,7 @@ namespace ProPri.Core.WebApp.Extensions
 
             // Notifications
             services.AddScoped<INotificationHandler<DomainNotification>, DomainNotificationHandler>();
-            
+
             //Seeder
             services.AddScoped<Seeder>();
 
@@ -34,6 +34,7 @@ namespace ProPri.Core.WebApp.Extensions
             services.AddScoped<IRequestHandler<EditUserCommand, bool>, UsersCommandHandler>();
             services.AddScoped<IRequestHandler<LoginCommand, LoginCommandResult>, UsersCommandHandler>();
             services.AddScoped<IRequestHandler<LogoutCommand, bool>, UsersCommandHandler>();
+            services.AddScoped<IRequestHandler<NewPasswordCommand, bool>, UsersCommandHandler>();
         }
     }
 }

@@ -26,6 +26,7 @@ namespace ProPri.Users.Domain
 
         Task<SignInResult> SignIn(string email, string password);
         Task SignOut();
+        Task<IdentityResult> ChangePassword(User user, string currentPassword, string newPassword);
 
         #endregion
 
@@ -33,7 +34,7 @@ namespace ProPri.Users.Domain
 
         Task<IEnumerable<RoleIdNameDto>> GetAllRoleIdName();
         Task<Role> GetRoleById(Guid id);
-        
+
         #endregion
 
         #region Claim

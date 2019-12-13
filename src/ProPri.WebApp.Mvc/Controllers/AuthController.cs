@@ -6,6 +6,7 @@ using ProPri.Core.Communication.Messages.Common.Notifications;
 using ProPri.Users.Application.Commands;
 using ProPri.Users.Application.Queries;
 using ProPri.WebApp.Mvc.Views.Auth.ViewModels;
+using System;
 using System.Threading.Tasks;
 
 namespace ProPri.WebApp.Mvc.Controllers
@@ -45,6 +46,8 @@ namespace ProPri.WebApp.Mvc.Controllers
 
             if (loginResult.Success)
                 return await RedirectToMainPageAsync(loginResult.UserId);
+            if (loginResult.RequiresNewPassword)
+                return RedirectToAction("NewPassword", new { UserId = loginResult.UserId });
 
             return View(loginVm);
         }
@@ -71,6 +74,27 @@ namespace ProPri.WebApp.Mvc.Controllers
         public IActionResult RecoverPassword(LoginViewModel loginVm)
         {
             return View();
+        }
+
+        [AllowAnonymous]
+        public IActionResult NewPassword(Guid userId)
+        {
+            return View(new NewPasswordViewModel { UserId = userId });
+        }
+
+        [AllowAnonymous]
+        [HttpPost]
+        public async Task<IActionResult> NewPassword(NewPasswordViewModel newPasswordVm)
+        {
+            var newPasswordCmd = new NewPasswordCommand(
+                newPasswordVm.UserId, newPasswordVm.CurrentPassword, newPasswordVm.Password, newPasswordVm.ConfirmPassword);
+
+            await _mediatorHandler.SendCommand(newPasswordCmd);
+
+            if (ValidOperation())
+                return await RedirectToMainPageAsync(newPasswordCmd.UserId);
+
+            return View(new NewPasswordViewModel { UserId = newPasswordCmd.UserId });
         }
     }
 }

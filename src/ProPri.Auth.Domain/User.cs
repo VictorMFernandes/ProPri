@@ -151,7 +151,7 @@ namespace ProPri.Users.Domain
 
         public string GenerateTempPassword()
         {
-            return StringHelper.RandomString(ConstSizes.UserPasswordMin);
+            return StringHelper.RandomPassword(ConstSizes.UserPasswordMin);
         }
     }
 }
