@@ -4,7 +4,7 @@ using System.Collections.Generic;
 
 namespace ProPri.Core.Domain
 {
-    public abstract class Entity
+    public abstract class Entity : IEventContainer
     {
         public Guid Id { get; }
         public DateTime RegistrationDate { get; }
@@ -17,6 +17,8 @@ namespace ProPri.Core.Domain
             RegistrationDate = DateTime.Now;
             InitializeCollections();
         }
+
+        #region EventContainer Methods
 
         public void AddEvent(Event eventItem)
         {
@@ -33,6 +35,8 @@ namespace ProPri.Core.Domain
         {
             _notifications?.Clear();
         }
+
+        #endregion
 
         public override bool Equals(object obj)
         {

@@ -18,7 +18,6 @@ namespace ProPri.Users.Domain
         Task<UserFormDto> GetUserFormById(Guid id);
         Task<IdentityResult> CreateUser(User user, string tempPassword);
         void UpdateUser(User user);
-        Task<int> QtyOfActiveUsersInRole(string roleName);
 
         #endregion
 

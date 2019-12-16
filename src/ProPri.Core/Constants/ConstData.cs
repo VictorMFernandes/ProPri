@@ -6,9 +6,13 @@
 
         public const string SimplePassword = "12345678";
 
-        public const string OwnerEmail = "manager@email.com";
-        public const string OwnerFirstName = "ManagerFirstName";
-        public const string OwnerSurname = "ManagerSurname";
+        public const string Administrator = "admin@email.com";
+        public const string AdministratorFirstName = "AdminFirstName";
+        public const string AdministratorSurname = "AdminSurname";
+
+        public const string Manager = "manager@email.com";
+        public const string ManagerFirstName = "ManagerFirstName";
+        public const string ManagerSurname = "ManagerSurname";
 
         public const string PedEmail = "ped@email.com";
         public const string PedFirstName = "PedFirstName";
@@ -22,6 +26,7 @@
 
         #region Roles
 
+        public const string RoleAdministrator = "Administrator";
         public const string RoleManager = "Manager";
         public const string RolePed = "PED";
         public const string RoleFd = "FD";

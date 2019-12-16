@@ -26,6 +26,17 @@ namespace ProPri.Users.Data
 
         private void SeedRoles()
         {
+            if (!_roleManager.RoleExistsAsync(ConstData.RoleAdministrator).Result)
+            {
+                var role = new Role(ConstData.RoleAdministrator);
+                _roleManager.CreateAsync(role).Wait();
+
+                AddFdClaims(role);
+                AddPedClaims(role);
+                AddManagerClaims(role);
+                AddAdminClaims(role);
+            }
+
             if (!_roleManager.RoleExistsAsync(ConstData.RoleManager).Result)
             {
                 var role = new Role(ConstData.RoleManager);
@@ -54,6 +65,11 @@ namespace ProPri.Users.Data
             }
         }
 
+        private void AddAdminClaims(Role role)
+        {
+
+        }
+
         private void AddManagerClaims(Role role)
         {
         }
@@ -72,10 +88,18 @@ namespace ProPri.Users.Data
 
         private void SeedUsers()
         {
-            if (_userManager.FindByEmailAsync(ConstData.OwnerEmail).Result == null)
+            if (_userManager.FindByEmailAsync(ConstData.Administrator).Result == null)
             {
-                var name = new PersonName(ConstData.OwnerFirstName, ConstData.OwnerSurname);
-                var user = new User(name, ConstData.OwnerEmail);
+                var name = new PersonName(ConstData.AdministratorFirstName, ConstData.AdministratorSurname);
+                var user = new User(name, ConstData.Administrator, true);
+                _userManager.CreateAsync(user, ConstData.SimplePassword).Wait();
+                _userManager.AddToRoleAsync(user, ConstData.RoleManager).Wait();
+            }
+
+            if (_userManager.FindByEmailAsync(ConstData.Manager).Result == null)
+            {
+                var name = new PersonName(ConstData.ManagerFirstName, ConstData.ManagerSurname);
+                var user = new User(name, ConstData.Manager, false);
                 _userManager.CreateAsync(user, ConstData.SimplePassword).Wait();
                 _userManager.AddToRoleAsync(user, ConstData.RoleManager).Wait();
             }
@@ -83,7 +107,7 @@ namespace ProPri.Users.Data
             if (_userManager.FindByEmailAsync(ConstData.PedEmail).Result == null)
             {
                 var name = new PersonName(ConstData.PedFirstName, ConstData.PedSurname);
-                var user = new User(name, ConstData.PedEmail);
+                var user = new User(name, ConstData.PedEmail, false);
                 _userManager.CreateAsync(user, ConstData.SimplePassword).Wait();
                 _userManager.AddToRoleAsync(user, ConstData.RolePed).Wait();
             }
@@ -91,7 +115,7 @@ namespace ProPri.Users.Data
             if (_userManager.FindByEmailAsync(ConstData.FdEmail).Result == null)
             {
                 var name = new PersonName(ConstData.FdFirstName, ConstData.FdSurname);
-                var user = new User(name, ConstData.FdEmail);
+                var user = new User(name, ConstData.FdEmail, false);
                 _userManager.CreateAsync(user, ConstData.SimplePassword).Wait();
                 _userManager.AddToRoleAsync(user, ConstData.RoleFd).Wait();
             }

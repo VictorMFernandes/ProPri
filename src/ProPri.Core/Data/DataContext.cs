@@ -1,24 +1,19 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using ProPri.Core.Domain;
-using System;
-using System.Linq;
-using System.Threading.Tasks;
+using ProPri.Core.Communication.Messages;
 
 namespace ProPri.Core.Data
 {
-    public abstract class DataContext<T> : DbContext, IUnitOfWork where T : DbContext
+    public abstract class DataContext<T> : DbContext where T : DbContext
     {
         protected DataContext(DbContextOptions<T> options)
-            : base(options) { }
+            : base(options)
+        {
+        }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             modelBuilder.ApplyConfigurationsFromAssembly(typeof(T).Assembly);
-        }
-
-        public async Task<bool> Commit()
-        {
-            return await base.SaveChangesAsync() > 0;
+            modelBuilder.Ignore<Event>();
         }
     }
 }

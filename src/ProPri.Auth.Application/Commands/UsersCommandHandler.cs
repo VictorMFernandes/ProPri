@@ -1,5 +1,6 @@
 ﻿using MediatR;
 using ProPri.Core.Communication.Handlers;
+using ProPri.Core.Communication.Messages.Common.Events.IntegrationEvents;
 using ProPri.Core.Communication.Messages.Common.Notifications;
 using ProPri.Core.Constants;
 using ProPri.Core.Domain.ValueObjects;
@@ -7,7 +8,6 @@ using ProPri.Users.Domain;
 using System;
 using System.Threading;
 using System.Threading.Tasks;
-using ProPri.Core.Communication.Messages.Common.Events.IntegrationEvents;
 
 namespace ProPri.Users.Application.Commands
 {
@@ -38,7 +38,7 @@ namespace ProPri.Users.Application.Commands
 
             var name = new PersonName(request.FirstName, request.Surname);
             var role = await _userRepository.GetRoleById(request.RoleId);
-            var createdUser = performingUser.CreateUser(name, request.Email, request.Birthday, role);
+            var createdUser = performingUser.CreateUser(name, request.Email, request.Active, request.Birthday, role);
 
             if (createdUser == null)
             {
@@ -52,8 +52,8 @@ namespace ProPri.Users.Application.Commands
 
             if (createResult.Succeeded)
             {
-                await _userRepository.UnitOfWork.Commit();
-                await MediatorHandler.PublishEvent(new UserCreatedEvent(createdUser.Id, createdUser.Name.ToString(), tempPassword));
+                createdUser.AddEvent(new UserCreatedEvent(createdUser.Id, createdUser.Name.ToString(), createdUser.Email, tempPassword));
+                await _userRepository.Commit();
                 return true;
             }
 
@@ -83,14 +83,6 @@ namespace ProPri.Users.Application.Commands
             var name = new PersonName(request.FirstName, request.Surname);
             var role = await _userRepository.GetRoleById(request.RoleId);
 
-            if (editedUser.HasRole(ConstData.RoleManager) &&
-                (!request.Active || role.Name != ConstData.RoleManager) &&
-                await _userRepository.QtyOfActiveUsersInRole(ConstData.RoleManager) == 1)
-            {
-                await MediatorHandler.PublishNotification(new DomainNotification("user", $"There must be at least one active user in the role of {ConstData.RoleManager}"));
-                return false;
-            }
-
             var updateValid = performingUser.UpdateUser(editedUser, name, request.Email, request.Birthday, request.Active, role);
 
             if (!updateValid)
@@ -101,7 +93,7 @@ namespace ProPri.Users.Application.Commands
 
             _userRepository.UpdateUser(performingUser);
             _userRepository.UpdateUser(editedUser);
-            return await _userRepository.UnitOfWork.Commit();
+            return await _userRepository.Commit();
         }
 
         public async Task<LoginCommandResult> Handle(LoginCommand request, CancellationToken cancellationToken)
@@ -160,7 +152,7 @@ namespace ProPri.Users.Application.Commands
                 return false;
 
             _userRepository.UpdateUser(user);
-            return await _userRepository.UnitOfWork.Commit();
+            return await _userRepository.Commit();
         }
 
         public async Task<User> GetPerformingUser(Guid userId, string claim)

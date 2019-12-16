@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Identity;
+using ProPri.Core.Communication.Messages;
 using ProPri.Core.Constants;
 using ProPri.Core.Domain;
 using ProPri.Core.Domain.ValueObjects;
@@ -10,7 +11,7 @@ using System.Linq;
 
 namespace ProPri.Users.Domain
 {
-    public sealed class User : IdentityUser<Guid>, IAggregateRoot
+    public sealed class User : IdentityUser<Guid>, IAggregateRoot, IEventContainer
     {
         #region Properties
 
@@ -19,9 +20,13 @@ namespace ProPri.Users.Domain
         public DateTime LastActiveDate { get; private set; }
         public bool Active { get; set; }
         public DateTime? Birthday { get; private set; }
+        public bool IsAdministrator { get; private set; }
 
         public ICollection<UserRole> UserRoles { get; set; }
         public Role Role => UserRoles.Single().Role;
+
+        private List<Event> _notifications;
+        public IReadOnlyCollection<Event> Notifications => _notifications?.AsReadOnly();
 
         #endregion
 
@@ -29,22 +34,24 @@ namespace ProPri.Users.Domain
 
         private User() { }
 
-        private User(PersonName name, string email, DateTime? birthday, Role role)
+        private User(PersonName name, string email, bool active, DateTime? birthday, Role role)
         {
             InitializeCollections();
 
             Name = name;
             Email = email;
             UserName = Email;
+            Active = active;
             Birthday = birthday;
             UserRoles.Add(new UserRole(role));
             RegistrationDate = DateTime.Now;
+            IsAdministrator = false;
 
             Validate();
         }
 
         // TODO remover esse construtor e criar uma factory para dar o seed quando for para produção
-        public User(PersonName name, string email)
+        public User(PersonName name, string email, bool isAdministrator)
         {
             InitializeCollections();
 
@@ -54,6 +61,7 @@ namespace ProPri.Users.Domain
             RegistrationDate = DateTime.Now;
             Active = true;
             EmailConfirmed = true;
+            IsAdministrator = isAdministrator;
 
             Validate();
         }
@@ -65,6 +73,7 @@ namespace ProPri.Users.Domain
         private void InitializeCollections()
         {
             UserRoles = new List<UserRole>();
+            _notifications = new List<Event>();
         }
 
         public override string ToString()
@@ -79,12 +88,32 @@ namespace ProPri.Users.Domain
 
         #endregion
 
-        public User CreateUser(PersonName name, string email, DateTime? birthday, Role role)
+        #region EventContainer Methods
+
+        public void AddEvent(Event eventItem)
+        {
+            _notifications ??= new List<Event>();
+            _notifications.Add(eventItem);
+        }
+
+        public void RemoveEvent(Event eventItem)
+        {
+            _notifications?.Remove(eventItem);
+        }
+
+        public void CleanEvents()
+        {
+            _notifications?.Clear();
+        }
+
+        #endregion
+
+        public User CreateUser(PersonName name, string email, bool active, DateTime? birthday, Role role)
         {
             if (role.Name == ConstData.RoleManager && !HasRole(ConstData.RoleManager))
                 return null;
 
-            var user = new User(name, email, birthday, role);
+            var user = new User(name, email, active, birthday, role);
 
             user.Validate();
 
@@ -141,12 +170,12 @@ namespace ProPri.Users.Domain
 
         public bool HasRole(string role)
         {
-            return UserRoles.Single().Role.Name == role;
+            return IsAdministrator || UserRoles.Single().Role.Name == role;
         }
 
         public bool HasClaim(string claim)
         {
-            return UserRoles.Single().Role.RoleClaims.Any(rc => rc.ClaimValue == claim);
+            return IsAdministrator || UserRoles.Single().Role.RoleClaims.Any(rc => rc.ClaimValue == claim);
         }
 
         public string GenerateTempPassword()

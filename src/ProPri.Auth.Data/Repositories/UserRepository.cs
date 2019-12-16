@@ -1,6 +1,8 @@
 ﻿using AutoMapper;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
+using ProPri.Core.Communication.Handlers;
+using ProPri.Core.Constants;
 using ProPri.Core.Data;
 using ProPri.Core.Helpers;
 using ProPri.Users.Domain;
@@ -10,22 +12,19 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace ProPri.Users.Data.Repository
+namespace ProPri.Users.Data.Repositories
 {
-    public class UserRepository : IUserRepository
+    public class UserRepository : Repository<UsersContext>, IUserRepository
     {
         private readonly IMapper _mapper;
-        private readonly UsersContext _context;
         private readonly UserManager<User> _userManager;
         private readonly SignInManager<User> _signInManager;
 
-        public IUnitOfWork UnitOfWork => _context;
-
-        public UserRepository(UsersContext context, IMapper mapper,
-                              UserManager<User> userManager,
+        public UserRepository(UsersContext context, IMediatorHandler mediatorHandler,
+                              IMapper mapper, UserManager<User> userManager,
                               SignInManager<User> signInManager)
+            : base(mediatorHandler, context)
         {
-            _context = context;
             _mapper = mapper;
             _userManager = userManager;
             _signInManager = signInManager;
@@ -35,10 +34,11 @@ namespace ProPri.Users.Data.Repository
 
         public async Task<PaginatedList<UserIndexDto>> GetUsers(int pageNumber, int pageSize)
         {
-            var users = await PaginatedList<UserIndexDto>.Create(_context.Users
+            var users = await PaginatedList<UserIndexDto>.Create(Context.Users
                 .AsNoTracking()
                 .Include(u => u.UserRoles)
                 .ThenInclude(ur => ur.Role)
+                .Where(u => !u.IsAdministrator)
                 .Select(u => new UserIndexDto(
                     u.Id, u.Name.ToString(), u.UserRoles.Single().Role.Name)
                 ), pageNumber, pageSize);
@@ -53,15 +53,16 @@ namespace ProPri.Users.Data.Repository
 
         public async Task<UserFormDto> GetUserFormById(Guid id)
         {
-            var user = await _context.Users.AsNoTracking()
+            var user = await Context.Users.AsNoTracking()
                 .Include(u => u.UserRoles)
-                .FirstOrDefaultAsync(u => u.Id == id);
-            return _mapper.Map<UserFormDto>(user);
+                .FirstOrDefaultAsync(u => u.Id == id && !u.IsAdministrator);
+
+            return user == null ? null : _mapper.Map<UserFormDto>(user);
         }
 
         public async Task<User> GetUserById(Guid id)
         {
-            var user = await _context.Users
+            var user = await Context.Users
                 .Include(u => u.UserRoles)
                 .ThenInclude(ur => ur.Role)
                 .ThenInclude(r => r.RoleClaims)
@@ -78,16 +79,7 @@ namespace ProPri.Users.Data.Repository
 
         public void UpdateUser(User user)
         {
-            _context.Users.Update(user);
-        }
-
-        public async Task<int> QtyOfActiveUsersInRole(string roleName)
-        {
-            return await _context.UserRoles
-                .AsNoTracking()
-                .Include(ur => ur.User)
-                .Include(ur => ur.Role)
-                .CountAsync(ur => ur.User.Active && ur.Role.Name == roleName);
+            Context.Users.Update(user);
         }
 
         #endregion
@@ -115,14 +107,14 @@ namespace ProPri.Users.Data.Repository
 
         public async Task<IEnumerable<RoleIdNameDto>> GetAllRoleIdName()
         {
-            var roles = await _context.Roles.AsNoTracking().ToListAsync();
+            var roles = await Context.Roles.AsNoTracking().Where(r => r.Name != ConstData.RoleAdministrator).ToListAsync();
             return _mapper.Map<IEnumerable<RoleIdNameDto>>(roles);
         }
 
         public async Task<Role> GetRoleById(Guid id)
         {
-            var role = await _context.Roles.AsNoTracking()
-                .FirstOrDefaultAsync(r => r.Id == id);
+            var role = await Context.Roles.AsNoTracking()
+                .FirstOrDefaultAsync(r => r.Id == id && r.Name != ConstData.RoleAdministrator);
             return role;
         }
 
@@ -135,7 +127,7 @@ namespace ProPri.Users.Data.Repository
             if (userId == Guid.Empty)
                 return false;
 
-            var userRole = await _context.UserRoles
+            var userRole = await Context.UserRoles
                 .AsNoTracking()
                 .Include(ur => ur.Role)
                 .ThenInclude(r => r.RoleClaims)
@@ -147,10 +139,5 @@ namespace ProPri.Users.Data.Repository
         }
 
         #endregion
-
-        public void Dispose()
-        {
-            _context.Dispose();
-        }
     }
 }

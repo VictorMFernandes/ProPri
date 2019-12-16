@@ -36,11 +36,11 @@ namespace ProPri.Core.Communication.Handlers
         {
             await _mediator.Publish(evento);
         }
-        
+
         public async Task PublishEvents<T>(T context) where T : DbContext
         {
             var domainEntities = context.ChangeTracker
-                .Entries<Entity>()
+                .Entries<IEventContainer>()
                 .Where(x => x.Entity.Notifications != null && x.Entity.Notifications.Any())
                 .ToList();
 

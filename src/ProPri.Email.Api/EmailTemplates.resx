@@ -1,0 +1,486 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <!-- 
+    Microsoft ResX Schema 
+    
+    Version 2.0
+    
+    The primary goals of this format is to allow a simple XML format 
+    that is mostly human readable. The generation and parsing of the 
+    various data types are done through the TypeConverter classes 
+    associated with the data types.
+    
+    Example:
+    
+    ... ado.net/XML headers & schema ...
+    <resheader name="resmimetype">text/microsoft-resx</resheader>
+    <resheader name="version">2.0</resheader>
+    <resheader name="reader">System.Resources.ResXResourceReader, System.Windows.Forms, ...</resheader>
+    <resheader name="writer">System.Resources.ResXResourceWriter, System.Windows.Forms, ...</resheader>
+    <data name="Name1"><value>this is my long string</value><comment>this is a comment</comment></data>
+    <data name="Color1" type="System.Drawing.Color, System.Drawing">Blue</data>
+    <data name="Bitmap1" mimetype="application/x-microsoft.net.object.binary.base64">
+        <value>[base64 mime encoded serialized .NET Framework object]</value>
+    </data>
+    <data name="Icon1" type="System.Drawing.Icon, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+        <value>[base64 mime encoded string representing a byte array form of the .NET Framework object]</value>
+        <comment>This is a comment</comment>
+    </data>
+                
+    There are any number of "resheader" rows that contain simple 
+    name/value pairs.
+    
+    Each data row contains a name, and value. The row also contains a 
+    type or mimetype. Type corresponds to a .NET class that support 
+    text/value conversion through the TypeConverter architecture. 
+    Classes that don't support this are serialized and stored with the 
+    mimetype set.
+    
+    The mimetype is used for serialized objects, and tells the 
+    ResXResourceReader how to depersist the object. This is currently not 
+    extensible. For a given mimetype the value must be set accordingly:
+    
+    Note - application/x-microsoft.net.object.binary.base64 is the format 
+    that the ResXResourceWriter will generate, however the reader can 
+    read any of the formats listed below.
+    
+    mimetype: application/x-microsoft.net.object.binary.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Binary.BinaryFormatter
+            : and then encoded with base64 encoding.
+    
+    mimetype: application/x-microsoft.net.object.soap.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Soap.SoapFormatter
+            : and then encoded with base64 encoding.
+
+    mimetype: application/x-microsoft.net.object.bytearray.base64
+    value   : The object must be serialized into a byte array 
+            : using a System.ComponentModel.TypeConverter
+            : and then encoded with base64 encoding.
+    -->
+  <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+    <xsd:import namespace="http://www.w3.org/XML/1998/namespace" />
+    <xsd:element name="root" msdata:IsDataSet="true">
+      <xsd:complexType>
+        <xsd:choice maxOccurs="unbounded">
+          <xsd:element name="metadata">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" />
+              </xsd:sequence>
+              <xsd:attribute name="name" use="required" type="xsd:string" />
+              <xsd:attribute name="type" type="xsd:string" />
+              <xsd:attribute name="mimetype" type="xsd:string" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="assembly">
+            <xsd:complexType>
+              <xsd:attribute name="alias" type="xsd:string" />
+              <xsd:attribute name="name" type="xsd:string" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="data">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+                <xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" msdata:Ordinal="1" />
+              <xsd:attribute name="type" type="xsd:string" msdata:Ordinal="3" />
+              <xsd:attribute name="mimetype" type="xsd:string" msdata:Ordinal="4" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="resheader">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" />
+            </xsd:complexType>
+          </xsd:element>
+        </xsd:choice>
+      </xsd:complexType>
+    </xsd:element>
+  </xsd:schema>
+  <resheader name="resmimetype">
+    <value>text/microsoft-resx</value>
+  </resheader>
+  <resheader name="version">
+    <value>2.0</value>
+  </resheader>
+  <resheader name="reader">
+    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <resheader name="writer">
+    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <data name="Welcome" xml:space="preserve">
+    <value>&lt;!DOCTYPE html
+  PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd"&gt;
+&lt;html xmlns="http://www.w3.org/1999/xhtml"&gt;
+
+&lt;head&gt;
+  &lt;meta http-equiv="Content-Type" content="text/html; charset=UTF-8" /&gt;
+  &lt;meta name="viewport" content="width=device-width, initial-scale=1" /&gt;
+  &lt;title&gt;Welcome to Rise&lt;/title&gt;
+
+  &lt;style type="text/css"&gt;
+    /* Take care of image borders and formatting, client hacks */
+    img {
+      max-width: 600px;
+      outline: none;
+      text-decoration: none;
+      -ms-interpolation-mode: bicubic;
+    }
+
+    a img {
+      border: none;
+    }
+
+    table {
+      border-collapse: collapse !important;
+    }
+
+    #outlook a {
+      padding: 0;
+    }
+
+    .ReadMsgBody {
+      width: 100%;
+    }
+
+    .ExternalClass {
+      width: 100%;
+    }
+
+    .backgroundTable {
+      margin: 0 auto;
+      padding: 0;
+      width: 100% !important;
+    }
+
+    table td {
+      border-collapse: collapse;
+    }
+
+    .ExternalClass * {
+      line-height: 115%;
+    }
+
+    .container-for-gmail-android {
+      min-width: 600px;
+    }
+
+
+    /* General styling */
+    * {
+      font-family: Helvetica, Arial, sans-serif;
+    }
+
+    body {
+      -webkit-font-smoothing: antialiased;
+      -webkit-text-size-adjust: none;
+      width: 100% !important;
+      margin: 0 !important;
+      height: 100%;
+      color: #676767;
+    }
+
+    td {
+      font-family: Helvetica, Arial, sans-serif;
+      font-size: 14px;
+      color: #777777;
+      text-align: center;
+      line-height: 21px;
+    }
+
+    a {
+      color: #a400b9;
+      text-decoration: none !important;
+    }
+
+    .pull-left {
+      text-align: left;
+    }
+
+    .pull-right {
+      text-align: right;
+    }
+
+    .header-lg,
+    .header-md,
+    .header-sm {
+      font-size: 32px;
+      font-weight: 700;
+      line-height: normal;
+      padding: 35px 0 0;
+      color: #4d4d4d;
+    }
+
+    .header-md {
+      font-size: 24px;
+    }
+
+    .header-sm {
+      padding: 5px 0;
+      font-size: 18px;
+      line-height: 1.3;
+    }
+
+    .content-padding {
+      padding: 20px 0 5px;
+    }
+
+    .mobile-header-padding-right {
+      width: 290px;
+      text-align: right;
+      padding-left: 10px;
+    }
+
+    .mobile-header-padding-left {
+      width: 290px;
+      text-align: left;
+      padding-left: 10px;
+    }
+
+    .free-text {
+      width: 100% !important;
+      padding: 10px 60px 0px;
+    }
+
+    .button {
+      padding: 30px 0;
+    }
+
+    .mini-block {
+      border: 1px solid #e5e5e5;
+      border-radius: 5px;
+      background-color: #ffffff;
+      padding: 12px 15px 15px;
+      text-align: left;
+      width: 253px;
+    }
+
+    .mini-container-left {
+      width: 278px;
+      padding: 10px 0 10px 15px;
+    }
+
+    .mini-container-right {
+      width: 278px;
+      padding: 10px 14px 10px 15px;
+    }
+
+    .product {
+      text-align: left;
+      vertical-align: top;
+      width: 175px;
+    }
+
+    .total-space {
+      padding-bottom: 8px;
+      display: inline-block;
+    }
+
+    .item-table {
+      padding: 50px 20px;
+      width: 560px;
+    }
+
+    .item {
+      width: 300px;
+    }
+
+    .mobile-hide-img {
+      text-align: left;
+      width: 125px;
+    }
+
+    .mobile-hide-img img {
+      border: 1px solid #e6e6e6;
+      border-radius: 4px;
+    }
+
+    .item-col {
+      padding-top: 20px;
+      text-align: left;
+      vertical-align: top;
+    }
+
+    .force-width-gmail {
+      min-width: 600px;
+      height: 0px !important;
+      line-height: 1px !important;
+      font-size: 1px !important;
+    }
+  &lt;/style&gt;
+
+  &lt;style type="text/css" media="screen"&gt;
+    @import url(http://fonts.googleapis.com/css?family=Oxygen:400,700);
+  &lt;/style&gt;
+
+  &lt;style type="text/css" media="screen"&gt;
+    @media screen {
+
+      /* Thanks Outlook 2013! */
+      * {
+        font-family: 'Oxygen', 'Helvetica Neue', 'Arial', 'sans-serif' !important;
+      }
+    }
+  &lt;/style&gt;
+
+  &lt;style type="text/css" media="only screen and (max-width: 480px)"&gt;
+    /* Mobile styles */
+    @media only screen and (max-width: 480px) {
+
+      table[class*="container-for-gmail-android"] {
+        min-width: 290px !important;
+        width: 100% !important;
+      }
+
+      img[class="force-width-gmail"] {
+        display: none !important;
+        width: 0 !important;
+        height: 0 !important;
+      }
+
+      table[class="w320"] {
+        width: 320px !important;
+      }
+
+      td[class*="mobile-header-padding-left"] {
+        width: 160px !important;
+        padding-left: 0 !important;
+      }
+
+      td[class*="mobile-header-padding-right"] {
+        width: 160px !important;
+        padding-right: 0 !important;
+      }
+
+      td[class="header-lg"] {
+        font-size: 24px !important;
+        padding-bottom: 5px !important;
+      }
+
+      td[class="content-padding"] {
+        padding: 5px 0 5px !important;
+      }
+
+      td[class="button"] {
+        padding: 5px 5px 30px !important;
+      }
+
+      td[class*="free-text"] {
+        padding: 10px 18px 30px !important;
+      }
+
+      td[class~="mobile-hide-img"] {
+        display: none !important;
+        height: 0 !important;
+        width: 0 !important;
+        line-height: 0 !important;
+      }
+
+      td[class~="item"] {
+        width: 140px !important;
+        vertical-align: top !important;
+      }
+
+      td[class~="quantity"] {
+        width: 50px !important;
+      }
+
+      td[class~="price"] {
+        width: 90px !important;
+      }
+
+      td[class="item-table"] {
+        padding: 30px 20px !important;
+      }
+
+      td[class="mini-container-left"],
+      td[class="mini-container-right"] {
+        padding: 0 15px 15px !important;
+        display: block !important;
+        width: 290px !important;
+      }
+
+    }
+  &lt;/style&gt;
+&lt;/head&gt;
+
+&lt;body bgcolor="#f7f7f7"&gt;
+  &lt;table align="center" cellpadding="0" cellspacing="0" class="container-for-gmail-android" width="100%"&gt;
+    &lt;tr&gt;
+      &lt;td align="left" valign="top" width="100%"
+        style="background:repeat-x url(http://s3.amazonaws.com/swu-filepicker/4E687TRe69Ld95IDWyEg_bg_top_02.jpg) #ffffff;"&gt;
+        &lt;center&gt;
+          &lt;table cellspacing="0" cellpadding="0" width="100%" bgcolor="#ffffff"
+            background="http://s3.amazonaws.com/swu-filepicker/4E687TRe69Ld95IDWyEg_bg_top_02.jpg"
+            style="background-color:transparent"&gt;
+            &lt;tr&gt;
+              &lt;td width="100%" height="80" valign="top" style="text-align: center; vertical-align:middle;"&gt;
+                &lt;center&gt;
+                  &lt;table cellpadding="0" cellspacing="0" width="600" class="w320"&gt;
+                    &lt;tr&gt;
+                      &lt;td class="pull-left mobile-header-padding-left" style="vertical-align: middle;"&gt;
+                        &lt;a href=""&gt;&lt;img width="137" height="47"
+                            src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRuXIdinixe3k4OWa0LOGGsahejG2KXFBhiiPJnGUgfpTbjHPnLHA&amp;s"&gt;&lt;/a&gt;
+                      &lt;/td&gt;
+                      &lt;td class="pull-right mobile-header-padding-right" style="color: #4d4d4d;"&gt;
+                        &lt;a href=""&gt;&lt;img width="44" height="47"
+                            src="http://s3.amazonaws.com/swu-filepicker/k8D8A7SLRuetZspHxsJk_social_08.gif" /&gt;&lt;/a&gt;
+                        &lt;a href=""&gt;&lt;img width="38" height="47"
+                            src="http://s3.amazonaws.com/swu-filepicker/LMPMj7JSRoCWypAvzaN3_social_09.gif" /&gt;&lt;/a&gt;
+                      &lt;/td&gt;
+                    &lt;/tr&gt;
+                  &lt;/table&gt;
+                &lt;/center&gt;
+              &lt;/td&gt;
+            &lt;/tr&gt;
+          &lt;/table&gt;
+        &lt;/center&gt;
+      &lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td align="center" valign="top" width="100%" style="background-color: #f7f7f7;" class="content-padding"&gt;
+        &lt;center&gt;
+          &lt;table cellspacing="0" cellpadding="0" width="600" class="w320"&gt;
+            &lt;tr&gt;
+              &lt;td class="header-lg"&gt;
+                Welcome to Rise!
+              &lt;/td&gt;
+            &lt;/tr&gt;
+            &lt;tr&gt;
+              &lt;td class="free-text"&gt;
+                [created-user-name], we're excited to have you onboard. Please sign in at &lt;a
+                  href="[website-loginpage]"&gt;Rise&lt;/a&gt; to
+                have access to all the functionality you need to rise our team to the next level.&lt;br /&gt;
+                Here's your password
+              &lt;/td&gt;
+            &lt;/tr&gt;
+            &lt;tr&gt;
+              &lt;td class="button"&gt;
+                &lt;div style="background-color:#ff6f6f;border-radius:5px;color:#ffffff;display:inline-block;
+              font-family:'Cabin',Helvetica, Arial, sans-serif;
+              font-size:22px;font-weight:bold;line-height:40px;letter-spacing:2px;
+              text-align:center;text-decoration:none;width:155px;-webkit-text-size-adjust:none;mso-hide:all;"&gt;
+                  [created-user-password]&lt;/div&gt;
+              &lt;/td&gt;
+            &lt;/tr&gt;
+          &lt;/table&gt;
+        &lt;/center&gt;
+      &lt;/td&gt;
+    &lt;/tr&gt;
+  &lt;/table&gt;
+  &lt;/div&gt;
+&lt;/body&gt;
+
+&lt;/html&gt;</value>
+    <comment>[created-user-name], [created-user-password], [website-login-page]</comment>
+  </data>
+</root>

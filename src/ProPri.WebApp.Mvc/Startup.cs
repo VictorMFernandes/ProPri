@@ -15,6 +15,8 @@ using ProPri.Users.Domain;
 using ProPri.WebApp.Mvc.Extensions;
 using Syncfusion.Licensing;
 using System;
+using ProPri.Email.Api.Setup;
+using Rise.Email.AntiCorruption;
 
 namespace ProPri.WebApp.Mvc
 {
@@ -64,6 +66,12 @@ namespace ProPri.WebApp.Mvc
             services.InjectDependencies();
             SyncfusionLicenseProvider.RegisterLicense("MTc4NjMyQDMxMzcyZTMzMmUzMElidVVLdGNQQjgxNi95UGNjQVl4MEtMNUFObVNBVzFyV3Z2OStLTHpMRUU9");
             services.AddMediatR(typeof(Startup));
+            services.AddEmailProvider()
+                .AddSendGrid(options =>
+                {
+                    options.ApiKey = "SG.39yr7I34S8eQeqAda9i_BA.I_X-L4c_DbBzuPrLZwg9IUIy4_r4dJGWrJTLfPIdD_U";
+                    options.SenderEmail = "victor.m.fernandes@outlook.com";
+                });
         }
 
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env, Seeder seeder)

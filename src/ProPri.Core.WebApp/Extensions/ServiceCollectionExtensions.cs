@@ -6,7 +6,7 @@ using ProPri.Core.WebApp.Data;
 using ProPri.Users.Application.Commands;
 using ProPri.Users.Application.Queries;
 using ProPri.Users.Data;
-using ProPri.Users.Data.Repository;
+using ProPri.Users.Data.Repositories;
 using ProPri.Users.Domain;
 
 namespace ProPri.Core.WebApp.Extensions

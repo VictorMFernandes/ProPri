@@ -24,7 +24,9 @@
     <ProjectReference Include="..\ProPri.Auth.Data\ProPri.Users.Data.csproj" />
     <ProjectReference Include="..\ProPri.Core.WebApp\ProPri.Core.WebApp.csproj" />
     <ProjectReference Include="..\ProPri.Core\ProPri.Core.csproj" />
+    <ProjectReference Include="..\ProPri.Email.Api\ProPri.Email.Api.csproj" />
     <ProjectReference Include="..\ProPri.Student.Data\ProPri.Students.Data.csproj" />
+    <ProjectReference Include="..\Rise.Email.AntiCorruption\Rise.Email.AntiCorruption.csproj" />
   </ItemGroup>
 
 </Project>
