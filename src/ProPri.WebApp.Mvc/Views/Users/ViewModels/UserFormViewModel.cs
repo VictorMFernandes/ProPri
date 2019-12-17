@@ -8,8 +8,7 @@ namespace ProPri.WebApp.Mvc.Views.Users.ViewModels
     {
         public Guid LoggedUserId { get; set; }
         public Guid Id { get; set; }
-        public string FirstName { get; set; }
-        public string Surname { get; set; }
+        public string Name { get; set; }
         public string Email { get; set; }
         public DateTime LastActiveDate { get; set; }
         public DateTime RegistrationDate { get; set; }

@@ -40,12 +40,13 @@ namespace ProPri.Users.Data.Migrations
                     LockoutEnd = table.Column<DateTimeOffset>(nullable: true),
                     LockoutEnabled = table.Column<bool>(nullable: false),
                     AccessFailedCount = table.Column<int>(nullable: false),
-                    FirstName = table.Column<string>(maxLength: 3, nullable: true),
-                    Surname = table.Column<string>(maxLength: 60, nullable: true),
+                    Name = table.Column<string>(maxLength: 63, nullable: false),
+                    NormalizedName = table.Column<string>(maxLength: 63, nullable: false),
                     RegistrationDate = table.Column<DateTime>(nullable: false),
                     LastActiveDate = table.Column<DateTime>(nullable: false),
                     Active = table.Column<bool>(nullable: false),
-                    Birthday = table.Column<DateTime>(nullable: true)
+                    Birthday = table.Column<DateTime>(nullable: true),
+                    IsAdministrator = table.Column<bool>(nullable: false)
                 },
                 constraints: table =>
                 {

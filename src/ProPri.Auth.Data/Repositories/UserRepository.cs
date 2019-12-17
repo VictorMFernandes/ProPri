@@ -7,6 +7,7 @@ using ProPri.Core.Data;
 using ProPri.Core.Helpers;
 using ProPri.Users.Domain;
 using ProPri.Users.Domain.Dtos;
+using ProPri.Users.Domain.Filters;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -32,16 +33,18 @@ namespace ProPri.Users.Data.Repositories
 
         #region User
 
-        public async Task<PaginatedList<UserIndexDto>> GetUsers(int pageNumber, int pageSize)
+        public async Task<PaginatedList<UserIndexDto>> GetUsers(UserFilter filter)
         {
             var users = await PaginatedList<UserIndexDto>.Create(Context.Users
                 .AsNoTracking()
                 .Include(u => u.UserRoles)
                 .ThenInclude(ur => ur.Role)
-                .Where(u => !u.IsAdministrator)
-                .Select(u => new UserIndexDto(
-                    u.Id, u.Name.ToString(), u.UserRoles.Single().Role.Name)
-                ), pageNumber, pageSize);
+                .Where(u => !u.IsAdministrator &&
+                            EF.Functions.Like(u.NormalizedName, $"%{filter.SearchString}%") &&
+                            (filter.ActiveFilter == EActiveFilter.All || filter.ActiveFilter == EActiveFilter.Active && u.Active || filter.ActiveFilter == EActiveFilter.Inactive && !u.Active))
+                            .Select(u => new UserIndexDto(
+                    u.Id, u.Name, u.UserRoles.Single().Role.Name, u.Active)
+                ), filter.PageNumber, filter.PageSize);
 
             return users;
         }

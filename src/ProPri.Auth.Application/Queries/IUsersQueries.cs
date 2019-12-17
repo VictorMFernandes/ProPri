@@ -1,6 +1,6 @@
 ﻿using ProPri.Core.Helpers;
-using ProPri.Users.Application.Queries.Filters;
 using ProPri.Users.Domain.Dtos;
+using ProPri.Users.Domain.Filters;
 using System;
 using System.Collections.Generic;
 using System.Security.Claims;

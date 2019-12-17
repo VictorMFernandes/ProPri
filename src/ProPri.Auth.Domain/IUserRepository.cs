@@ -2,6 +2,7 @@
 using ProPri.Core.Data;
 using ProPri.Core.Helpers;
 using ProPri.Users.Domain.Dtos;
+using ProPri.Users.Domain.Filters;
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
@@ -12,7 +13,7 @@ namespace ProPri.Users.Domain
     {
         #region User
 
-        Task<PaginatedList<UserIndexDto>> GetUsers(int pageNumber, int pageSize);
+        Task<PaginatedList<UserIndexDto>> GetUsers(UserFilter filter);
         Task<User> GetUserById(Guid id);
         Task<User> GetUserByEmail(string email);
         Task<UserFormDto> GetUserFormById(Guid id);

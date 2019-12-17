@@ -1,4 +1,5 @@
-﻿@model IEnumerable<ProPri.WebApp.Mvc.Views.Users.ViewModels.UserIndexViewModel>
+﻿@using ProPri.Core.Helpers
+@model ProPri.Core.Helpers.PaginatedList<ProPri.Users.Domain.Dtos.UserIndexDto>
 
 @{
     ViewData["Title"] = "Users";
@@ -8,31 +9,58 @@
     <h3>@ViewData["Title"]</h3>
 
     <div class="row">
-        <p class="col-9 align-middle">
+        <p class="col-6 align-middle">
             <a asp-action="Create">Create New</a>
         </p>
+        <div class="col-1"></div>
+
+        <form class="col-5" asp-action="Index" method="get">
+            <div class="input-group pl-0">
+                <input name="searchString" value="@ViewData["CurrentFilter"]"
+                       class="form-control my-0 py-1" autofocus type="text" placeholder="Search by Name..." aria-label="Search">
+                <div class="input-group-append">
+                    <select name="activeFilter" asp-items="Html.GetEnumSelectList<EActiveFilter>()" asp-for="@ViewData["CurrentActiveFilter"]"></select>
+                </div>
+                <div class="input-group-append">
+                    <button type="submit" class="btn btn-dark">
+                        <i class="fas fa-search" aria-hidden="true"></i>
+                    </button>
+                </div>
+            </div>
+        </form>
     </div>
 
     <table class="table table-hover mt-2 table-without-img">
         <thead class="thead-dark">
             <tr>
                 <th>
-                    @Html.DisplayNameFor(model => model.Name)
+                    @Html.DisplayNameFor(model => model[0].Name)
                 </th>
-                <th class="d-none d-sm-table-cell">
-                    @Html.DisplayNameFor(model => model.Role)
+                <th class="w-25">
+                    @Html.DisplayNameFor(model => model[0].Role)
+                </th>
+                <th class="w-5">
+                    @Html.DisplayNameFor(model => model[0].Active)
                 </th>
             </tr>
         </thead>
         <tbody>
             @foreach (var user in Model)
             {
+                var userActive = user.Active ? "yes" : "no";
+                var activeColor = user.Active ? "text-success" : "text-secondary";
+
                 <tr>
                     <td>
                         <a class="table-data" asp-action="Edit" asp-route-id="@user.Id">@user.Name</a>
                     </td>
-                    <td class="d-none d-sm-table-cell">
-                        <a class="table-data" asp-action="Edit">@user.Role</a>
+
+                    <td>
+                        <a class="table-data" asp-action="Edit" asp-route-id="@user.Id">@user.Role</a>
+                    </td>
+
+                    <td class="text-center">
+                        <a class="table-data @activeColor" asp-action="Edit" asp-route-id="@user.Id"><strong>@userActive</strong></a>
                     </td>
                 </tr>
             }
@@ -40,17 +68,5 @@
 
     </table>
 
-    <nav aria-label="PageNumber navigation example">
-        <ul class="pagination justify-content-center">
-            <li class="page-item disabled">
-                <a class="page-link" href="#" tabindex="-1">Previous</a>
-            </li>
-            <li class="page-item"><a class="page-link" href="#">1</a></li>
-            <li class="page-item"><a class="page-link" href="#">2</a></li>
-            <li class="page-item"><a class="page-link" href="#">3</a></li>
-            <li class="page-item">
-                <a class="page-link" href="#">Next</a>
-            </li>
-        </ul>
-    </nav>
+    <partial name="_Pagination" />
 </div>

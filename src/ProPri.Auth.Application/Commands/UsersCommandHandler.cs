@@ -3,7 +3,6 @@ using ProPri.Core.Communication.Handlers;
 using ProPri.Core.Communication.Messages.Common.Events.IntegrationEvents;
 using ProPri.Core.Communication.Messages.Common.Notifications;
 using ProPri.Core.Constants;
-using ProPri.Core.Domain.ValueObjects;
 using ProPri.Users.Domain;
 using System;
 using System.Threading;
@@ -20,7 +19,6 @@ namespace ProPri.Users.Application.Commands
     {
         private readonly IUserRepository _userRepository;
 
-
         public UsersCommandHandler(IMediatorHandler mediatorHandler,
                                    IUserRepository userRepository)
             : base(mediatorHandler)
@@ -36,9 +34,8 @@ namespace ProPri.Users.Application.Commands
             if (performingUser == null)
                 return false;
 
-            var name = new PersonName(request.FirstName, request.Surname);
             var role = await _userRepository.GetRoleById(request.RoleId);
-            var createdUser = performingUser.CreateUser(name, request.Email, request.Active, request.Birthday, role);
+            var createdUser = performingUser.CreateUser(request.Name, request.Email, request.Active, request.Birthday, role);
 
             if (createdUser == null)
             {
@@ -52,7 +49,7 @@ namespace ProPri.Users.Application.Commands
 
             if (createResult.Succeeded)
             {
-                createdUser.AddEvent(new UserCreatedEvent(createdUser.Id, createdUser.Name.ToString(), createdUser.Email, tempPassword));
+                createdUser.AddEvent(new UserCreatedEvent(createdUser.Id, createdUser.Name, createdUser.Email, tempPassword));
                 await _userRepository.Commit();
                 return true;
             }
@@ -80,10 +77,9 @@ namespace ProPri.Users.Application.Commands
                 return false;
             }
 
-            var name = new PersonName(request.FirstName, request.Surname);
             var role = await _userRepository.GetRoleById(request.RoleId);
 
-            var updateValid = performingUser.UpdateUser(editedUser, name, request.Email, request.Birthday, request.Active, role);
+            var updateValid = performingUser.UpdateUser(editedUser, request.Name, request.Email, request.Birthday, request.Active, role);
 
             if (!updateValid)
             {

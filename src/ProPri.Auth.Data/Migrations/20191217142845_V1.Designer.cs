@@ -9,7 +9,7 @@ using ProPri.Users.Data;
 namespace ProPri.Users.Data.Migrations
 {
     [DbContext(typeof(UsersContext))]
-    [Migration("20191211130604_V1")]
+    [Migration("20191217142845_V1")]
     partial class V1
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -84,7 +84,7 @@ namespace ProPri.Users.Data.Migrations
                     b.ToTable("tb_user_token");
                 });
 
-            modelBuilder.Entity("ProPri.Users.Domain.ActiveUserWithRoleExists", b =>
+            modelBuilder.Entity("ProPri.Users.Domain.Role", b =>
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
@@ -159,6 +159,9 @@ namespace ProPri.Users.Data.Migrations
                     b.Property<bool>("EmailConfirmed")
                         .HasColumnType("INTEGER");
 
+                    b.Property<bool>("IsAdministrator")
+                        .HasColumnType("INTEGER");
+
                     b.Property<DateTime>("LastActiveDate")
                         .HasColumnType("TEXT");
 
@@ -168,9 +171,21 @@ namespace ProPri.Users.Data.Migrations
                     b.Property<DateTimeOffset?>("LockoutEnd")
                         .HasColumnType("TEXT");
 
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasColumnName("Name")
+                        .HasColumnType("TEXT")
+                        .HasMaxLength(63);
+
                     b.Property<string>("NormalizedEmail")
                         .HasColumnType("TEXT")
                         .HasMaxLength(160);
+
+                    b.Property<string>("NormalizedName")
+                        .IsRequired()
+                        .HasColumnName("NormalizedName")
+                        .HasColumnType("TEXT")
+                        .HasMaxLength(63);
 
                     b.Property<string>("NormalizedUserName")
                         .HasColumnType("TEXT")
@@ -255,44 +270,16 @@ namespace ProPri.Users.Data.Migrations
 
             modelBuilder.Entity("ProPri.Users.Domain.RoleClaim", b =>
                 {
-                    b.HasOne("ProPri.Users.Domain.ActiveUserWithRoleExists", "ActiveUserWithRoleExists")
+                    b.HasOne("ProPri.Users.Domain.Role", "Role")
                         .WithMany("RoleClaims")
                         .HasForeignKey("RoleId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
                 });
 
-            modelBuilder.Entity("ProPri.Users.Domain.User", b =>
-                {
-                    b.OwnsOne("ProPri.Core.Domain.ValueObjects.PersonName", "Name", b1 =>
-                        {
-                            b1.Property<Guid>("UserId")
-                                .HasColumnType("TEXT");
-
-                            b1.Property<string>("FirstName")
-                                .IsRequired()
-                                .HasColumnName("FirstName")
-                                .HasColumnType("TEXT")
-                                .HasMaxLength(3);
-
-                            b1.Property<string>("Surname")
-                                .IsRequired()
-                                .HasColumnName("Surname")
-                                .HasColumnType("TEXT")
-                                .HasMaxLength(60);
-
-                            b1.HasKey("UserId");
-
-                            b1.ToTable("tb_user");
-
-                            b1.WithOwner()
-                                .HasForeignKey("UserId");
-                        });
-                });
-
             modelBuilder.Entity("ProPri.Users.Domain.UserRole", b =>
                 {
-                    b.HasOne("ProPri.Users.Domain.ActiveUserWithRoleExists", "ActiveUserWithRoleExists")
+                    b.HasOne("ProPri.Users.Domain.Role", "Role")
                         .WithMany("UserRoles")
                         .HasForeignKey("RoleId")
                         .OnDelete(DeleteBehavior.Cascade)

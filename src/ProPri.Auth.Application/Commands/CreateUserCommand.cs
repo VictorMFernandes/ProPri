@@ -8,8 +8,7 @@ namespace ProPri.Users.Application.Commands
     public class CreateUserCommand : CommandWithoutResult
     {
         public Guid LoggedUserId { get; protected set; }
-        public string FirstName { get; set; }
-        public string Surname { get; set; }
+        public string Name { get; set; }
         public string Email { get; set; }
         public bool Active { get; set; }
         public DateTime? Birthday { get; set; }
@@ -29,29 +28,17 @@ namespace ProPri.Users.Application.Commands
                     .NotEqual(Guid.Empty)
                     .WithMessage("You must be logged in to edit an user");
 
-                RuleFor(c => c.FirstName)
+                RuleFor(c => c.Name)
                     .NotEmpty()
-                    .WithMessage(ConstMessages.ErrorNullOrEmpty("First Name"));
+                    .WithMessage(ConstMessages.ErrorNullOrEmpty(nameof(Name)));
 
-                RuleFor(c => c.FirstName)
-                    .MaximumLength(ConstSizes.PersonFirstNameMax)
-                    .WithMessage(ConstMessages.ErrorMaxLength("First Name", ConstSizes.PersonFirstNameMax));
+                RuleFor(c => c.Name)
+                    .MaximumLength(ConstSizes.PersonFirstNameMax + ConstSizes.PersonSurnameMax)
+                    .WithMessage(ConstMessages.ErrorMaxLength(nameof(Name), ConstSizes.PersonFirstNameMax + ConstSizes.PersonSurnameMax));
 
-                RuleFor(c => c.FirstName)
+                RuleFor(c => c.Name)
                     .MinimumLength(ConstSizes.PersonFirstNameMin)
-                    .WithMessage(ConstMessages.ErrorMinLength("First Name", ConstSizes.PersonFirstNameMin));
-
-                RuleFor(c => c.Surname)
-                    .NotEmpty()
-                    .WithMessage(ConstMessages.ErrorNullOrEmpty(nameof(Surname)));
-
-                RuleFor(c => c.Surname)
-                    .MaximumLength(ConstSizes.PersonSurnameMax)
-                    .WithMessage(ConstMessages.ErrorMaxLength(nameof(Surname), ConstSizes.PersonSurnameMax));
-
-                RuleFor(c => c.Surname)
-                    .MinimumLength(ConstSizes.PersonSurnameMin)
-                    .WithMessage(ConstMessages.ErrorMinLength(nameof(Surname), ConstSizes.PersonSurnameMin));
+                    .WithMessage(ConstMessages.ErrorMinLength(nameof(Name), ConstSizes.PersonFirstNameMin));
 
                 RuleFor(c => c.Email)
                     .NotEmpty()

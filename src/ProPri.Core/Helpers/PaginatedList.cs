@@ -12,6 +12,13 @@ namespace ProPri.Core.Helpers
         public int PageQty { get; set; }
         public int PageSize { get; set; }
         public int Items { get; set; }
+        public bool HasPreviousPage => (PageNumber > 1);
+        public bool HasNextPage => (PageNumber < PageQty);
+
+        private PaginatedList()
+        {
+
+        }
 
         private PaginatedList(IEnumerable<T> items, int count, int pageNumber, int pageSize)
         {

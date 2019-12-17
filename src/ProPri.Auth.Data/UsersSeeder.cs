@@ -1,6 +1,5 @@
 ﻿using Microsoft.AspNetCore.Identity;
 using ProPri.Core.Constants;
-using ProPri.Core.Domain.ValueObjects;
 using ProPri.Users.Domain;
 using System.Security.Claims;
 
@@ -90,32 +89,91 @@ namespace ProPri.Users.Data
         {
             if (_userManager.FindByEmailAsync(ConstData.Administrator).Result == null)
             {
-                var name = new PersonName(ConstData.AdministratorFirstName, ConstData.AdministratorSurname);
-                var user = new User(name, ConstData.Administrator, true);
+                var user = new User($"{ConstData.AdministratorFirstName} {ConstData.AdministratorSurname}", ConstData.Administrator, true);
                 _userManager.CreateAsync(user, ConstData.SimplePassword).Wait();
                 _userManager.AddToRoleAsync(user, ConstData.RoleManager).Wait();
             }
 
             if (_userManager.FindByEmailAsync(ConstData.Manager).Result == null)
             {
-                var name = new PersonName(ConstData.ManagerFirstName, ConstData.ManagerSurname);
-                var user = new User(name, ConstData.Manager, false);
+                var user = new User($"{ConstData.ManagerFirstName} {ConstData.ManagerSurname}", ConstData.Manager, false);
                 _userManager.CreateAsync(user, ConstData.SimplePassword).Wait();
                 _userManager.AddToRoleAsync(user, ConstData.RoleManager).Wait();
             }
 
             if (_userManager.FindByEmailAsync(ConstData.PedEmail).Result == null)
             {
-                var name = new PersonName(ConstData.PedFirstName, ConstData.PedSurname);
-                var user = new User(name, ConstData.PedEmail, false);
+                var user = new User($"{ConstData.PedFirstName} {ConstData.PedSurname}", ConstData.PedEmail, false);
                 _userManager.CreateAsync(user, ConstData.SimplePassword).Wait();
                 _userManager.AddToRoleAsync(user, ConstData.RolePed).Wait();
             }
 
             if (_userManager.FindByEmailAsync(ConstData.FdEmail).Result == null)
             {
-                var name = new PersonName(ConstData.FdFirstName, ConstData.FdSurname);
-                var user = new User(name, ConstData.FdEmail, false);
+                var user = new User($"{ConstData.FdFirstName} {ConstData.FdSurname}", ConstData.FdEmail, false);
+                _userManager.CreateAsync(user, ConstData.SimplePassword).Wait();
+                _userManager.AddToRoleAsync(user, ConstData.RoleFd).Wait();
+            }
+
+            if (_userManager.FindByEmailAsync("teste@email.com").Result == null)
+            {
+                var user = new User("Teste TesteSur", "teste@email.com", false);
+                _userManager.CreateAsync(user, ConstData.SimplePassword).Wait();
+                _userManager.AddToRoleAsync(user, ConstData.RoleFd).Wait();
+            }
+
+            if (_userManager.FindByEmailAsync("teste1@email.com").Result == null)
+            {
+                var user = new User("Teste1 Teste1Sur", "teste1@email.com", false);
+                _userManager.CreateAsync(user, ConstData.SimplePassword).Wait();
+                _userManager.AddToRoleAsync(user, ConstData.RoleFd).Wait();
+            }
+
+            if (_userManager.FindByEmailAsync("teste2@email.com").Result == null)
+            {
+                var user = new User("Teste2 Teste2Sur", "teste2@email.com", false);
+                _userManager.CreateAsync(user, ConstData.SimplePassword).Wait();
+                _userManager.AddToRoleAsync(user, ConstData.RoleFd).Wait();
+            }
+
+            if (_userManager.FindByEmailAsync("teste3@email.com").Result == null)
+            {
+                var user = new User("Teste3 Teste3Sur", "teste3@email.com", false);
+                _userManager.CreateAsync(user, ConstData.SimplePassword).Wait();
+                _userManager.AddToRoleAsync(user, ConstData.RoleFd).Wait();
+            }
+
+            if (_userManager.FindByEmailAsync("teste4@email.com").Result == null)
+            {
+                var user = new User("Teste4 TesteSur4", "teste4@email.com", false);
+                _userManager.CreateAsync(user, ConstData.SimplePassword).Wait();
+                _userManager.AddToRoleAsync(user, ConstData.RoleFd).Wait();
+            }
+
+            if (_userManager.FindByEmailAsync("teste5@email.com").Result == null)
+            {
+                var user = new User("Teste5 Teste5Sur", "teste5@email.com", false);
+                _userManager.CreateAsync(user, ConstData.SimplePassword).Wait();
+                _userManager.AddToRoleAsync(user, ConstData.RoleFd).Wait();
+            }
+
+            if (_userManager.FindByEmailAsync("teste6@email.com").Result == null)
+            {
+                var user = new User("Teste6 Teste6Sur", "teste6@email.com", false);
+                _userManager.CreateAsync(user, ConstData.SimplePassword).Wait();
+                _userManager.AddToRoleAsync(user, ConstData.RoleFd).Wait();
+            }
+
+            if (_userManager.FindByEmailAsync("teste7@email.com").Result == null)
+            {
+                var user = new User("Teste7 Teste7Sur", "teste7@email.com", false);
+                _userManager.CreateAsync(user, ConstData.SimplePassword).Wait();
+                _userManager.AddToRoleAsync(user, ConstData.RoleFd).Wait();
+            }
+
+            if (_userManager.FindByEmailAsync("teste8@email.com").Result == null)
+            {
+                var user = new User("Teste8 Teste8Sur", "teste8@email.com", false);
                 _userManager.CreateAsync(user, ConstData.SimplePassword).Wait();
                 _userManager.AddToRoleAsync(user, ConstData.RoleFd).Wait();
             }

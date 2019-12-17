@@ -1,7 +1,7 @@
 ﻿@model ProPri.WebApp.Mvc.Views.Users.ViewModels.UserFormViewModel
 
 @{
-    ViewData["Title"] = $"{Model.FirstName} {Model.Surname}";
+    ViewData["Title"] = Model.Name;
 }
 
 <div class="row">
@@ -14,7 +14,7 @@
 
         <div class="col-md-10">
             <form asp-action="Edit">
-                
+
                 <partial name="_FormFields" />
 
                 <input type="hidden" asp-for="Id" />

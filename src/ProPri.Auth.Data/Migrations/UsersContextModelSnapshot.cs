@@ -169,9 +169,21 @@ namespace ProPri.Users.Data.Migrations
                     b.Property<DateTimeOffset?>("LockoutEnd")
                         .HasColumnType("TEXT");
 
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasColumnName("Name")
+                        .HasColumnType("TEXT")
+                        .HasMaxLength(63);
+
                     b.Property<string>("NormalizedEmail")
                         .HasColumnType("TEXT")
                         .HasMaxLength(160);
+
+                    b.Property<string>("NormalizedName")
+                        .IsRequired()
+                        .HasColumnName("NormalizedName")
+                        .HasColumnType("TEXT")
+                        .HasMaxLength(63);
 
                     b.Property<string>("NormalizedUserName")
                         .HasColumnType("TEXT")
@@ -261,34 +273,6 @@ namespace ProPri.Users.Data.Migrations
                         .HasForeignKey("RoleId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
-                });
-
-            modelBuilder.Entity("ProPri.Users.Domain.User", b =>
-                {
-                    b.OwnsOne("ProPri.Core.Domain.ValueObjects.PersonName", "Name", b1 =>
-                        {
-                            b1.Property<Guid>("UserId")
-                                .HasColumnType("TEXT");
-
-                            b1.Property<string>("FirstName")
-                                .IsRequired()
-                                .HasColumnName("FirstName")
-                                .HasColumnType("TEXT")
-                                .HasMaxLength(3);
-
-                            b1.Property<string>("Surname")
-                                .IsRequired()
-                                .HasColumnName("Surname")
-                                .HasColumnType("TEXT")
-                                .HasMaxLength(60);
-
-                            b1.HasKey("UserId");
-
-                            b1.ToTable("tb_user");
-
-                            b1.WithOwner()
-                                .HasForeignKey("UserId");
-                        });
                 });
 
             modelBuilder.Entity("ProPri.Users.Domain.UserRole", b =>

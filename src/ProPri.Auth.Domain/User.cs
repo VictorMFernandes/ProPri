@@ -2,7 +2,7 @@
 using ProPri.Core.Communication.Messages;
 using ProPri.Core.Constants;
 using ProPri.Core.Domain;
-using ProPri.Core.Domain.ValueObjects;
+using ProPri.Core.Extensions;
 using ProPri.Core.Helpers;
 using ProPri.Core.Validation;
 using System;
@@ -15,7 +15,17 @@ namespace ProPri.Users.Domain
     {
         #region Properties
 
-        public PersonName Name { get; private set; }
+        private string _name;
+        public string Name
+        {
+            get => _name;
+            private set
+            {
+                _name = value;
+                NormalizedName = _name.ToNeutral();
+            }
+        }
+        public string NormalizedName { get; private set; }
         public DateTime RegistrationDate { get; }
         public DateTime LastActiveDate { get; private set; }
         public bool Active { get; set; }
@@ -34,7 +44,7 @@ namespace ProPri.Users.Domain
 
         private User() { }
 
-        private User(PersonName name, string email, bool active, DateTime? birthday, Role role)
+        private User(string name, string email, bool active, DateTime? birthday, Role role)
         {
             InitializeCollections();
 
@@ -51,7 +61,7 @@ namespace ProPri.Users.Domain
         }
 
         // TODO remover esse construtor e criar uma factory para dar o seed quando for para produção
-        public User(PersonName name, string email, bool isAdministrator)
+        public User(string name, string email, bool isAdministrator)
         {
             InitializeCollections();
 
@@ -78,7 +88,7 @@ namespace ProPri.Users.Domain
 
         public override string ToString()
         {
-            return Name.ToString();
+            return Name;
         }
 
         private void Validate()
@@ -108,7 +118,7 @@ namespace ProPri.Users.Domain
 
         #endregion
 
-        public User CreateUser(PersonName name, string email, bool active, DateTime? birthday, Role role)
+        public User CreateUser(string name, string email, bool active, DateTime? birthday, Role role)
         {
             if (role.Name == ConstData.RoleManager && !HasRole(ConstData.RoleManager))
                 return null;
@@ -120,7 +130,7 @@ namespace ProPri.Users.Domain
             return user;
         }
 
-        public bool UpdateUser(User user, PersonName name, string email, DateTime? birthday, bool active, Role role)
+        public bool UpdateUser(User user, string name, string email, DateTime? birthday, bool active, Role role)
         {
             user.Name = name;
             user.Email = email;

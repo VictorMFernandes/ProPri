@@ -17,12 +17,9 @@ namespace ProPri.Users.Data.Mappings
 
             b.Property(u => u.RegistrationDate).HasColumnName("RegistrationDate").IsRequired();
 
-            b.OwnsOne(u => u.Name, n =>
-            {
-                n.Property(no => no.FirstName).IsRequired().HasMaxLength(ConstSizes.PersonFirstNameMin).HasColumnName("FirstName");
-                n.Property(no => no.Surname).IsRequired().HasMaxLength(ConstSizes.PersonSurnameMax).HasColumnName("Surname");
-            });
-
+            b.Property(u => u.Name).IsRequired().HasMaxLength(ConstSizes.PersonFirstNameMin + ConstSizes.PersonSurnameMax).HasColumnName("Name");
+            b.Property(u => u.NormalizedName).IsRequired().HasMaxLength(ConstSizes.PersonFirstNameMin + ConstSizes.PersonSurnameMax).HasColumnName("NormalizedName");
+            
             b.HasKey(u => u.Id);
 
             // Indexes for "normalized" username and email, to allow efficient lookups

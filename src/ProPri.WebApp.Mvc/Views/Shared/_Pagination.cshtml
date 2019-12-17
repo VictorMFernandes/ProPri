@@ -1,0 +1,35 @@
+﻿@{
+    var prevDisabled = !Model.HasPreviousPage ? "disabled" : string.Empty;
+    var nextDisabled = !Model.HasNextPage ? "disabled" : string.Empty;
+}
+
+<nav aria-label="PageNumber navigation example">
+    <ul class="pagination justify-content-center">
+        <li class="page-item @prevDisabled">
+            <a asp-action="Index"
+               asp-route-pageNumber="@(Model.PageNumber - 1)"
+               asp-route-currentFilter="@ViewData["CurrentFilter"]"
+               asp-route-activeCurrentFilter="@ViewData["CurrentActiveFilter"]"
+               class="page-link">Previous</a>
+        </li>
+        @for (var i = 1; i <= Model.PageQty; i++)
+        {
+            var pageActive = i == Model.PageNumber ? "active" : string.Empty;
+
+            <li class="page-item @pageActive">
+                <a asp-action="Index"
+                   asp-route-pageNumber="@i"
+                   asp-route-currentFilter="@ViewData["CurrentFilter"]"
+                   asp-route-activeCurrentFilter="@ViewData["CurrentActiveFilter"]"
+                   class="page-link">@i</a>
+            </li>
+        }
+        <li class="page-item @nextDisabled">
+            <a asp-action="Index"
+               asp-route-pageNumber="@(Model.PageNumber + 1)"
+               asp-route-currentFilter="@ViewData["CurrentFilter"]"
+               asp-route-activeCurrentFilter="@ViewData["CurrentActiveFilter"]"
+               class="page-link">Next</a>
+        </li>
+    </ul>
+</nav>

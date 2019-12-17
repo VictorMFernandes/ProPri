@@ -7,11 +7,12 @@ using ProPri.Core.Communication.Messages.Common.Notifications;
 using ProPri.Core.Constants;
 using ProPri.Users.Application.Commands;
 using ProPri.Users.Application.Queries;
-using ProPri.Users.Application.Queries.Filters;
+using ProPri.Users.Domain.Filters;
 using ProPri.WebApp.Mvc.Views.Users.ViewModels;
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
+using ProPri.Core.Helpers;
 
 namespace ProPri.WebApp.Mvc.Controllers
 {
@@ -32,16 +33,24 @@ namespace ProPri.WebApp.Mvc.Controllers
         }
 
         [Authorize(Policy = ConstData.ClaimUsersRead)]
-        public async Task<IActionResult> Index()
+        public async Task<IActionResult> Index(string searchString, string currentFilter, EActiveFilter? activeFilter, EActiveFilter currentActiveFilter, int pageNumber = 1)
         {
-            var userFilter = new UserFilter
+            if (searchString != null || activeFilter != null)
             {
-                PageNumber = 1,
-                PageSize = 5
-            };
+                pageNumber = 1;
+            }
+            else
+            {
+                searchString = currentFilter;
+                activeFilter = currentActiveFilter;
+            }
+            ViewData["CurrentFilter"] = searchString;
+            ViewData["CurrentActiveFilter"] = activeFilter;
+
+            var userFilter = new UserFilter(pageNumber, 5, searchString, activeFilter);
 
             var users = await _usersQueries.GetUsers(userFilter);
-            return View(_mapper.Map<IEnumerable<UserIndexViewModel>>(users));
+            return View(users);
         }
 
         [Authorize(Policy = ConstData.ClaimUsersWrite)]
@@ -76,6 +85,7 @@ namespace ProPri.WebApp.Mvc.Controllers
             return View(userFormVm);
         }
 
+        [Authorize(Policy = ConstData.ClaimUsersWrite)]
         public async Task<IActionResult> Edit(Guid id)
         {
             var userFormVm = _mapper.Map<UserFormViewModel>(await _usersQueries.GetUserById(id));
