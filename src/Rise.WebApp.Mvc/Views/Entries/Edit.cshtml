@@ -1,0 +1,32 @@
+﻿@model Rise.WebApp.Mvc.Views.Entries.ViewModels.EntryFormViewModel
+
+@{
+    ViewData["Title"] = Model.English;
+}
+
+<h4>@ViewData["Title"]</h4>
+<hr />
+<div class="row">
+    <div class="col-md-10">
+        <form asp-action="Edit">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            
+            <partial name="_FormFields" />
+
+            <input type="hidden" asp-for="Id" />
+
+            <div class="form-group">
+                <input type="submit" value="Save" class="btn btn-primary" />
+            </div>
+
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-action="Index">Back to list</a>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

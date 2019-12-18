@@ -1,0 +1,34 @@
+﻿@using Rise.WebApp.Mvc.Views.Classifications.ViewModels
+@model IEnumerable<ClassificationIndexViewModel>
+
+@{
+    ViewData["Title"] = "Classifications";
+
+    const string nodeTemplate = "<div class=\"row treeview-row\">" +
+                                "   <div class=\"col-8 treeview-name\">${Name}</div>" +
+                                "   <div class=\"col-4 text-right align-middle\">" +
+                                "       <a class=\"btn btn-warning treeview-btn\" href=\"/Classifications/Edit/${Id}\"><spam class=\"fa fa-pencil-alt\"></spam></a>" +
+                                "       <a class=\"btn btn-danger treeview-btn ml-2\" data-modal=\"/Classifications/Delete/${Id}\"><spam class=\"fa fa-trash\"></spam></a>" +
+                                "   </div>" +
+                                "</div>";
+}
+
+<div class="main-content">
+    <h3>@ViewData["Title"]</h3>
+    <a asp-action="Create">Create New</a>
+
+    <div id="treeview-parent">
+        <ejs-treeview id="hierarchical" loadOnDemand="false" cssClass="custom" nodeTemplate="@Html.Raw(nodeTemplate)">
+            <e-treeview-fields dataSource="Model" child="nameof(ClassificationIndexViewModel.Children)"
+                               hasChildren="HasChild" id="Id" text="Name" parentID="ParentId" expanded="Expanded"></e-treeview-fields>
+        </ejs-treeview>
+    </div>
+</div>
+
+@section Scripts {
+    <script>
+        $(document).ready(function () {
+            AjaxModal();
+        });
+    </script>
+}

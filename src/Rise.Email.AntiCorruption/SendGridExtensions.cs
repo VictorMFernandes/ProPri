@@ -1,6 +1,6 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
-using ProPri.Email.Api;
-using ProPri.Email.Api.Setup;
+using Rise.Email.Api;
+using Rise.Email.Api.Setup;
 using System;
 
 namespace Rise.Email.AntiCorruption

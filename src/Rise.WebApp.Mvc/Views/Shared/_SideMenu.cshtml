@@ -1,0 +1,65 @@
+﻿@using Microsoft.AspNetCore.Identity
+@using Rise.Users.Application.Queries
+@using Rise.Users.Domain
+@using Rise.WebApp.Mvc.Extensions
+@using Rise.Core.Constants
+@inject SignInManager<User> SignInManager
+@inject IUsersQueries UsersQueries
+
+@{
+    var menu = new List<object>();
+
+    if (await UsersQueries.IsAuthorized(AuthorizationExtensions.GetLoggedUserId(User), ConstData.ClaimUsersRead))
+    {
+        menu.Add(new
+        {
+            text = "Users",
+            iconCss = "icon-users icon",
+            action = "Index",
+            controller = "Users"
+        });
+    }
+
+    if (await UsersQueries.IsAuthorized(AuthorizationExtensions.GetLoggedUserId(User), ConstData.ClaimStudentsRead))
+    {
+        menu.Add(new
+        {
+            text = "Students",
+            iconCss = "icon-students icon",
+            action = "Index",
+            controller = "Students"
+        });
+    }
+
+    menu.Add(new
+    {
+        text = "Vocabulary",
+        iconCss = "icon-vocabulary icon",
+        items = new List<object>()
+        {
+            new {text = "Classifications", iconCss = "icon-Classification icon", action = "Index", controller = "Classifications"},
+            new {text = "Entries", iconCss = "icon-team icon", action = "Index", controller = "Entries"},
+        }
+    });
+    menu.Add(new
+    {
+        text = "Challenges",
+        iconCss = "icon-puzzle icon",
+    });
+    menu.Add(new
+    {
+        text = "Schedule",
+        iconCss = "icon-schedule icon",
+        action = "Index",
+        controller = "Schedules"
+    });
+}
+
+@if (SignInManager.IsSignedIn(User))
+{
+    <ejs-sidebar id="sidebar-menu" class="dock-menu" width="220px" dockSize="50px" target="#main-content-wrapper" enableDock="true" type="Over">
+        <e-content-template>
+            <ejs-menu id="main-menubar" items="@menu" orientation="Vertical" cssClass="dock-menu" select="onMenuItemSelect"></ejs-menu>
+        </e-content-template>
+    </ejs-sidebar>
+}

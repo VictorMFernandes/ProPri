@@ -1,0 +1,47 @@
+﻿@using Microsoft.AspNetCore.Identity
+@using Rise.Users.Domain
+@inject SignInManager<User> SignInManager
+
+@{
+    var menu = new List<object>();
+    if (SignInManager.IsSignedIn(User))
+    {
+        menu = new List<object>()
+{
+            new
+            {
+                text = $"Hi {User.Identity.Name}!",
+                items = new List<object>() {
+                    new { text= "Profile", action = "Index", controller = "Classifications"},
+                    new { text= "Log out", action = "Logout", controller = "Auth" }
+                }
+            }
+        };
+    }
+    else
+    {
+        menu = new List<object>()
+{
+            new
+            {
+                text = "Login",
+                action = "Login",
+                controller = "Auth"
+            }
+        };
+    }
+}
+
+<div class="dock-menu" id="header">
+    <ul class="header-list box-shadow">
+        @if (SignInManager.IsSignedIn(User))
+        {
+            <li id="hamburger" class="icon-menu icon list"></li>
+        }
+        <li class="right-header list">
+            <div class="horizontal-menu">
+                <ejs-menu id="horizontal-menubar" items="@menu" orientation="Horizontal" cssClass="dock-menu" select="onMenuItemSelect"></ejs-menu>
+            </div>
+        </li>
+    </ul>
+</div>

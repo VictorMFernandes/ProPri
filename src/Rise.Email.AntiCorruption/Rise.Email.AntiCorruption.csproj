@@ -9,7 +9,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\ProPri.Email.Api\ProPri.Email.Api.csproj" />
+    <ProjectReference Include="..\Rise.Email.Api\Rise.Email.Api.csproj" />
   </ItemGroup>
 
   <ItemGroup>

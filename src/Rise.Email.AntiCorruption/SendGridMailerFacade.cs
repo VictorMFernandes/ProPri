@@ -1,4 +1,4 @@
-﻿using ProPri.Email.Api;
+﻿using Rise.Email.Api;
 using SendGrid;
 using SendGrid.Helpers.Mail;
 using System.Net;
