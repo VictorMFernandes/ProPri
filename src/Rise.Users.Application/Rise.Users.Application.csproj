@@ -14,6 +14,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\Rise.Image.Api\Rise.ImageUpload.Api.csproj" />
     <ProjectReference Include="..\Rise.Users.Domain\Rise.Users.Domain.csproj" />
   </ItemGroup>
 

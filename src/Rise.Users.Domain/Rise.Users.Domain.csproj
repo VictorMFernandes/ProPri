@@ -12,6 +12,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\Rise.Core\Rise.Core.csproj" />
+    <ProjectReference Include="..\Rise.Image.Api\Rise.ImageUpload.Api.csproj" />
   </ItemGroup>
 
 </Project>

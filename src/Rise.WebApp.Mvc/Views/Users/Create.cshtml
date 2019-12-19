@@ -4,28 +4,25 @@
     ViewData["Title"] = "New User";
 }
 
-<div class="row">
+<form enctype="multipart/form-data" asp-action="Create">
+    <div class="row">
+        <div class="content content-s">
+            <partial name="_Details" />
+        </div>
 
-    <div class="content content-s">
-        <partial name="_Details" />
-    </div>
+        <div class="content content-g">
 
-    <div class="content content-g">
+            <div class="col-md-10">
 
-        <div class="col-md-10">
-            <form asp-action="Create">
-                
                 <partial name="_FormFields" />
 
                 <div class="form-group">
                     <input type="submit" value="Create" class="btn btn-primary" />
                 </div>
-
-            </form>
+            </div>
         </div>
     </div>
-
-</div>
+</form>
 
 @section Scripts {
     @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}

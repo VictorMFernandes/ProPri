@@ -33,10 +33,10 @@ namespace Rise.Students.Data.Mappings
                 c.Property(cr => cr.Active).HasColumnName("Active");
             });
 
-            b.OwnsOne(u => u.Image, i =>
+            b.OwnsOne(s => s.Image, i =>
             {
-                i.Property(fo => fo.Url).HasMaxLength(ConstSizes.ImageUrlMax).HasColumnName("ImageUrl");
-                i.Property(fo => fo.PublicId).HasMaxLength(ConstSizes.ImagePublicIdMax).HasColumnName("ImagePublicId");
+                i.Property(im => im.Url).HasMaxLength(ConstSizes.ImageUrlMax).HasColumnName("ImageUrl");
+                i.Property(im => im.PublicId).HasMaxLength(ConstSizes.ImagePublicIdMax).HasColumnName("ImagePublicId");
             });
 
             b.OwnsOne(u => u.Address, a =>

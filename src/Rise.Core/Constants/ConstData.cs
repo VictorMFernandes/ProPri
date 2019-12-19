@@ -2,6 +2,12 @@
 {
     public class ConstData
     {
+        #region Images
+
+        public const string PersonDefaultImage = "https://res.cloudinary.com/appinova/image/upload/v1576768319/rise/default/person.png";
+
+        #endregion
+
         #region Users
 
         public const string SimplePassword = "12345678";

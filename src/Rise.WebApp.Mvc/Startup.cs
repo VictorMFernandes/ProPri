@@ -11,6 +11,8 @@ using Rise.Core.WebApp.Data;
 using Rise.Core.WebApp.Extensions;
 using Rise.Email.AntiCorruption;
 using Rise.Email.Api.Setup;
+using Rise.ImageUpload.AntiCorruption;
+using Rise.ImageUpload.Api.Setup;
 using Rise.Students.Data;
 using Rise.Users.Data;
 using Rise.Users.Domain;
@@ -69,8 +71,15 @@ namespace Rise.WebApp.Mvc
             services.AddEmailProvider()
                 .AddSendGrid(options =>
                 {
-                    options.ApiKey = "SG.39yr7I34S8eQeqAda9i_BA.I_X-L4c_DbBzuPrLZwg9IUIy4_r4dJGWrJTLfPIdD_U";
-                    options.SenderEmail = "victor.m.fernandes@outlook.com";
+                    options.ApiKey = Configuration.GetSection("EmailOptions:ApiKey").Value;
+                    options.SenderEmail = Configuration.GetSection("EmailOptions:SenderEmail").Value;
+                });
+            services.AddImageUploaderProvider()
+                .AddCloudinary(options =>
+                {
+                    options.CloudName = Configuration.GetSection("ImageOptions:CloudName").Value;
+                    options.ApiKey = Configuration.GetSection("ImageOptions:ApiKey").Value;
+                    options.ApiSecret = Configuration.GetSection("ImageOptions:ApiSecret").Value;
                 });
         }
 

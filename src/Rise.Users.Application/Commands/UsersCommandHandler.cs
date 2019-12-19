@@ -3,6 +3,8 @@ using Rise.Core.Communication.Handlers;
 using Rise.Core.Communication.Messages.Common.Events.IntegrationEvents;
 using Rise.Core.Communication.Messages.Common.Notifications;
 using Rise.Core.Constants;
+using Rise.Core.Domain.ValueObjects;
+using Rise.ImageUpload.Api.Commands;
 using Rise.Users.Domain;
 using System;
 using System.Threading;
@@ -43,6 +45,16 @@ namespace Rise.Users.Application.Commands
                 return false;
             }
 
+            if (request.Image != null)
+            {
+                var uploadImageResult = await MediatorHandler.SendCommand<UploadImageCommand, UploadImageCommandResult>(new UploadImageCommand(request.Image));
+                if (uploadImageResult.Success)
+                {
+                    var image = new Image(uploadImageResult.ImageUrl, uploadImageResult.ImagePublicId);
+                    performingUser.UpdateUserImage(createdUser, image);
+                }
+            }
+            
             _userRepository.UpdateUser(performingUser);
             var tempPassword = createdUser.GenerateTempPassword();
             var createResult = await _userRepository.CreateUser(createdUser, tempPassword);

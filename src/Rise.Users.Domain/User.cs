@@ -2,9 +2,11 @@
 using Rise.Core.Communication.Messages;
 using Rise.Core.Constants;
 using Rise.Core.Domain;
+using Rise.Core.Domain.ValueObjects;
 using Rise.Core.Extensions;
 using Rise.Core.Helpers;
 using Rise.Core.Validation;
+using Rise.ImageUpload.Api.Events;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -31,6 +33,7 @@ namespace Rise.Users.Domain
         public bool Active { get; set; }
         public DateTime? Birthday { get; private set; }
         public bool IsAdministrator { get; private set; }
+        public Image Image { get; private set; }
 
         public ICollection<UserRole> UserRoles { get; set; }
         public Role Role => UserRoles.Single().Role;
@@ -171,6 +174,16 @@ namespace Rise.Users.Domain
             user.UserRoles.Add(new UserRole(role));
 
             return true;
+        }
+
+        public void UpdateUserImage(User user, Image image)
+        {
+            var oldImage = user.Image;
+
+            user.Image = image;
+
+            if (oldImage != null)
+                AddEvent(new ImageUpdatedEvent(user.Id, oldImage.PublicId));
         }
 
         public void UpdateLastActiveDate()

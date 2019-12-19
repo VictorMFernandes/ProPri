@@ -4,16 +4,16 @@ namespace Rise.Core.WebApp.Data
 {
     public class Seeder
     {
-        private readonly UsersSeeder _authSeeder;
+        private readonly UsersSeeder _userSeeder;
 
-        public Seeder(UsersSeeder authSeeder)
+        public Seeder(UsersSeeder userSeeder)
         {
-            _authSeeder = authSeeder;
+            _userSeeder = userSeeder;
         }
 
         public void Seed()
         {
-            _authSeeder.Seed();
+            _userSeeder.Seed();
         }
     }
 }

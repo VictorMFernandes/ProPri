@@ -19,7 +19,13 @@ namespace Rise.Users.Data.Mappings
 
             b.Property(u => u.Name).IsRequired().HasMaxLength(ConstSizes.PersonFirstNameMin + ConstSizes.PersonSurnameMax).HasColumnName("Name");
             b.Property(u => u.NormalizedName).IsRequired().HasMaxLength(ConstSizes.PersonFirstNameMin + ConstSizes.PersonSurnameMax).HasColumnName("NormalizedName");
-            
+
+            b.OwnsOne(u => u.Image, i =>
+            {
+                i.Property(im => im.Url).HasMaxLength(ConstSizes.ImageUrlMax).HasColumnName("ImageUrl");
+                i.Property(im => im.PublicId).HasMaxLength(ConstSizes.ImagePublicIdMax).HasColumnName("ImagePublicId");
+            });
+
             b.HasKey(u => u.Id);
 
             // Indexes for "normalized" username and email, to allow efficient lookups

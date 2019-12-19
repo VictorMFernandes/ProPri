@@ -20,6 +20,8 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\Rise.Image.AntiCorruption\Rise.ImageUpload.AntiCorruption.csproj" />
+    <ProjectReference Include="..\Rise.Image.Api\Rise.ImageUpload.Api.csproj" />
     <ProjectReference Include="..\Rise.Users.Application\Rise.Users.Application.csproj" />
     <ProjectReference Include="..\Rise.Users.Data\Rise.Users.Data.csproj" />
     <ProjectReference Include="..\Rise.Core.WebApp\Rise.Core.WebApp.csproj" />
