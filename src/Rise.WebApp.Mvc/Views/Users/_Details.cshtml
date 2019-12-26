@@ -1,59 +1,6 @@
-﻿@using Rise.Core.Constants
-@model Rise.WebApp.Mvc.Views.Users.ViewModels.UserFormViewModel
+﻿@model Rise.WebApp.Mvc.Views.Users.ViewModels.UserFormViewModel
 
-@{
-    var image = string.IsNullOrEmpty(Html.ValueFor(model => model.Image)) ? ConstData.PersonDefaultImage : Html.ValueFor(model => model.Image);
-}
-
-<style>
-    .image-container {
-        position: relative;
-        cursor: pointer;
-    }
-
-    .image-input {
-        opacity: 1;
-        display: block;
-        width: 100%;
-        height: auto;
-        transition: .5s ease;
-        backface-visibility: hidden;
-    }
-
-    .btn-img {
-        transition: .5s ease;
-        opacity: 0;
-        position: absolute;
-        top: 50%;
-        left: 50%;
-        transform: translate(-50%, -50%);
-        -ms-transform: translate(-50%, -50%);
-        text-align: center;
-    }
-
-    .image-container:hover .image-input {
-        opacity: 0.3;
-    }
-
-    .image-container:hover .btn-img {
-        opacity: 1;
-    }
-
-    .btn-img-text {
-        color: #212529;
-        font-size: 20px;
-        font-weight: bold;
-    }
-</style>
-
-<div class="image-container">
-    <img class="card-img-top image-input" src="@image" alt="User image">
-    <input type="file" class="custom-file-input" id="ImageUpload" asp-for="ImageUpload"
-           style="display:none">
-    <div class="btn-img">
-        <div class="btn-img-text">Change image</div>
-    </div>
-</div>
+<partial name="_ImageUploader" />
 
 <div class="card-body">
     <h5 class="card-title">@ViewData["Title"]</h5>

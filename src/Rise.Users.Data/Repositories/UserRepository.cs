@@ -80,7 +80,6 @@ namespace Rise.Users.Data.Repositories
         public async Task<IdentityResult> CreateUser(User user, string tempPassword)
         {
             var result = await _userManager.CreateAsync(user, tempPassword);
-
             return result;
         }
 

@@ -1,0 +1,1 @@
+﻿const ConstPersonDefaultImage = "https://res.cloudinary.com/appinova/image/upload/v1576768319/rise/default/person.png";

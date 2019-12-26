@@ -12,5 +12,6 @@ namespace Rise.Users.Domain.Dtos
         public DateTime LastActiveDate { get; set; }
         public DateTime RegistrationDate { get; set; }
         public Guid RoleId { get; set; }
+        public string Image { get; set; }
     }
 }

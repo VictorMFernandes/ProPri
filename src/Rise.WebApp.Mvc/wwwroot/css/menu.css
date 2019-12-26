@@ -34,6 +34,7 @@
 #header .header-list {
     padding-left: 15px;
     margin: 0;
+    list-style-type: none;
 }
 
 /* menu styles */
@@ -53,9 +54,19 @@
     width: 220px !important;
 }
 
+.brand-name {
+    float: left;
+    vertical-align: middle;
+    line-height: 40px;
+    height: 40px;
+    padding: 7px;
+    font-family: 'Baloo Bhai', cursive;
+    margin-left: 10vw;
+    font-size: 2.3rem;
+}
+
 /* end of horizontal-menu styles */
 /* vertical-menu styles */
-
 #sidebar-menu .e-menu-wrapper ul .e-menu-item.e-menu-caret-icon {
     width: 220px;
 }

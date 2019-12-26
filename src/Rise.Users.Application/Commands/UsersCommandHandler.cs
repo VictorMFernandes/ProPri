@@ -36,7 +36,10 @@ namespace Rise.Users.Application.Commands
             if (performingUser == null)
                 return false;
 
-            var role = await _userRepository.GetRoleById(request.RoleId);
+            var role = await GetSelectedRole(request.RoleId);
+            if (role == null)
+                return false;
+
             var createdUser = performingUser.CreateUser(request.Name, request.Email, request.Active, request.Birthday, role);
 
             if (createdUser == null)
@@ -45,16 +48,16 @@ namespace Rise.Users.Application.Commands
                 return false;
             }
 
-            if (request.Image != null)
+            if (request.ImageUpload != null)
             {
-                var uploadImageResult = await MediatorHandler.SendCommand<UploadImageCommand, UploadImageCommandResult>(new UploadImageCommand(request.Image));
+                var uploadImageResult = await MediatorHandler.SendCommand<UploadImageCommand, UploadImageCommandResult>(new UploadImageCommand(request.ImageUpload));
                 if (uploadImageResult.Success)
                 {
                     var image = new Image(uploadImageResult.ImageUrl, uploadImageResult.ImagePublicId);
                     performingUser.UpdateUserImage(createdUser, image);
                 }
             }
-            
+
             _userRepository.UpdateUser(performingUser);
             var tempPassword = createdUser.GenerateTempPassword();
             var createResult = await _userRepository.CreateUser(createdUser, tempPassword);
@@ -66,8 +69,10 @@ namespace Rise.Users.Application.Commands
                 return true;
             }
 
+            await MediatorHandler.PublishEvent(new UserCreationFailedEvent(performingUser.Id, createdUser.Name, createdUser.Image));
             foreach (var error in createResult.Errors)
             {
+                if (error.Code == "DuplicateUserName") continue;
                 await MediatorHandler.PublishNotification(new DomainNotification("user", error.Description));
             }
 
@@ -89,7 +94,9 @@ namespace Rise.Users.Application.Commands
                 return false;
             }
 
-            var role = await _userRepository.GetRoleById(request.RoleId);
+            var role = await GetSelectedRole(request.RoleId);
+            if (role == null)
+                return false;
 
             var updateValid = performingUser.UpdateUser(editedUser, request.Name, request.Email, request.Birthday, request.Active, role);
 
@@ -97,6 +104,20 @@ namespace Rise.Users.Application.Commands
             {
                 await MediatorHandler.PublishNotification(new DomainNotification("user", "You don't have permission to edit this user"));
                 return false;
+            }
+
+            if (request.ImageUpload != null)
+            {
+                var uploadImageResult = await MediatorHandler.SendCommand<UploadImageCommand, UploadImageCommandResult>(new UploadImageCommand(request.ImageUpload));
+                if (uploadImageResult.Success)
+                {
+                    var image = new Image(uploadImageResult.ImageUrl, uploadImageResult.ImagePublicId);
+                    performingUser.UpdateUserImage(editedUser, image);
+                }
+            }
+            else if (request.DeleteOriginalImage)
+            {
+                performingUser.UpdateUserImage(editedUser, null);
             }
 
             _userRepository.UpdateUser(performingUser);
@@ -163,7 +184,7 @@ namespace Rise.Users.Application.Commands
             return await _userRepository.Commit();
         }
 
-        public async Task<User> GetPerformingUser(Guid userId, string claim)
+        private async Task<User> GetPerformingUser(Guid userId, string claim)
         {
             var performingUser = await _userRepository.GetUserById(userId);
             if (performingUser == null)
@@ -177,6 +198,16 @@ namespace Rise.Users.Application.Commands
             if (performingUser.HasClaim(claim)) return performingUser;
 
             await MediatorHandler.PublishNotification(new DomainNotification("user", "You don't have permission to edit a user"));
+            return null;
+        }
+
+        private async Task<Role> GetSelectedRole(Guid roleId)
+        {
+            var role = await _userRepository.GetRoleById(roleId);
+            
+            if (role != null) return role;
+
+            await MediatorHandler.PublishNotification(new DomainNotification("role", "This role could not be found"));
             return null;
         }
     }

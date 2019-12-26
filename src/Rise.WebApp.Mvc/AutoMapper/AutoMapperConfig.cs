@@ -12,8 +12,10 @@ namespace Rise.WebApp.Mvc.AutoMapper
         public AutoMapperConfig()
         {
             CreateMap<User, UserFormDto>()
-                .ForMember(ufd => ufd.RoleId, opt => 
-                    opt.MapFrom(u => u.UserRoles.Single().RoleId));
+                .ForMember(ufd => ufd.RoleId, opt =>
+                    opt.MapFrom(u => u.UserRoles.Single().RoleId))
+                .ForMember(ufd => ufd.Image, opt =>
+                    opt.MapFrom(u => u.Image.Url));
             CreateMap<UserFormDto, UserFormViewModel>();
 
             CreateMap<Role, RoleIdNameDto>();

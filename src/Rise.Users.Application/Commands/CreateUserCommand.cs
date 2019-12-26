@@ -14,7 +14,7 @@ namespace Rise.Users.Application.Commands
         public bool Active { get; set; }
         public DateTime? Birthday { get; set; }
         public Guid RoleId { get; set; }
-        public IFormFile Image { get; set; }
+        public IFormFile ImageUpload { get; set; }
 
         public override bool IsValid()
         {

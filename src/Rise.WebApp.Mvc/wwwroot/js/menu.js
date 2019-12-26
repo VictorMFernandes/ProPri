@@ -1,9 +1,9 @@
 ﻿var sidebarInstance;
 
-document.addEventListener('DOMContentLoaded', function () {
-    sidebarInstance = document.getElementById('sidebar-menu').ej2_instances[0];
+document.addEventListener("DOMContentLoaded", function () {
+    sidebarInstance = document.getElementById("sidebar-menu").ej2_instances[0];
 
-    document.getElementById('hamburger').onclick = function () {
+    document.getElementById("hamburger").onclick = function () {
         sidebarInstance.toggle();
     };
 });

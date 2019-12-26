@@ -1,0 +1,24 @@
+﻿<link href="~/css/imageUploader.css" rel="stylesheet" />
+
+@using Rise.Core.Constants
+@model Rise.WebApp.Mvc.Views.Users.ViewModels.UserFormViewModel
+
+@{
+    var image = string.IsNullOrEmpty(Html.ValueFor(model => model.Image)) ? ConstData.PersonDefaultImage : Html.ValueFor(model => model.Image);
+}
+
+<div class="img-uploader-container">
+    <label for="id-img-upload">
+        <img class="card-img-top image-input" src="@image" alt="User image">
+
+        <input type="file" id="id-img-upload" asp-for="ImageUpload" accept="image/jpeg, image/png, image/gif" onchange="updateImage(this);"
+               style="display: none">
+        <span class="btn-img">Change image</span>
+    </label>
+
+    <div class="btn-clear-img" onclick="clearImage();">
+        <span>x</span>
+    </div>
+</div>
+
+<script src="~/js/imageUploader.js"></script>

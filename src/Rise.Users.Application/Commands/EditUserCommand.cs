@@ -6,7 +6,8 @@ namespace Rise.Users.Application.Commands
     public class EditUserCommand : CreateUserCommand
     {
         public Guid Id { get; private set; }
-        
+        public bool DeleteOriginalImage { get; private set; }
+
         public override bool IsValid()
         {
             ValidationResult = new EditUserCommandValidation().Validate(this);
