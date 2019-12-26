@@ -146,7 +146,12 @@ namespace Rise.Users.Application.Commands
             var loginResult = await _userRepository.SignIn(user.Email, request.Password);
 
             if (loginResult.Succeeded)
+            {
+                user.UpdateLastActiveDate();
+                _userRepository.UpdateUser(user);
+                await _userRepository.Commit();
                 return new LoginCommandResult(true, user.Id);
+            }
 
             if (loginResult.IsNotAllowed)
                 return new LoginCommandResult(false, user.Id, true);

@@ -4,3 +4,7 @@ file,
 textarea {
     max-width: 400px;
 }
+
+.details-value {
+    text-align: right;
+}

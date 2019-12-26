@@ -1,4 +1,7 @@
 ﻿@model Rise.WebApp.Mvc.Views.Users.ViewModels.UserFormViewModel
+@{
+    var lastActiveDate = Model.LastActiveDate == DateTime.MinValue ? "Never" : Model.LastActiveDate.ToString();
+}
 
 <partial name="_ImageUploader" />
 
@@ -11,16 +14,12 @@
 </div>
 
 <div suppress-by-action="create" class="card-footer">
-    <div class="row">
-        <div class="col-4">Last Active:</div>
-        <div class="col-8">
-            <div class="float-right">@Html.ValueFor(model => model.LastActiveDate)</div>
-        </div>
+    <div class="row" title="Last active date">
+        <div class="col-1">LA:</div>
+        <div class="col">@lastActiveDate</div>
     </div>
-    <div class="row">
-        <div class="col-4">Registration:</div>
-        <div class="col-8">
-            <div class="float-right">@Html.ValueFor(model => model.RegistrationDate)</div>
-        </div>
+    <div class="row" title="Registration date">
+        <div class="col-1">R:</div>
+        <div class="col">@Html.ValueFor(model => model.RegistrationDate)</div>
     </div>
 </div>
