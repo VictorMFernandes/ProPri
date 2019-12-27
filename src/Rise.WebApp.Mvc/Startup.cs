@@ -56,7 +56,7 @@ namespace Rise.WebApp.Mvc
 
             services.ConfigureApplicationCookie(options =>
             {
-                options.AccessDeniedPath = "/Auth/AccessDenied";
+                options.AccessDeniedPath = "/Error/403";
                 options.LoginPath = "/Auth/Login";
                 options.SlidingExpiration = true;
                 options.ExpireTimeSpan = TimeSpan.FromDays(30);
@@ -91,7 +91,8 @@ namespace Rise.WebApp.Mvc
             }
             else
             {
-                app.UseExceptionHandler("/Home/Error");
+                app.UseExceptionHandler("/Error/500");
+                app.UseStatusCodePagesWithReExecute("/Error/{0}");
                 app.UseHsts();
             }
             app.UseHttpsRedirection();

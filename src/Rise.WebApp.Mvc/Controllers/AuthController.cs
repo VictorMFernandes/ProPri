@@ -1,13 +1,13 @@
 ﻿using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Rise.Core.Communication.Handlers;
+using Rise.Core.Communication.Messages.Common.Notifications;
 using Rise.Users.Application.Commands;
 using Rise.Users.Application.Queries;
 using Rise.WebApp.Mvc.Views.Auth.ViewModels;
 using System;
 using System.Threading.Tasks;
-using Rise.Core.Communication.Handlers;
-using Rise.Core.Communication.Messages.Common.Notifications;
 
 namespace Rise.WebApp.Mvc.Controllers
 {
@@ -47,7 +47,7 @@ namespace Rise.WebApp.Mvc.Controllers
             if (loginResult.Success)
                 return await RedirectToMainPageAsync(loginResult.UserId);
             if (loginResult.RequiresNewPassword)
-                return RedirectToAction("NewPassword", new { UserId = loginResult.UserId });
+                return RedirectToAction("NewPassword", new { loginResult.UserId });
 
             return View(loginVm);
         }
@@ -56,11 +56,6 @@ namespace Rise.WebApp.Mvc.Controllers
         {
             await _mediatorHandler.SendCommand(new LogoutCommand());
             return RedirectToAction("Login");
-        }
-
-        public IActionResult AccessDenied()
-        {
-            return View();
         }
 
         [AllowAnonymous]
