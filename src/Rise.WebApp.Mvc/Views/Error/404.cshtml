@@ -1,18 +1,10 @@
-﻿@model  Rise.WebApp.Mvc.ViewModels.ErrorViewModel
-@{
-    ViewData["Title"] = "Ocorreu um erro";
+﻿@{
+    ViewData["Title"] = "Page not Found";
 }
 
-@{
-    if (Model == null)
-    {
-        <div>
-            <h2>A página não existe ou foi trocada de lugar. </h2>
-        </div>
-    }
-    else
-    {
-        <h1>@Html.Raw(Model.Titulo)</h1>
-        <h2 class="text-danger">@Html.Raw(Model.Mensagem)</h2>
-    }
-}
+<div class="main-content">
+    <header>
+        <h1 class="text-danger">@ViewData["Title"]</h1>
+        <p>The page you are looking for does not exist anymore.</p>
+    </header>
+</div>
