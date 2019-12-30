@@ -33,6 +33,8 @@ namespace Rise.WebApp.Mvc
 
         public void ConfigureServices(IServiceCollection services)
         {
+
+
             services.AddDbContext<UsersContext>(options =>
                 options.UseSqlite(Configuration.GetConnectionString("DefaultConnection")));
 
@@ -52,8 +54,6 @@ namespace Rise.WebApp.Mvc
             }).AddRoles<Role>()
             .AddEntityFrameworkStores<UsersContext>();
 
-            services.AddAuthorizationWithPolicies();
-
             services.ConfigureApplicationCookie(options =>
             {
                 options.AccessDeniedPath = "/Error/403";
@@ -62,9 +62,18 @@ namespace Rise.WebApp.Mvc
                 options.ExpireTimeSpan = TimeSpan.FromDays(30);
             });
 
+            services.AddAuthorizationWithPolicies();
+
             services.AddControllersWithViews();
 
             services.AddAutoMapper(typeof(Startup));
+
+            services.ConfigureApplication(options =>
+            {
+                options.AdminEmail = Configuration.GetSection("AppSettings:AdminEmail").Value;
+                options.AdminName = Configuration.GetSection("AppSettings:AdminName").Value;
+                options.AdminPassword = Configuration.GetSection("AppSettings:AdminPassword").Value;
+            });
             services.InjectDependencies();
             SyncfusionLicenseProvider.RegisterLicense("MTc4NjMyQDMxMzcyZTMzMmUzMElidVVLdGNQQjgxNi95UGNjQVl4MEtMNUFObVNBVzFyV3Z2OStLTHpMRUU9");
             services.AddMediatR(typeof(Startup));
@@ -110,7 +119,7 @@ namespace Rise.WebApp.Mvc
                     pattern: "{controller=Auth}/{action=Login}/{id?}");
             });
 
-            seeder.Seed();
+            seeder.Seed().Wait();
         }
     }
 }

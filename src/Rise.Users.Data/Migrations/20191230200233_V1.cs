@@ -46,7 +46,9 @@ namespace Rise.Users.Data.Migrations
                     LastActiveDate = table.Column<DateTime>(nullable: false),
                     Active = table.Column<bool>(nullable: false),
                     Birthday = table.Column<DateTime>(nullable: true),
-                    IsAdministrator = table.Column<bool>(nullable: false)
+                    IsAdministrator = table.Column<bool>(nullable: false),
+                    ImageUrl = table.Column<string>(maxLength: 160, nullable: true),
+                    ImagePublicId = table.Column<string>(maxLength: 25, nullable: true)
                 },
                 constraints: table =>
                 {

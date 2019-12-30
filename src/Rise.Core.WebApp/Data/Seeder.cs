@@ -1,4 +1,5 @@
-﻿using Rise.Users.Data;
+﻿using Rise.Users.Data.Seeding;
+using System.Threading.Tasks;
 
 namespace Rise.Core.WebApp.Data
 {
@@ -11,9 +12,9 @@ namespace Rise.Core.WebApp.Data
             _userSeeder = userSeeder;
         }
 
-        public void Seed()
+        public async Task Seed()
         {
-            _userSeeder.Seed();
+            await _userSeeder.Seed();
         }
     }
 }

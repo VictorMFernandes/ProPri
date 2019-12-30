@@ -11,6 +11,6 @@ namespace Rise.Core.Domain
 
         void RemoveEvent(Event eventItem);
 
-        void CleanEvents();
+        void ClearEvents();
     }
 }

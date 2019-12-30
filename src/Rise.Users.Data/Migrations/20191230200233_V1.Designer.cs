@@ -9,8 +9,8 @@ using Rise.Users.Data;
 namespace Rise.Users.Data.Migrations
 {
     [DbContext(typeof(UsersContext))]
-    [Migration("20191219144127_V2")]
-    partial class V2
+    [Migration("20191230200233_V1")]
+    partial class V1
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {

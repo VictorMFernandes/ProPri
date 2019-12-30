@@ -17,6 +17,7 @@ namespace Rise.Users.Domain
         Task<User> GetUserById(Guid id);
         Task<User> GetUserByEmail(string email);
         Task<UserFormDto> GetUserFormById(Guid id);
+        Task<bool> UserExistsByEmail(string email);
         Task<IdentityResult> CreateUser(User user, string tempPassword);
         void UpdateUser(User user);
 
@@ -34,6 +35,9 @@ namespace Rise.Users.Domain
 
         Task<IEnumerable<RoleIdNameDto>> GetAllRoleIdName();
         Task<Role> GetRoleById(Guid id);
+        Task<Role> GetRoleByName(string roleName);
+        Task<bool> RoleExists(string roleName);
+        void CreateRole(Role role);
 
         #endregion
 

@@ -63,22 +63,6 @@ namespace Rise.Users.Domain
             Validate();
         }
 
-        // TODO remover esse construtor e criar uma factory para dar o seed quando for para produção
-        public User(string name, string email, bool isAdministrator)
-        {
-            InitializeCollections();
-
-            Name = name;
-            Email = email;
-            UserName = email;
-            RegistrationDate = DateTime.Now;
-            Active = true;
-            EmailConfirmed = true;
-            IsAdministrator = isAdministrator;
-
-            Validate();
-        }
-
         #endregion
 
         #region Entity Methods
@@ -96,7 +80,9 @@ namespace Rise.Users.Domain
 
         private void Validate()
         {
-            Validator.IsNotNull(RegistrationDate, nameof(RegistrationDate));
+            Validator.NotEqual(RegistrationDate, DateTime.MinValue, nameof(RegistrationDate), "Min DateTime Value");
+
+            Validator.IsNotNull(UserRoles.FirstOrDefault(), nameof(Role));
         }
 
         #endregion
@@ -114,16 +100,33 @@ namespace Rise.Users.Domain
             _notifications?.Remove(eventItem);
         }
 
-        public void CleanEvents()
+        public void ClearEvents()
         {
             _notifications?.Clear();
         }
 
         #endregion
 
+        public static User CreateAdministrator(string name, string email, Role role)
+        {
+            if (!role.IsAdmin) return null;
+
+            var administrator = new User(name, email, true, null, role)
+            {
+                IsAdministrator = true,
+                EmailConfirmed = true
+            };
+
+            return administrator;
+        }
+
         public User CreateUser(string name, string email, bool active, DateTime? birthday, Role role)
         {
-            if (role.Name == ConstData.RoleManager && !HasRole(ConstData.RoleManager))
+            if (role == null) return null;
+
+            if (!HasRole(ConstData.RoleFd)) return null;
+
+            if (role.IsManager && !HasRole(ConstData.RoleManager))
                 return null;
 
             var user = new User(name, email, active, birthday, role);
@@ -193,7 +196,7 @@ namespace Rise.Users.Domain
 
         public bool HasRole(string role)
         {
-            return IsAdministrator || UserRoles.Single().Role.Name == role;
+            return IsAdministrator || UserRoles.Single().Role.HasAuthorization(role);
         }
 
         public bool HasClaim(string claim)

@@ -48,7 +48,7 @@ namespace Rise.Core.Communication.Handlers
                 .SelectMany(x => x.Entity.Notifications)
                 .ToList();
 
-            domainEntities.ForEach(entity => entity.Entity.CleanEvents());
+            domainEntities.ForEach(entity => entity.Entity.ClearEvents());
 
             var tasks = domainEvents
                 .Select(async (domainEvent) =>

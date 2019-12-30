@@ -52,6 +52,7 @@ namespace Rise.WebApp.Mvc.Controllers
 
             var controller = result ? "Users" : "Students";
 
+            var claims = User.Claims.ToList();
             return RedirectToAction("Index", controller);
         }
     }

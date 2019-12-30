@@ -5,6 +5,15 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="Migrations\20191218152544_V1.cs" />
+    <Compile Remove="Migrations\20191218152544_V1.Designer.cs" />
+    <Compile Remove="Migrations\20191219144127_V2.cs" />
+    <Compile Remove="Migrations\20191219144127_V2.Designer.cs" />
+    <Compile Remove="Migrations\20191230185616_V3.cs" />
+    <Compile Remove="Migrations\20191230185616_V3.Designer.cs" />
+  </ItemGroup>
+
+  <ItemGroup>
     <PackageReference Include="AutoMapper" Version="9.0.0" />
     <PackageReference Include="Microsoft.AspNetCore.Identity" Version="2.2.0" />
     <PackageReference Include="Microsoft.AspNetCore.Identity.EntityFrameworkCore" Version="3.1.0" />

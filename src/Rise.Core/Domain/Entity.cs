@@ -31,7 +31,7 @@ namespace Rise.Core.Domain
             _notifications?.Remove(eventItem);
         }
 
-        public void CleanEvents()
+        public void ClearEvents()
         {
             _notifications?.Clear();
         }

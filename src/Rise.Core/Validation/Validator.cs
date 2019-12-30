@@ -1,5 +1,5 @@
-﻿using System.Text.RegularExpressions;
-using Rise.Core.Constants;
+﻿using Rise.Core.Constants;
+using System.Text.RegularExpressions;
 
 namespace Rise.Core.Validation
 {
@@ -38,6 +38,12 @@ namespace Rise.Core.Validation
         {
             if (propertyA != propertyB)
                 throw new ValidationException(ConstMessages.ErrorNotEqual(propertyNameA, propertyNameB));
+        }
+
+        public static void NotEqual(object propertyA, object propertyB, string propertyNameA, string propertyNameB)
+        {
+            if (propertyA == propertyB)
+                throw new ValidationException(ConstMessages.ErrorEqual(propertyNameA, propertyNameB));
         }
 
         public static void IsNotNull(object property, string propertyName)

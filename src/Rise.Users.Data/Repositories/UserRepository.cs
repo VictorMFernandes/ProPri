@@ -67,6 +67,11 @@ namespace Rise.Users.Data.Repositories
             return user == null ? null : _mapper.Map<UserFormDto>(user);
         }
 
+        public async Task<bool> UserExistsByEmail(string email)
+        {
+            return await Context.Users.AnyAsync(u => u.Email == email);
+        }
+
         public async Task<User> GetUserById(Guid id)
         {
             var user = await Context.Users
@@ -122,6 +127,21 @@ namespace Rise.Users.Data.Repositories
             var role = await Context.Roles.AsNoTracking()
                 .FirstOrDefaultAsync(r => r.Id == id && r.Name != ConstData.RoleAdministrator);
             return role;
+        }
+
+        public async Task<Role> GetRoleByName(string roleName)
+        {
+            return await Context.Roles.SingleOrDefaultAsync(r => r.Name == roleName);
+        }
+
+        public async Task<bool> RoleExists(string roleName)
+        {
+            return await Context.Roles.AnyAsync(r => r.Name == roleName);
+        }
+
+        public void CreateRole(Role role)
+        {
+            Context.Roles.Add(role);
         }
 
         #endregion

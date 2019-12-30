@@ -1,4 +1,5 @@
-﻿using MediatR;
+﻿using System;
+using MediatR;
 using Microsoft.Extensions.DependencyInjection;
 using Rise.Core.Communication.Handlers;
 using Rise.Core.Communication.Messages.Common.Notifications;
@@ -7,6 +8,7 @@ using Rise.Users.Application.Commands;
 using Rise.Users.Application.Queries;
 using Rise.Users.Data;
 using Rise.Users.Data.Repositories;
+using Rise.Users.Data.Seeding;
 using Rise.Users.Domain;
 
 namespace Rise.Core.WebApp.Extensions
@@ -21,12 +23,7 @@ namespace Rise.Core.WebApp.Extensions
             // Notifications
             services.AddScoped<INotificationHandler<DomainNotification>, DomainNotificationHandler>();
 
-            //Seeder
-            services.AddScoped<Seeder>();
-
             //Users
-            services.AddScoped<UsersSeeder>();
-
             services.AddScoped<IUsersQueries, UsersQueries>();
             services.AddScoped<IUserRepository, UserRepository>();
 
@@ -35,6 +32,17 @@ namespace Rise.Core.WebApp.Extensions
             services.AddScoped<IRequestHandler<LoginCommand, LoginCommandResult>, UsersCommandHandler>();
             services.AddScoped<IRequestHandler<LogoutCommand, bool>, UsersCommandHandler>();
             services.AddScoped<IRequestHandler<NewPasswordCommand, bool>, UsersCommandHandler>();
+        }
+
+        public static void ConfigureApplication(this IServiceCollection services, Action<UserSeedingOptions> userOptions)
+        {
+            var userSeedingOptions = new UserSeedingOptions();
+            userOptions.Invoke(userSeedingOptions);
+            services.AddSingleton(c => userSeedingOptions);
+
+            //Seeder
+            services.AddScoped<Seeder>();
+            services.AddScoped<UsersSeeder>();
         }
     }
 }

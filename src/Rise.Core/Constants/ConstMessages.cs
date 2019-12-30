@@ -31,5 +31,10 @@
         {
             return $"{propertyNameA} and {propertyNameB} must be equal";
         }
+
+        public static string ErrorEqual(string propertyNameA, string propertyNameB)
+        {
+            return $"{propertyNameA} and {propertyNameB} must not be equal";
+        }
     }
 }
