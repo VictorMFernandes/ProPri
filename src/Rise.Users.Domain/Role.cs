@@ -7,8 +7,8 @@ namespace Rise.Users.Domain
 {
     public class Role : IdentityRole<Guid>
     {
-        public ICollection<UserRole> UserRoles { get; set; }
-        public ICollection<RoleClaim> RoleClaims { get; set; }
+        public virtual ICollection<UserRole> UserRoles { get; set; }
+        public virtual ICollection<RoleClaim> RoleClaims { get; set; }
 
         public bool IsAdmin => Name == ConstData.RoleAdministrator;
         public bool IsManager => Name == ConstData.RoleManager || IsAdmin;
@@ -17,7 +17,7 @@ namespace Rise.Users.Domain
 
         #region Constructors
 
-        private Role() { }
+        public Role() { }
 
         public Role(string name)
         {
